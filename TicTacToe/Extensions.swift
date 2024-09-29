@@ -14,6 +14,9 @@ extension UIColor {
 		case purple
 		case darkPurple
 		case lightPurple
+		case unactiveButton
+		case activeButton
+		case black
 		
 		var color: UIColor {
 			switch self {
@@ -22,7 +25,13 @@ extension UIColor {
 			case .darkPurple:
 				return UIColor(red: 132/255, green: 128/255, blue: 212/255, alpha: 1)
 			case .lightPurple:
-				return UIColor(red: 246/255, green: 247/255, blue: 255/255, alpha: 1)
+				return UIColor(red: 245/255, green: 247/255, blue: 255/255, alpha: 1)
+			case .unactiveButton:
+				return UIColor(red: 229/255, green: 233/255, blue: 249/255, alpha: 1)
+			case .activeButton:
+				return UIColor(red: 132/255, green: 128/255, blue: 212/255, alpha: 1)
+			case .black:
+				return UIColor(red: 35/255, green: 41/255, blue: 70/255, alpha: 1)
 			}
 		}
 	}
@@ -35,3 +44,12 @@ extension UIColor {
 
 
 
+extension UIView {
+	
+	func dropShadow() {
+		layer.shadowColor = UIColor.black.cgColor
+		layer.shadowOpacity = 0.15
+		layer.shadowRadius = 10
+	}
+	
+}
