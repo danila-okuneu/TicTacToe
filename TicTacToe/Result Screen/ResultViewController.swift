@@ -9,6 +9,14 @@ import UIKit
 
 final class ResultViewController: UIViewController {
 
+    // MARK: - Properties
+
+    public var gameResult: GameResult? {
+        didSet {
+            updateUI()
+        }
+    }
+
     // MARK: - Outlets
 
     private let resultLabel: UILabel = {
@@ -151,6 +159,14 @@ final class ResultViewController: UIViewController {
         button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
+    }
+
+    private func updateUI() {
+        guard
+            let gameResult, let resultModel = ResultModel.results[gameResult]
+        else { return }
+        resultLabel.text = resultModel.label
+        resultImage.image = UIImage(named: resultModel.image)
     }
 }
 
