@@ -18,7 +18,7 @@
 		F1548F4C2CA963DA00889470 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Assets/Info.plist,
+				Info.plist,
 			);
 			target = F1548F392CA963D700889470 /* TicTacToe */;
 		};

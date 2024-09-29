@@ -2,22 +2,19 @@
 //  ViewController.swift
 //  TicTacToe
 //
-//  Created by Danila Okuneu on 29.09.24.
+//  Kirill
 //
 
 import UIKit
 
 class MainViewController: UIViewController {
 
-	
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		view.backgroundColor = UIColor.app(.purple)
 		
 	}
-
-	
 	
 }
 
