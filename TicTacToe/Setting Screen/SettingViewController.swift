@@ -10,11 +10,51 @@ import SnapKit
 
 class SettingsViewController: UIViewController {
 	
+	
 	private var selectedSkins: SkinsCardView?
 	
-	private let timeToggleView = TimeToggleView()
 	
+	// MARK: - UI Components
+	private let settingsView: UIView = {
+		let view = UIView()
+		view.layer.cornerRadius = 40
+		view.backgroundColor = .white
+		view.translatesAutoresizingMaskIntoConstraints = false
+		return view
+	}()
+	
+	private let settingStackView: UIStackView = {
+		let stack = UIStackView()
+		stack.axis = .vertical
+		stack.spacing = 20
+		stack.distribution = .fillEqually
+		stack.translatesAutoresizingMaskIntoConstraints = false
+		return stack
+	}()
+	
+	private let scrollView: UIScrollView = {
+		let scrollView = UIScrollView()
+		scrollView.alwaysBounceVertical = true
+		scrollView.clipsToBounds = false
+		scrollView.showsVerticalScrollIndicator = false
+		scrollView.translatesAutoresizingMaskIntoConstraints = false
+		return scrollView
+	}()
+	
+	private let scrollViewContainer: UIStackView = {
+		let stack = UIStackView()
+		stack.axis = .vertical
+		stack.alignment = .center
+		stack.spacing = 20
+		stack.translatesAutoresizingMaskIntoConstraints = false
+		return stack
+	}()
+	
+	
+	
+	private let timeToggleView = TimeToggleView()
 	private let timeView: UIView = TimeView()
+	
 	
 	private lazy var skinsVStack: UIStackView = {
 		let stackView = UIStackView()
@@ -43,66 +83,130 @@ class SettingsViewController: UIViewController {
 		super.viewDidLoad()
 		
 		view.backgroundColor = UIColor.app(.lightPurple)
+		title = "Settings"
 		
+		navigationItem.leftBarButtonItem = UIBarButtonItem(
+			image: UIImage(named: "backButtonIcon"),
+			style: .plain,
+			target: self,
+			action: #selector(backButtonTapped)
+		)
+		
+		setupScrollView()
 		addViews()
 		makeConstraints()
 		setDelegates()
 		
 		
-		skinsVStack.dropShadow()
-		timeToggleView.dropShadow()
-		timeView.dropShadow()
+		
+		scrollView.dropShadow()
 	}
 	
 	
 	private func addViews() {
 		
-		view.addSubview(skinsVStack)
-		view.addSubview(timeToggleView)
-		view.addSubview(timeView)
+		
+		
 		skinsVStack.addArrangedSubview(firstHStack)
 		skinsVStack.addArrangedSubview(secondHStack)
 		skinsVStack.addArrangedSubview(thirdHStack)
 	}
 
-	private func makeConstraints() {
+	
+	
+	// MARK: - Layout
+	private func setupScrollView() {
 		
-		skinsVStack.snp.makeConstraints { make in
-			make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(20)
+		view.addSubview(scrollView)
+		scrollView.addSubview(scrollViewContainer)
+		
+		
+		scrollView.snp.makeConstraints { make in
+			make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
 			make.left.equalTo(view.safeAreaLayoutGuide.snp.left).inset(20)
 			make.right.equalTo(view.safeAreaLayoutGuide.snp.right).inset(20)
+			make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
 		}
 		
-		timeToggleView.snp.makeConstraints { make in
-			make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(10)
-			make.centerX.equalToSuperview()
-			make.height.equalTo(60)
-			make.left.equalToSuperview().inset(50)
-			make.right.equalToSuperview().inset(50)
+		
+		scrollViewContainer.snp.makeConstraints { make in
+			make.top.equalToSuperview()
+			make.left.equalToSuperview()
+			make.right.equalToSuperview()
+			make.bottom.equalToSuperview()
+			make.width.equalToSuperview()
 		}
 		
-		timeView.snp.makeConstraints { make in
-			make.top.equalTo(timeToggleView.snp.bottom).inset(-20)
-			make.centerX.equalToSuperview()
-			make.height.equalTo(60)
-			make.left.equalToSuperview().inset(50)
-			make.right.equalToSuperview().inset(50)
-
-			
-		}
+		configureContainerView()
+	}
+	
+	private func configureContainerView() {
 		
+		scrollViewContainer.addArrangedSubview(settingsView)
+		
+		settingsView.addSubview(settingStackView)
+		
+		settingStackView.addArrangedSubview(timeToggleView)
+		settingStackView.addArrangedSubview(timeView)
+	
+		scrollViewContainer.addArrangedSubview(skinsVStack)
 		
 	}
 	
 	
-	private func setDelegates() {
+	
+	private func makeConstraints() {
 		
+		
+		settingsView.snp.makeConstraints { make in
+			make.height.equalTo(settingStackView.arrangedSubviews.count * 80 + 20)
+			make.width.equalToSuperview()
+		}
+		
+		settingStackView.snp.makeConstraints { make in
+			make.top.equalToSuperview().inset(20)
+			make.bottom.equalToSuperview().inset(20)
+			make.left.equalToSuperview().inset(20)
+			make.right.equalToSuperview().inset(20)
+		}
+		
+		timeToggleView.snp.makeConstraints { make in
+			
+		
+			make.height.equalTo(60)
+//			make.width.equalToSuperview().dividedBy(1.5)
+		}
+		
+		timeView.snp.makeConstraints { make in
+			
+			make.height.equalTo(60)
+//			make.width.equalToSuperview().dividedBy(1.5)
+
+			
+		}
+		
+		if Saves.timeMode {
+			settingStackView.setCustomSpacing(20, after: timeToggleView)
+		} else {
+			settingStackView.setCustomSpacing(-60, after: timeToggleView)
+			timeView.layer.opacity = 0
+		}
+	}
+	
+	
+	private func setDelegates() {
 		firstSkinsView.delegate = self
 		secondSkinsView.delegate = self
 		thirdSkinsView.delegate = self
 		fourthSkinsView.delegate = self
 		fifthSkinsView.delegate = self
 		sixthSkinsView.delegate = self
+	}
+	
+	
+	@objc private func backButtonTapped() {
+		print("Tapped")
+		
 	}
 }
 
@@ -118,4 +222,14 @@ extension SettingsViewController: SkinsCardViewDelegate {
 		view.isSelected = true
 	}
 	
+	@objc private func toggleTime() {
+		Saves.timeMode.toggle()
+		
+	}
 }
+
+//
+//@available(iOS 17.0, *)
+//#Preview {
+//	return UINavigationController(rootViewController: SettingsViewController())
+//}

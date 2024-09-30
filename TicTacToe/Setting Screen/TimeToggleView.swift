@@ -11,10 +11,10 @@ import SnapKit
 
 class TimeToggleView: UIView {
 	
-	private let timeSwitch: UISwitch = {
+	let timeSwitch: UISwitch = {
 		let toggle = UISwitch()
 		toggle.onTintColor = UIColor.app(.activeButton)
-		toggle.isOn = true
+		toggle.isOn = Saves.timeMode
 		return toggle
 	}()
 	
@@ -38,7 +38,6 @@ class TimeToggleView: UIView {
 		setupView()
 		addViews()
 		makeConstraints()
-		
 	}
 	
 	required init?(coder: NSCoder) {
@@ -48,7 +47,7 @@ class TimeToggleView: UIView {
 	// MARK: - Layout
 	
 	private func setupView() {
-		backgroundColor = .white
+		backgroundColor = UIColor.app(.unactiveButton)
 		layer.cornerRadius = 30
 	}
 	private func addViews() {

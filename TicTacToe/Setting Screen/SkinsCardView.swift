@@ -17,6 +17,8 @@ final class SkinsCardView: UIView {
 			UIView.animate(withDuration: 0.2) {
 				self.selectButton.backgroundColor = self.isSelected ? UIColor.app(.activeButton) : UIColor.app(.unactiveButton)
 				self.selectButton.setTitleColor(self.isSelected ? .white : UIColor.app(.black), for: .normal)
+				self.selectButton.layer.shadowOpacity = self.isSelected ? 0.2 : 0
+				self.hStack.layer.shadowOpacity = self.isSelected ? 0.1 : 0
 				self.selectButton.setTitle(self.isSelected ? "Picked" : "Choose", for: .normal)
 			}
 		}
@@ -36,6 +38,8 @@ final class SkinsCardView: UIView {
 
 	private let selectButton: UIButton = {
 		let button = UIButton()
+		button.layer.shadowColor = UIColor.app(.activeButton).cgColor
+		button.layer.shadowRadius = 5
 		button.setTitle("Select", for: .normal)
 		button.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
 		button.setTitleColor(UIColor.app(.black), for: .normal)
@@ -47,9 +51,14 @@ final class SkinsCardView: UIView {
 	
 	// MARK: - Initializers
 	init(skinPair: Int) {
-		isSelected = false
+		
+		if skinPair == Skins.selectedPair {
+			isSelected = true
+		}
+		
 		super.init(frame: .zero)
 		
+		Skins.selectedPair = skinPair
 		let skins = Skins.get(pair: skinPair)
 		xSkinView.image = skins.x
 		oSkinView.image = skins.o
@@ -120,6 +129,9 @@ final class SkinsCardView: UIView {
 	
 	@objc private func buttonTapped() {
 		toggleButton()
+		
+		
+			
 	}
 	
 	
