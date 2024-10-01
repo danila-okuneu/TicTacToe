@@ -10,7 +10,6 @@ import SnapKit
 
 
 class TimeView: UIView {
-	
 
 	
 	private let titleLabel: UILabel = {
@@ -67,7 +66,7 @@ class TimeView: UIView {
 	// MARK: - Layout
 	
 	private func setupView() {
-		backgroundColor = .white
+		backgroundColor = UIColor.app(.unactiveButton)
 		layer.cornerRadius = 30
 	}
 	private func addViews() {

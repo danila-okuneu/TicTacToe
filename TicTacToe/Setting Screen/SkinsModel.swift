@@ -11,7 +11,7 @@ import UIKit
 struct Skins {
 	
 	
-	
+	static var selectedPair = 1
 
 	static func get(pair: Int) -> (x: UIImage,o: UIImage){
 		
