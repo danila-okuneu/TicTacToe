@@ -15,6 +15,7 @@ class MainViewController: UIViewController {
     let rulesIcon = UIImageView()
     let settingsIcon = UIImageView()
     let ticTacToeLabel = UILabel()
+    let logoStackView = UIStackView()
     
 
     override func viewDidLoad() {
@@ -30,19 +31,33 @@ class MainViewController: UIViewController {
         view.backgroundColor = UIColor.white
     }
     
+    
+    func setLogoStackView() {
+        view.addSubview(logoStackView)
+        logoStackView.axis = .horizontal
+        logoStackView.distribution = .fillEqually
+        logoStackView.spacing = 5
+        
+        NSLayoutConstraint.activate([
+            logoStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logoStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100)
+        ])
+        
+    }
+    
     func setupPlayButton() {
         view.addSubview(playButton)
         
         playButton.setTitle("Let's play", for: .normal)
         playButton.layer.cornerRadius = 30
-        playButton.titleLabel?.font = UIFont(name: ".SFProDisplay-Semibold", size: 20)
+        playButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         playButton.tintColor = .white
         playButton.backgroundColor = UIColor(red: 132/255, green: 128/255, blue: 212/255, alpha: 1)
         playButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             playButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            playButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 692),
+            playButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -100),
             playButton.heightAnchor.constraint(equalToConstant: 72),
             playButton.widthAnchor.constraint(equalToConstant: 348)
         ])
@@ -80,8 +95,8 @@ class MainViewController: UIViewController {
         rulesIcon.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            rulesIcon.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 21),
-            rulesIcon.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
+            rulesIcon.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            rulesIcon.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             rulesIcon.heightAnchor.constraint(equalToConstant: 36),
             rulesIcon.widthAnchor.constraint(equalToConstant: 36)
         ])
@@ -94,8 +109,8 @@ class MainViewController: UIViewController {
         settingsIcon.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            settingsIcon.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 331),
-            settingsIcon.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
+            settingsIcon.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            settingsIcon.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             settingsIcon.heightAnchor.constraint(equalToConstant: 36),
             settingsIcon.widthAnchor.constraint(equalToConstant: 38)
         ])
@@ -105,7 +120,7 @@ class MainViewController: UIViewController {
         view.addSubview(ticTacToeLabel)
         ticTacToeLabel.text = "TIC-TAC-TOE"
         ticTacToeLabel.textColor = .black
-        ticTacToeLabel.font = UIFont(name: ".SFProDisplay-Bold", size: 32)
+        ticTacToeLabel.font = UIFont.systemFont(ofSize: 32, weight: .bold)
         ticTacToeLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
