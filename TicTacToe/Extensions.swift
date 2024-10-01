@@ -17,7 +17,8 @@ extension UIColor {
 		case unactiveButton
 		case activeButton
 		case black
-		
+        case lightBlue
+
 		var color: UIColor {
 			switch self {
 			case .purple:
@@ -32,6 +33,8 @@ extension UIColor {
 				return UIColor(red: 132/255, green: 128/255, blue: 212/255, alpha: 1)
 			case .black:
 				return UIColor(red: 35/255, green: 41/255, blue: 70/255, alpha: 1)
+            case .lightBlue:
+                return UIColor(red: 230/255, green: 233/255, blue: 249/255, alpha: 1)
 			}
 		}
 	}
