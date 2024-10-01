@@ -39,7 +39,7 @@ class MainViewController: UIViewController {
         logoStackView.axis = .horizontal
         logoStackView.distribution = .fillEqually
         logoStackView.alignment = .center
-        logoStackView.spacing = 5.0
+        logoStackView.spacing = 0.5
         self.view.addSubview(logoStackView)
         logoStackView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -47,7 +47,6 @@ class MainViewController: UIViewController {
         logoStackView.addArrangedSubview(xskin1Image)
         
         NSLayoutConstraint.activate([
-//            logoStackView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 300),
             logoStackView.topAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -100),
             logoStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 50),
             logoStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -50),
@@ -68,7 +67,7 @@ class MainViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             playButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            playButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -100),
+            playButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
             playButton.heightAnchor.constraint(equalToConstant: 72),
             playButton.widthAnchor.constraint(equalToConstant: 348)
         ])
@@ -82,8 +81,10 @@ class MainViewController: UIViewController {
         xskin1Image.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            xskin1Image.trailingAnchor.constraint(equalTo: logoStackView.centerXAnchor, constant: -50),
-            xskin1Image.centerYAnchor.constraint(equalTo: logoStackView.centerYAnchor),
+            xskin1Image.trailingAnchor.constraint(equalTo: logoStackView.centerXAnchor),
+            xskin1Image.centerYAnchor.constraint(equalTo: logoStackView.centerYAnchor, constant: 15),
+            xskin1Image.heightAnchor.constraint(equalToConstant: 120),
+            xskin1Image.widthAnchor.constraint(equalToConstant: 120)
         ])
     }
     
@@ -94,8 +95,10 @@ class MainViewController: UIViewController {
         oskin1Image.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            oskin1Image.leadingAnchor.constraint(equalTo: logoStackView.centerXAnchor, constant: 50),
+            oskin1Image.leadingAnchor.constraint(equalTo: logoStackView.centerXAnchor),
             oskin1Image.centerYAnchor.constraint(equalTo: logoStackView.centerYAnchor),
+            oskin1Image.heightAnchor.constraint(equalToConstant: 150),
+            oskin1Image.widthAnchor.constraint(equalToConstant: 150)
         ])
     }
     
@@ -135,7 +138,7 @@ class MainViewController: UIViewController {
         ticTacToeLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            ticTacToeLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 100),
+            ticTacToeLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 30),
             ticTacToeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
     }
