@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		370CA3432CADE737007F2A5C /* GameBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370CA3422CADE737007F2A5C /* GameBoard.swift */; };
+		370CA3452CADF240007F2A5C /* ViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370CA3442CADF240007F2A5C /* ViewModels.swift */; };
 		371F88AF2CACAAB0003849A2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 371F88AE2CACAAB0003849A2 /* SnapKit */; };
 		371F88B32CACAC8F003849A2 /* LeaderboardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371F88B22CACAC8F003849A2 /* LeaderboardViewCell.swift */; };
 		371F88B52CACACB9003849A2 /* LeaderboardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371F88B42CACACB9003849A2 /* LeaderboardModel.swift */; };
@@ -39,6 +41,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		370CA3422CADE737007F2A5C /* GameBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoard.swift; sourceTree = "<group>"; };
+		370CA3442CADF240007F2A5C /* ViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModels.swift; sourceTree = "<group>"; };
 		371F88B22CACAC8F003849A2 /* LeaderboardViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewCell.swift; sourceTree = "<group>"; };
 		371F88B42CACACB9003849A2 /* LeaderboardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardModel.swift; sourceTree = "<group>"; };
 		371F88B62CACACDD003849A2 /* LeaderboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +156,8 @@
 			children = (
 				37F8D4452CAC963200CBB15A /* GameViewController.swift */,
 				3777C7CB2CACD69E00AE76C0 /* GamePlayerCard.swift */,
+				370CA3422CADE737007F2A5C /* GameBoard.swift */,
+				370CA3442CADF240007F2A5C /* ViewModels.swift */,
 			);
 			path = "Game Screen";
 			sourceTree = "<group>";
@@ -327,10 +333,12 @@
 				37F8D4572CAC977F00CBB15A /* SettingViewController.swift in Sources */,
 				37F8D4442CAC960000CBB15A /* Saves.swift in Sources */,
 				37F8D44D2CAC96B900CBB15A /* ResultViewController.swift in Sources */,
+				370CA3452CADF240007F2A5C /* ViewModels.swift in Sources */,
 				371F88B52CACACB9003849A2 /* LeaderboardModel.swift in Sources */,
 				37F8D4222CAC937B00CBB15A /* AppDelegate.swift in Sources */,
 				37F8D4552CAC976400CBB15A /* HStackView.swift in Sources */,
 				37F8D4422CAC95E200CBB15A /* ResultsData.swift in Sources */,
+				370CA3432CADE737007F2A5C /* GameBoard.swift in Sources */,
 				371F88B32CACAC8F003849A2 /* LeaderboardViewCell.swift in Sources */,
 				3777C7CC2CACD69E00AE76C0 /* GamePlayerCard.swift in Sources */,
 				37F8D4592CAC979E00CBB15A /* SkinsCardView.swift in Sources */,

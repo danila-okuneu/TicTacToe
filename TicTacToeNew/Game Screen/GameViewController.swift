@@ -7,21 +7,13 @@
 
 import UIKit
 
+protocol GameBoardProtocol: AnyObject {
+    func finishGame(with resultGame: GameResult)
+}
+
 class GameViewController: UIViewController {
     
-    // MARK: - Properties
-    
-    private var gameState: [Player?] = Array(repeating: nil, count: 9)
-    private let winningCombinations: [Set<Int>] = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6],
-    ]
+    var resetGame: (() -> Void)?
     
     let timerLabel: UILabel = {
         let label = UILabel()
@@ -40,22 +32,7 @@ class GameViewController: UIViewController {
     }()
     
     // MARK: - UI Elements
-    private let gameBoardView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 30
-        view.backgroundColor = .white
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOffset = CGSize(width: 4, height: 4)
-        view.layer.shadowOpacity = 0.3
-        view.layer.shadowRadius = 30
-        return view
-    }()
-    
-    private var stackView: UIStackView!
-    
-    private var gameButtons: [UIButton] = []
-    
-    private var currentPlayer: Player = .cross // Начинаем с крестика
+    private lazy var gameBoardView: GameBoard = createGameBoard()
     
     // MARK: - Enum for Players
     private enum Player {
@@ -67,23 +44,36 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupGameBoard()
-        setupGameButtons()
         setupHeaderInfo()
         setupNavigationBar()
+        initialGameBoard()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        guard let resetGame = resetGame else {
+                print("resetGame nil")
+                return
+        }
         resetGame()
     }
-    
 }
 
 extension GameViewController {
-    func setupHeaderInfo() {
-        let cardOnePlyaer  = PlayerCard(image: Skins.getSelected().x, text: "xSkin1")
-        let cardTwoPlayer = PlayerCard(image: Skins.getSelected().0, text: "oSkin1")
+    private func initialGameBoard() {
+        view.addSubview(gameBoardView)
+        gameBoardView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(328)
+            make.left.equalToSuperview().offset(44)
+            make.right.equalToSuperview().offset(-44)
+            make.bottom.equalToSuperview().offset(-217)
+        }
+        resetGame = gameBoardView.reset
+    }
+    
+    private func setupHeaderInfo() {
+        let cardOnePlyaer  = PlayerCard(image: Skins.getSelected().x, text: "You")
+        let cardTwoPlayer = PlayerCard(image: Skins.getSelected().0, text: "Player Two")
         
         view.addSubview(gameHeaderInfo)
         gameHeaderInfo.addSubview(cardOnePlyaer)
@@ -111,123 +101,17 @@ extension GameViewController {
             cardTwoPlayer.bottomAnchor.constraint(equalTo: gameHeaderInfo.bottomAnchor),
         ])
     }
-}
-
-
-// Работа с полем игры
-extension GameViewController {
     
-    // Добавляем поле в иерархию маин вью и ставим ограничения
-    private func setupGameBoard() {
-        view.addSubview(gameBoardView)
-        
-        gameBoardView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(328)
-            make.left.equalToSuperview().offset(48.5)
-            make.right.equalToSuperview().offset(-39.5)
-            make.bottom.equalToSuperview().offset(-217)
-        }
-    }
-    
-    // Инициализируем кнопки и добавляем в поле игры
-    private func setupGameButtons() {
-        // Создаем основной стек для кнопок
-        stackView = UIStackView()
-        stackView.axis = .vertical // Стек будет вертикальным
-        stackView.spacing = 20 // Отступ между рядами кнопок
-        stackView.distribution = .fillEqually // Кнопки будут равномерно распределены
-        gameBoardView.addSubview(stackView) // Добавляем стек на игровое поле
-        
-        // Устанавливаем границы для стека
-        stackView.snp.makeConstraints { make in
-            make.edges.equalTo(gameBoardView).inset(20) // Устанавливаем внутренние отступы
-        }
-        
-        // Создаем 3 строки с 3 кнопками в каждой
-        for _ in 0..<3 {
-            let rowStackView = createRowStackView() // Создаем горизонтальный стек для кнопок в строке
-            
-            // Добавляем кнопки в ряд
-            for _ in 0..<3 {
-                let button = createGameButton() // Создаем кнопку
-                rowStackView.addArrangedSubview(button) // Добавляем кнопку в строку
-            }
-            
-            stackView.addArrangedSubview(rowStackView) // Добавляем строку в основной стек
-        }
-    }
-    
-    // Функция для создания горизонтального стека для кнопок
-    private func createRowStackView() -> UIStackView {
-        let rowStackView = UIStackView()
-        rowStackView.axis = .horizontal // Стек будет горизонтальным
-        rowStackView.spacing = 20 // Отступ между кнопками
-        rowStackView.distribution = .fillEqually // Кнопки будут равномерно распределены
-        return rowStackView // Возвращаем созданный стек
-    }
-    
-    // Функция для создания кнопки игры
-    private func createGameButton() -> UIButton {
-        let button = UIButton(type: .system) // Создаем кнопку типа системной
-        button.layer.cornerRadius = 20 // Закругляем углы кнопки
-        button.backgroundColor = UIColor(red: 230/255, green: 233/255, blue: 249/255, alpha: 1) // Устанавливаем цвет фона
-        
-        // Создаем UIImageView для изображения внутри кнопки
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit // Сохраняем пропорции изображения
-        imageView.layer.cornerRadius = 4 // Закругляем углы изображения
-        imageView.layer.masksToBounds = true // Применяем закругление
-        button.addSubview(imageView) // Добавляем изображение в кнопку
-        
-        // Устанавливаем ограничения для imageView
-        imageView.translatesAutoresizingMaskIntoConstraints = false // Отключаем авторазметку
-        NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: button.topAnchor, constant: 10), // Отступ сверху
-            imageView.leftAnchor.constraint(equalTo: button.leftAnchor, constant: 10), // Отступ слева
-            imageView.rightAnchor.constraint(equalTo: button.rightAnchor, constant: -10), // Отступ справа
-            imageView.bottomAnchor.constraint(equalTo: button.bottomAnchor, constant: -10) // Отступ снизу
-        ])
-        
-        // Добавляем действие при нажатии на кнопку
-        button.addTarget(self, action: #selector(gameButtonTapped(_:)), for: .touchUpInside)
-        
-        // Устанавливаем размеры кнопки
-        button.widthAnchor.constraint(equalToConstant: 74).isActive = true // Ширина кнопки
-        button.heightAnchor.constraint(equalToConstant: 73).isActive = true // Высота кнопки
-        
-        gameButtons.append(button) // Добавляем кнопку в массив кнопок
-        return button // Возвращаем созданную кнопку
-    }
-    
-    
-    
-    @objc private func gameButtonTapped(_ sender: UIButton) {
-        // Индекс нажатой кнопки
-        guard let index = gameButtons.firstIndex(of: sender), gameState[index] == nil else { return }
-        
-        gameState[index] = currentPlayer
-        
-        // Проверка не занята ли она
-        if let imageView = sender.subviews.compactMap({ $0 as? UIImageView }).first, imageView.image == nil {
-            // символ в зависимости кто игрок
-            if currentPlayer == .cross {
-                imageView.image = Skins.get(pair: Skins.selectedPair).x
-            } else {
-                imageView.image = Skins.get(pair: Skins.selectedPair).o
-            }
-            
-            imageView.layer.cornerRadius = 4
-            imageView.layer.masksToBounds = true
-            
-            if let winner = determineWinner() {
-                finishGame(with: winner)
-            } else if gameState.allSatisfy({ $0 != nil }) {
-                finishGame(with: nil)
-            } else {
-                currentPlayer = currentPlayer == .cross ? .nought : .cross
-            }
-            print("Button \(index) tapped") // принты чтобы проверить на время что нажимаються и отрабатывают кнопки
-        }
+    func createGameBoard() -> GameBoard {
+        let gameBoard = GameBoard(Skins.getSelected().x, Skins.getSelected().0, delegateVC: self)
+        gameBoard.translatesAutoresizingMaskIntoConstraints = false
+        gameBoard.layer.cornerRadius = 30
+        gameBoard.backgroundColor = .white
+        gameBoard.layer.shadowColor = UIColor.black.cgColor
+        gameBoard.layer.shadowOffset = CGSize(width: 4, height: 4)
+        gameBoard.layer.shadowOpacity = 0.3
+        gameBoard.layer.shadowRadius = 30
+        return gameBoard
     }
 }
 
@@ -244,57 +128,12 @@ extension GameViewController {
     }
 }
 
-// MARK: - Winner Handling
-
-extension GameViewController {
-    
-    /// Определяет победителя игры на основе текущего состояния игрового поля.
-    /// - Returns: Игрок, выигравший игру, или nil, если победитель не найден.
-    private func determineWinner() -> Player? {
-        // Проходим по всем выигрышным комбинациям
-        for combination in winningCombinations {
-            // Получаем игроков из текущей комбинации
-            let players = combination.compactMap { gameState[$0] }
-            
-            // Проверяем, что в комбинации три одинаковых игрока
-            if players.count == 3, Set(players).count == 1 {
-                // Если только один игрок, возвращаем его как победителя
-                return players.first
-            }
-        }
-        // Если победитель не найден, возвращаем nil
-        return nil
-    }
-    
-    /// Завершает игру и отображает экран с результатом.
-    /// - Parameter winner: Игрок, который выиграл игру, или nil, если игра закончилась вничью.
-    private func finishGame(with winner: Player?) {
-        let result: GameResult
-        
-        // Определяем результат игры на основе наличия победителя
-        if let winner = winner {
-            result = winner == .cross ? .win : .lose
-        } else {
-            result = .draw
-        }
-        
+// Навигация в конце игры
+extension GameViewController: GameBoardProtocol {
+    func finishGame(with resultGame: GameResult) {
         let resultViewController = ResultViewController()
-        resultViewController.gameResult = result
+        resultViewController.gameResult = resultGame
         navigationController?.pushViewController(resultViewController, animated: true)
     }
 }
 
-// MARK: - Helpers methods
-
-extension GameViewController {
-    // Reset game state
-    private func resetGame() {
-        gameState = Array(repeating: .none, count: 9)
-        currentPlayer = .cross
-        for button in gameButtons {
-            if let imageView = button.subviews.compactMap({ $0 as? UIImageView }).first {
-                imageView.image = nil
-            }
-        }
-    }
-}
