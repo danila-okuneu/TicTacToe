@@ -182,7 +182,7 @@ final class DynamicTimeView: UIView {
 	
 	@objc private func switchTime() {
 		Saves.isTimeMode.toggle()
-		
+		UserDefaults.standard.set(Saves.isTimeMode, forKey: "timeMode")
 		self.heightConstraint?.update(offset: Saves.isTimeMode ? 140 : 60)
 		UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseOut) {
 			   self.layoutIfNeeded()

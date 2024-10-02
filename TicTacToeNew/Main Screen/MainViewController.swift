@@ -32,6 +32,11 @@ class MainViewController: UIViewController {
     }
     
 	override func viewWillAppear(_ animated: Bool) {
+	
+		
+		
+		Saves.load()
+		
 		xskin1Image.image = Skins.get(pair: Skins.selectedPair).x
 		oskin1Image.image = Skins.get(pair: Skins.selectedPair).o
 	}
