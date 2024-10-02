@@ -97,6 +97,11 @@ class SettingsViewController: UIViewController {
         makeConstraints()
         setDelegates()
         
+		[firstSkinsView, secondSkinsView, thirdSkinsView, fourthSkinsView, fifthSkinsView, sixthSkinsView].forEach() {
+			if $0.isSelected {
+				selectedSkins = $0
+			}
+		}
         
         
         scrollView.dropShadow()

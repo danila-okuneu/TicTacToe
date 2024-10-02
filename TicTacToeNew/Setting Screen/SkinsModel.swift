@@ -11,7 +11,7 @@ import UIKit
 struct Skins {
     
     
-    static var selectedPair = 1
+	static var selectedPair = 1
     
 //    static func get(pair: Int) -> (x: UIImage, o: UIImage) { // на время теста экрана
 //       
@@ -23,8 +23,8 @@ struct Skins {
 
     static func get(pair: Int) -> (x: UIImage,o: UIImage) {   
 
-        guard let x = UIImage(named: "xSkin\(pair)") else { return Skins.get(pair: 1)}
-        guard let o = UIImage(named: "oSkin\(pair)") else { return Skins.get(pair: 1)}
+        guard let x = UIImage(named: "xSkin\(pair)") else { return Skins.get(pair: 1) }
+        guard let o = UIImage(named: "oSkin\(pair)") else { return Skins.get(pair: 1) }
 
         return (x, o)
     }

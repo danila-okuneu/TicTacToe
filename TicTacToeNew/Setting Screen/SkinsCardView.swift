@@ -13,14 +13,10 @@ final class SkinsCardView: UIView {
 	var pair: Int
     weak var delegate: SkinsCardViewDelegate?
     
-    var isSelected: Bool = false {
+	var isSelected: Bool {
         didSet {
             UIView.animate(withDuration: 0.2) {
-                self.selectButton.backgroundColor = self.isSelected ? UIColor.app(.activeButton) : UIColor.app(.unactiveButton)
-                self.selectButton.setTitleColor(self.isSelected ? .white : UIColor.app(.black), for: .normal)
-                self.selectButton.layer.shadowOpacity = self.isSelected ? 0.2 : 0
-                self.hStack.layer.shadowOpacity = self.isSelected ? 0.1 : 0
-                self.selectButton.setTitle(self.isSelected ? "Picked" : "Choose", for: .normal)
+				self.updateButton()
             }
         }
     }
@@ -53,13 +49,13 @@ final class SkinsCardView: UIView {
     // MARK: - Initializers
     init(skinPair: Int) {
 		pair = skinPair
-        if skinPair == Skins.selectedPair {
-            isSelected = true
-        }
+		isSelected = skinPair == Skins.selectedPair
+		super.init(frame: .zero)
+		
+		
+       
         
-        super.init(frame: .zero)
-        
-        Skins.selectedPair = skinPair
+		updateButton()
         let skins = Skins.get(pair: skinPair)
         xSkinView.image = skins.x
         oSkinView.image = skins.o
@@ -118,6 +114,14 @@ final class SkinsCardView: UIView {
             
         }
     }
+	
+	private func updateButton() {
+		self.selectButton.backgroundColor = self.isSelected ? UIColor.app(.activeButton) : UIColor.app(.unactiveButton)
+		self.selectButton.setTitleColor(self.isSelected ? .white : UIColor.app(.black), for: .normal)
+		self.selectButton.layer.shadowOpacity = self.isSelected ? 0.2 : 0
+		self.hStack.layer.shadowOpacity = self.isSelected ? 0.1 : 0
+		self.selectButton.setTitle(self.isSelected ? "Picked" : "Choose", for: .normal)	
+	}
     
     
     func toggleButton() {
@@ -130,6 +134,7 @@ final class SkinsCardView: UIView {
     
     @objc private func buttonTapped() {
         toggleButton()
+		isSelected = true
 		Skins.selectedPair = pair
     }
     
