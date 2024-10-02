@@ -8,9 +8,9 @@
 import UIKit
 
 class GameViewController: UIViewController {
-
+    
     // MARK: - Properties
-
+    
     private var gameState: [Player?] = Array(repeating: nil, count: 9)
     private let winningCombinations: [Set<Int>] = [
         [0, 1, 2],
@@ -22,7 +22,23 @@ class GameViewController: UIViewController {
         [0, 4, 8],
         [2, 4, 6],
     ]
-
+    
+    let timerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "1.50"
+        label.textAlignment = .center
+        label.textColor = UIColor.app(.black)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let gameHeaderInfo: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     // MARK: - UI Elements
     private let gameBoardView: UIView = {
         let view = UIView()
@@ -40,29 +56,63 @@ class GameViewController: UIViewController {
     private var gameButtons: [UIButton] = []
     
     private var currentPlayer: Player = .cross // Начинаем с крестика
-
+    
     // MARK: - Enum for Players
     private enum Player {
         case cross
         case nought
     }
-
+    
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupGameBoard()
         setupGameButtons()
-        setupHeaderView()
-		setupNavigationBar()
+        setupHeaderInfo()
+        setupNavigationBar()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         resetGame()
     }
-
+    
 }
+
+extension GameViewController {
+    func setupHeaderInfo() {
+        let cardOnePlyaer  = PlayerCard(image: Skins.getSelected().x, text: "xSkin1")
+        let cardTwoPlayer = PlayerCard(image: Skins.getSelected().0, text: "oSkin1")
+        
+        view.addSubview(gameHeaderInfo)
+        gameHeaderInfo.addSubview(cardOnePlyaer)
+        gameHeaderInfo.addSubview(timerLabel)
+        gameHeaderInfo.addSubview(cardTwoPlayer)
+        
+        NSLayoutConstraint.activate([
+            gameHeaderInfo.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 112),
+            gameHeaderInfo.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 30),
+            gameHeaderInfo.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -30),
+            gameHeaderInfo.heightAnchor.constraint(equalToConstant: 103),
+            gameHeaderInfo.widthAnchor.constraint(equalToConstant: 330),
+        ])
+        
+        NSLayoutConstraint.activate([
+            cardOnePlyaer.topAnchor.constraint(equalTo: gameHeaderInfo.topAnchor),
+            cardOnePlyaer.leadingAnchor.constraint(equalTo: gameHeaderInfo.leadingAnchor),
+            cardTwoPlayer.bottomAnchor.constraint(equalTo: gameHeaderInfo.bottomAnchor),
+            
+            timerLabel.centerXAnchor.constraint(equalTo: gameHeaderInfo.centerXAnchor),
+            timerLabel.centerYAnchor.constraint(equalTo: gameHeaderInfo.centerYAnchor),
+            
+            cardTwoPlayer.topAnchor.constraint(equalTo: gameHeaderInfo.topAnchor),
+            cardTwoPlayer.trailingAnchor.constraint(equalTo: gameHeaderInfo.trailingAnchor),
+            cardTwoPlayer.bottomAnchor.constraint(equalTo: gameHeaderInfo.bottomAnchor),
+        ])
+    }
+}
+
 
 // Работа с полем игры
 extension GameViewController {
@@ -70,7 +120,7 @@ extension GameViewController {
     // Добавляем поле в иерархию маин вью и ставим ограничения
     private func setupGameBoard() {
         view.addSubview(gameBoardView)
-
+        
         gameBoardView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(328)
             make.left.equalToSuperview().offset(48.5)
@@ -87,12 +137,12 @@ extension GameViewController {
         stackView.spacing = 20 // Отступ между рядами кнопок
         stackView.distribution = .fillEqually // Кнопки будут равномерно распределены
         gameBoardView.addSubview(stackView) // Добавляем стек на игровое поле
-
+        
         // Устанавливаем границы для стека
         stackView.snp.makeConstraints { make in
             make.edges.equalTo(gameBoardView).inset(20) // Устанавливаем внутренние отступы
         }
-
+        
         // Создаем 3 строки с 3 кнопками в каждой
         for _ in 0..<3 {
             let rowStackView = createRowStackView() // Создаем горизонтальный стек для кнопок в строке
@@ -102,11 +152,11 @@ extension GameViewController {
                 let button = createGameButton() // Создаем кнопку
                 rowStackView.addArrangedSubview(button) // Добавляем кнопку в строку
             }
-
+            
             stackView.addArrangedSubview(rowStackView) // Добавляем строку в основной стек
         }
     }
-
+    
     // Функция для создания горизонтального стека для кнопок
     private func createRowStackView() -> UIStackView {
         let rowStackView = UIStackView()
@@ -115,20 +165,20 @@ extension GameViewController {
         rowStackView.distribution = .fillEqually // Кнопки будут равномерно распределены
         return rowStackView // Возвращаем созданный стек
     }
-
+    
     // Функция для создания кнопки игры
     private func createGameButton() -> UIButton {
         let button = UIButton(type: .system) // Создаем кнопку типа системной
         button.layer.cornerRadius = 20 // Закругляем углы кнопки
         button.backgroundColor = UIColor(red: 230/255, green: 233/255, blue: 249/255, alpha: 1) // Устанавливаем цвет фона
-
+        
         // Создаем UIImageView для изображения внутри кнопки
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit // Сохраняем пропорции изображения
         imageView.layer.cornerRadius = 4 // Закругляем углы изображения
         imageView.layer.masksToBounds = true // Применяем закругление
         button.addSubview(imageView) // Добавляем изображение в кнопку
-
+        
         // Устанавливаем ограничения для imageView
         imageView.translatesAutoresizingMaskIntoConstraints = false // Отключаем авторазметку
         NSLayoutConstraint.activate([
@@ -137,38 +187,38 @@ extension GameViewController {
             imageView.rightAnchor.constraint(equalTo: button.rightAnchor, constant: -10), // Отступ справа
             imageView.bottomAnchor.constraint(equalTo: button.bottomAnchor, constant: -10) // Отступ снизу
         ])
-
+        
         // Добавляем действие при нажатии на кнопку
         button.addTarget(self, action: #selector(gameButtonTapped(_:)), for: .touchUpInside)
-
+        
         // Устанавливаем размеры кнопки
         button.widthAnchor.constraint(equalToConstant: 74).isActive = true // Ширина кнопки
         button.heightAnchor.constraint(equalToConstant: 73).isActive = true // Высота кнопки
-
+        
         gameButtons.append(button) // Добавляем кнопку в массив кнопок
         return button // Возвращаем созданную кнопку
     }
-
-
-
+    
+    
+    
     @objc private func gameButtonTapped(_ sender: UIButton) {
         // Индекс нажатой кнопки
         guard let index = gameButtons.firstIndex(of: sender), gameState[index] == nil else { return }
-
+        
         gameState[index] = currentPlayer
-
+        
         // Проверка не занята ли она
         if let imageView = sender.subviews.compactMap({ $0 as? UIImageView }).first, imageView.image == nil {
             // символ в зависимости кто игрок
             if currentPlayer == .cross {
-				imageView.image = Skins.get(pair: Skins.selectedPair).x
+                imageView.image = Skins.get(pair: Skins.selectedPair).x
             } else {
-				imageView.image = Skins.get(pair: Skins.selectedPair).o
+                imageView.image = Skins.get(pair: Skins.selectedPair).o
             }
-
+            
             imageView.layer.cornerRadius = 4
             imageView.layer.masksToBounds = true
-
+            
             if let winner = determineWinner() {
                 finishGame(with: winner)
             } else if gameState.allSatisfy({ $0 != nil }) {
@@ -181,78 +231,23 @@ extension GameViewController {
     }
 }
 
-// Работа с Header View
+// Навигация
 extension GameViewController {
     
-    func setupHeaderView() {
-        // Создаем боковые вьюшки
-		let sideItem1 = CustomSideButton(image: Skins.getSelected().x, labelText: "xSkin1")
-		let sideItem2 = CustomSideButton(image: Skins.getSelected().o, labelText: "oSkin1")
-        
-        // Создаем центральную вьюшку с лейблом
-        let centerView = UIView()
-        
-        
-        let centerLabel = UILabel()
-        centerLabel.text = "19.2"
-        centerLabel.textAlignment = .center
-        centerLabel.textColor = UIColor(named: "BasicBlack") ?? .black
-        centerLabel.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
-        centerView.addSubview(centerLabel)
-        
-        centerLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-        }
-        
-        // Устанавливаем размеры центральной вьюшки
-        centerView.snp.makeConstraints { make in
-            make.width.equalTo(330)
-            make.height.equalTo(103)
-        }
-        
-        // Создаем горизонтальный стек
-        let horizontalStackView = UIStackView(arrangedSubviews: [sideItem1, centerView, sideItem2])
-        horizontalStackView.axis = .horizontal
-        horizontalStackView.spacing = 30
-        horizontalStackView.distribution = .equalCentering
-        
-        view.addSubview(horizontalStackView)
-        
-        // Устанавливаем констрейнты для горизонтального стека
-        horizontalStackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(112)
-            make.left.equalToSuperview().offset(30)
-            make.right.equalToSuperview().offset(-30)
-            make.height.equalTo(103)
-        }
-        
-        // Устанавливаем размеры для боковых вьюшек
-        sideItem1.snp.makeConstraints { make in
-            make.width.equalTo(83)
-            make.height.equalTo(83)
-            
-        }
-        
-        sideItem2.snp.makeConstraints { make in
-            make.width.equalTo(83)
-            make.height.equalTo(83)
-        }
+    // MARK: - Navigation Bar
+    private func setupNavigationBar() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backButtonIcon"), style: .plain, target: self, action: #selector(backButtonTapped))
     }
-	
-	// MARK: - Navigation Bar
-	private func setupNavigationBar() {
-		self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backButtonIcon"), style: .plain, target: self, action: #selector(backButtonTapped))
-	}
-	
-	@objc private func backButtonTapped() {
-		self.navigationController?.popViewController(animated: true)
-	}
+    
+    @objc private func backButtonTapped() {
+        self.navigationController?.popViewController(animated: true)
+    }
 }
 
 // MARK: - Winner Handling
 
 extension GameViewController {
-
+    
     /// Определяет победителя игры на основе текущего состояния игрового поля.
     /// - Returns: Игрок, выигравший игру, или nil, если победитель не найден.
     private func determineWinner() -> Player? {
@@ -260,7 +255,7 @@ extension GameViewController {
         for combination in winningCombinations {
             // Получаем игроков из текущей комбинации
             let players = combination.compactMap { gameState[$0] }
-
+            
             // Проверяем, что в комбинации три одинаковых игрока
             if players.count == 3, Set(players).count == 1 {
                 // Если только один игрок, возвращаем его как победителя
@@ -270,19 +265,19 @@ extension GameViewController {
         // Если победитель не найден, возвращаем nil
         return nil
     }
-
+    
     /// Завершает игру и отображает экран с результатом.
     /// - Parameter winner: Игрок, который выиграл игру, или nil, если игра закончилась вничью.
     private func finishGame(with winner: Player?) {
         let result: GameResult
-
+        
         // Определяем результат игры на основе наличия победителя
         if let winner = winner {
             result = winner == .cross ? .win : .lose
         } else {
             result = .draw
         }
-
+        
         let resultViewController = ResultViewController()
         resultViewController.gameResult = result
         navigationController?.pushViewController(resultViewController, animated: true)
