@@ -31,6 +31,10 @@ class MainViewController: UIViewController {
         view.backgroundColor = UIColor.white
     }
     
+	override func viewWillAppear(_ animated: Bool) {
+		xskin1Image.image = Skins.get(pair: Skins.selectedPair).x
+		oskin1Image.image = Skins.get(pair: Skins.selectedPair).o
+	}
     
     func setLogoStackView() {
         view.addSubview(logoStackView)
