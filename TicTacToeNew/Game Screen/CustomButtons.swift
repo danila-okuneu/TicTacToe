@@ -14,10 +14,10 @@ final class CustomSideButton: UIView {
     private let label = UILabel()
     
     // Инициализатор
-    init(imageName: String, labelText: String) {
+	init(image: UIImage, labelText: String) {
         super.init(frame: .zero)
         setupView()
-        setContent(imageName: imageName, labelText: labelText)
+		setContent(image: image, labelText: labelText)
     }
     
     required init?(coder: NSCoder) {
@@ -59,8 +59,8 @@ final class CustomSideButton: UIView {
     }
     
     // Метод для задания контента
-    private func setContent(imageName: String, labelText: String) {
-        imageView.image = UIImage(named: imageName)
+	private func setContent(image: UIImage, labelText: String) {
+		imageView.image = image
         label.text = labelText
     }
 }

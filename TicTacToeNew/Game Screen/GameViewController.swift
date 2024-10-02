@@ -161,9 +161,9 @@ extension GameViewController {
         if let imageView = sender.subviews.compactMap({ $0 as? UIImageView }).first, imageView.image == nil {
             // символ в зависимости кто игрок
             if currentPlayer == .cross {
-                imageView.image = UIImage(named: "xSkin1")
+				imageView.image = Skins.get(pair: Skins.selectedPair).x
             } else {
-                imageView.image = UIImage(named: "oSkin1")
+				imageView.image = Skins.get(pair: Skins.selectedPair).o
             }
 
             imageView.layer.cornerRadius = 4
@@ -186,8 +186,8 @@ extension GameViewController {
     
     func setupHeaderView() {
         // Создаем боковые вьюшки
-        let sideItem1 = CustomSideButton(imageName: "oSkin1", labelText: "oSkin1")
-        let sideItem2 = CustomSideButton(imageName: "oSkin1", labelText: "oSkin1")
+		let sideItem1 = CustomSideButton(image: Skins.getSelected().x, labelText: "xSkin1")
+		let sideItem2 = CustomSideButton(image: Skins.getSelected().o, labelText: "oSkin1")
         
         // Создаем центральную вьюшку с лейблом
         let centerView = UIView()
