@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 
+
+
 final class PlayerCard: UIView {
     private let imageView: UIImageView = {
         let view = UIImageView()
