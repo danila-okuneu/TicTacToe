@@ -29,6 +29,10 @@ struct Skins {
         return (x, o)
     }
 	
+	static func getSelected() -> (x: UIImage, o: UIImage) {
+		return Skins.get(pair: Skins.selectedPair)
+	}
+	
 	
 	static func load() {
 		
