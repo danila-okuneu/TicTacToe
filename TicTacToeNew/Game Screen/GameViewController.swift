@@ -22,6 +22,8 @@ class GameViewController: UIViewController {
         [0, 4, 8],
         [2, 4, 6],
     ]
+    private var crossSkin: UIImage?
+    private var noughtSkin: UIImage?
 
     // MARK: - UI Elements
     private let gameBoardView: UIView = {
@@ -55,6 +57,10 @@ class GameViewController: UIViewController {
         setupGameButtons()
         setupHeaderView()
 		setupNavigationBar()
+
+        Saves.load()
+        crossSkin = Skins.get(pair: Skins.selectedPair).x
+        noughtSkin = Skins.get(pair: Skins.selectedPair).o
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -161,9 +167,9 @@ extension GameViewController {
         if let imageView = sender.subviews.compactMap({ $0 as? UIImageView }).first, imageView.image == nil {
             // символ в зависимости кто игрок
             if currentPlayer == .cross {
-                imageView.image = UIImage(named: "xSkin1")
+                imageView.image = crossSkin
             } else {
-                imageView.image = UIImage(named: "oSkin1")
+                imageView.image = noughtSkin
             }
 
             imageView.layer.cornerRadius = 4
