@@ -14,7 +14,7 @@ class TimeToggleView: UIView {
     let timeSwitch: UISwitch = {
         let toggle = UISwitch()
         toggle.onTintColor = UIColor.app(.activeButton)
-        toggle.isOn = Saves.timeMode
+        toggle.isOn = Saves.isTimeMode
         return toggle
     }()
     
