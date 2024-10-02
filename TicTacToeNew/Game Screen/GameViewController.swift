@@ -8,7 +8,21 @@
 import UIKit
 
 class GameViewController: UIViewController {
-    
+
+    // MARK: - Properties
+
+    private var gameState: [Player?] = Array(repeating: nil, count: 9)
+    private let winningCombinations: [Set<Int>] = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+    ]
+
     // MARK: - UI Elements
     private let gameBoardView: UIView = {
         let view = UIView()
@@ -43,8 +57,11 @@ class GameViewController: UIViewController {
 		setupNavigationBar()
     }
 
-    
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        resetGame()
+    }
+
 }
 
 // Работа с полем игры
@@ -136,26 +153,32 @@ extension GameViewController {
 
     @objc private func gameButtonTapped(_ sender: UIButton) {
         // Индекс нажатой кнопки
-        guard let index = gameButtons.firstIndex(of: sender) else { return }
+        guard let index = gameButtons.firstIndex(of: sender), gameState[index] == nil else { return }
+
+        gameState[index] = currentPlayer
 
         // Проверка не занята ли она
         if let imageView = sender.subviews.compactMap({ $0 as? UIImageView }).first, imageView.image == nil {
             // символ в зависимости кто игрок
             if currentPlayer == .cross {
-                imageView.image = UIImage(named: "Xskin1")
-                currentPlayer = .nought // Меняем игрока на нолик
+                imageView.image = UIImage(named: "xSkin1")
             } else {
                 imageView.image = UIImage(named: "oSkin1")
-                currentPlayer = .cross // Меняем игрока на крестик
             }
 
             imageView.layer.cornerRadius = 4
             imageView.layer.masksToBounds = true
-            
+
+            if let winner = determineWinner() {
+                finishGame(with: winner)
+            } else if gameState.allSatisfy({ $0 != nil }) {
+                finishGame(with: nil)
+            } else {
+                currentPlayer = currentPlayer == .cross ? .nought : .cross
+            }
             print("Button \(index) tapped") // принты чтобы проверить на время что нажимаються и отрабатывают кнопки
         }
     }
-
 }
 
 // Работа с Header View
@@ -226,10 +249,57 @@ extension GameViewController {
 	}
 }
 
+// MARK: - Winner Handling
 
+extension GameViewController {
 
+    /// Определяет победителя игры на основе текущего состояния игрового поля.
+    /// - Returns: Игрок, выигравший игру, или nil, если победитель не найден.
+    private func determineWinner() -> Player? {
+        // Проходим по всем выигрышным комбинациям
+        for combination in winningCombinations {
+            // Получаем игроков из текущей комбинации
+            let players = combination.compactMap { gameState[$0] }
 
+            // Проверяем, что в комбинации три одинаковых игрока
+            if players.count == 3, Set(players).count == 1 {
+                // Если только один игрок, возвращаем его как победителя
+                return players.first
+            }
+        }
+        // Если победитель не найден, возвращаем nil
+        return nil
+    }
 
+    /// Завершает игру и отображает экран с результатом.
+    /// - Parameter winner: Игрок, который выиграл игру, или nil, если игра закончилась вничью.
+    private func finishGame(with winner: Player?) {
+        let result: GameResult
 
+        // Определяем результат игры на основе наличия победителя
+        if let winner = winner {
+            result = winner == .cross ? .win : .lose
+        } else {
+            result = .draw
+        }
 
+        let resultViewController = ResultViewController()
+        resultViewController.gameResult = result
+        navigationController?.pushViewController(resultViewController, animated: true)
+    }
+}
 
+// MARK: - Helpers methods
+
+extension GameViewController {
+    // Reset game state
+    private func resetGame() {
+        gameState = Array(repeating: .none, count: 9)
+        currentPlayer = .cross
+        for button in gameButtons {
+            if let imageView = button.subviews.compactMap({ $0 as? UIImageView }).first {
+                imageView.image = nil
+            }
+        }
+    }
+}

@@ -73,16 +73,13 @@ final class ResultViewController: UIViewController {
         setupHierarchy()
         setupLayout()
         setupButtonAction()
-
-        // TODO: Remove this call when testing is complete
-        // Temporary call to demonstrate working with the model
-        handlePlayAgain()
     }
 
     // MARK: - Setups
 
     private func setupView() {
         view.backgroundColor = Constants.mainBackgroundColor
+        navigationItem.hidesBackButton = true
     }
 
     private func setupHierarchy() {
@@ -155,16 +152,18 @@ final class ResultViewController: UIViewController {
 
     // MARK: - Action
 
+    // Start the game again
     private func handlePlayAgain() {
-        // TODO: Remove this code when testing is complete
-        // Generate a random game result for demonstration
-        let values: [GameResult] = [.draw, .lose, .win]
-        gameResult = values.randomElement()
-        print("Tapped Play Again")
+        if let gameViewController = navigationController?.viewControllers.first(where: { $0 is GameViewController }) {
+            navigationController?.popToViewController(gameViewController, animated: true)
+        }
     }
 
+    // Return to the game selection screen
     private func handleBack() {
-        print("Tapped Back")
+        if let selectViewController = navigationController?.viewControllers.first(where: { $0 is SelectViewController }) {
+            navigationController?.popToViewController(selectViewController, animated: true)
+        }
     }
 
     // MARK: - Helper methods
