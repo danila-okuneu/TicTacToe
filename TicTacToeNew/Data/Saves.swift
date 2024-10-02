@@ -11,7 +11,8 @@ struct Saves {
 
 	
 	
-    static var timeMode = true
+	static var isTimeMode = true
+	static var isMusicOn = true
 
     /// Allows you to save any data under a given key
     /// - Parameters:
@@ -38,5 +39,14 @@ struct Saves {
         }
         return nil
     }
-    
+	
+	
+	static func load() {
+		UserDefaults.standard.register(defaults: ["selectedPair" : 2])
+		UserDefaults.standard.register(defaults: ["timeMode" : false])
+		Skins.load()
+		
+		Saves.isTimeMode = UserDefaults.standard.bool(forKey: "timeMode")
+	}
+	
 }

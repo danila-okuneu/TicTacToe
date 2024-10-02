@@ -34,6 +34,7 @@
 		37F8D45F2CAC982600CBB15A /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D45E2CAC982600CBB15A /* TimeView.swift */; };
 		37F8D4612CAC98A700CBB15A /* CustomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D4602CAC98A700CBB15A /* CustomNavBar.swift */; };
 		37F8D4632CAC98C200CBB15A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D4622CAC98C200CBB15A /* Extensions.swift */; };
+		F1BCAF322CAD4EE700D812C3 /* DynamicTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BCAF312CAD4EE100D812C3 /* DynamicTimeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		37F8D45E2CAC982600CBB15A /* TimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
 		37F8D4602CAC98A700CBB15A /* CustomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBar.swift; sourceTree = "<group>"; };
 		37F8D4622CAC98C200CBB15A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		F1BCAF312CAD4EE100D812C3 /* DynamicTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTimeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +182,7 @@
 		37F8D43A2CAC94D200CBB15A /* Setting Screen */ = {
 			isa = PBXGroup;
 			children = (
+				F1BCAF312CAD4EE100D812C3 /* DynamicTimeView.swift */,
 				37F8D4542CAC976400CBB15A /* HStackView.swift */,
 				37F8D4562CAC977F00CBB15A /* SettingViewController.swift */,
 				37F8D4582CAC979E00CBB15A /* SkinsCardView.swift */,
@@ -307,6 +310,7 @@
 				37F8D45D2CAC97EA00CBB15A /* TimeToggleView.swift in Sources */,
 				37F8D4402CAC95C600CBB15A /* ResultModel.swift in Sources */,
 				37F8D44A2CAC968400CBB15A /* ResultScreenModel.swift in Sources */,
+				F1BCAF322CAD4EE700D812C3 /* DynamicTimeView.swift in Sources */,
 				37F8D44F2CAC96DE00CBB15A /* RulesCell.swift in Sources */,
 				37F8D45B2CAC97CD00CBB15A /* SkinsModel.swift in Sources */,
 				37F8D4572CAC977F00CBB15A /* SettingViewController.swift in Sources */,
