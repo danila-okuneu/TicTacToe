@@ -39,5 +39,14 @@ struct Saves {
         }
         return nil
     }
-    
+	
+	
+	static func load() {
+		UserDefaults.standard.register(defaults: ["selectedPair" : 2])
+		UserDefaults.standard.register(defaults: ["timeMode" : false])
+		Skins.load()
+		
+		Saves.isTimeMode = UserDefaults.standard.bool(forKey: "timeMode")
+	}
+	
 }

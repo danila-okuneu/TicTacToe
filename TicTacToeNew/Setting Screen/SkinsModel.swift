@@ -11,7 +11,7 @@ import UIKit
 struct Skins {
     
     
-	static var selectedPair = 1
+	static var selectedPair = 1 
     
 //    static func get(pair: Int) -> (x: UIImage, o: UIImage) { // на время теста экрана
 //       
@@ -28,4 +28,11 @@ struct Skins {
 
         return (x, o)
     }
+	
+	
+	static func load() {
+		
+		let defaults = UserDefaults.standard
+		Skins.selectedPair = defaults.value(forKey: "selectedPair") as! Int
+	}
 }

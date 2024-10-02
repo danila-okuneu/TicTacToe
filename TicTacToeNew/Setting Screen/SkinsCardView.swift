@@ -15,7 +15,7 @@ final class SkinsCardView: UIView {
     
 	var isSelected: Bool {
         didSet {
-            UIView.animate(withDuration: 0.2) {
+            UIView.animate(withDuration: 0.3) {
 				self.updateButton()
             }
         }
@@ -56,6 +56,7 @@ final class SkinsCardView: UIView {
        
         
 		updateButton()
+		clipsToBounds = false
         let skins = Skins.get(pair: skinPair)
         xSkinView.image = skins.x
         oSkinView.image = skins.o
@@ -118,8 +119,9 @@ final class SkinsCardView: UIView {
 	private func updateButton() {
 		self.selectButton.backgroundColor = self.isSelected ? UIColor.app(.activeButton) : UIColor.app(.unactiveButton)
 		self.selectButton.setTitleColor(self.isSelected ? .white : UIColor.app(.black), for: .normal)
-		self.selectButton.layer.shadowOpacity = self.isSelected ? 0.2 : 0
-		self.hStack.layer.shadowOpacity = self.isSelected ? 0.1 : 0
+		self.layer.shadowOpacity = isSelected ? 0.15 : 0
+		self.layer.shadowRadius = isSelected ? 10 : 5
+		
 		self.selectButton.setTitle(self.isSelected ? "Picked" : "Choose", for: .normal)	
 	}
     
@@ -136,6 +138,7 @@ final class SkinsCardView: UIView {
         toggleButton()
 		isSelected = true
 		Skins.selectedPair = pair
+		UserDefaults.standard.set(pair, forKey: "selectedPair")
     }
     
     
