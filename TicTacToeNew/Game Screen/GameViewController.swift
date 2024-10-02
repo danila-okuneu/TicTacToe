@@ -57,8 +57,11 @@ class GameViewController: UIViewController {
 		setupNavigationBar()
     }
 
-    
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        resetGame()
+    }
+
 }
 
 // Работа с полем игры
@@ -283,5 +286,20 @@ extension GameViewController {
         let resultViewController = ResultViewController()
         resultViewController.gameResult = result
         navigationController?.pushViewController(resultViewController, animated: true)
+    }
+}
+
+// MARK: - Helpers methods
+
+extension GameViewController {
+    // Reset game state
+    private func resetGame() {
+        gameState = Array(repeating: .none, count: 9)
+        currentPlayer = .cross
+        for button in gameButtons {
+            if let imageView = button.subviews.compactMap({ $0 as? UIImageView }).first {
+                imageView.image = nil
+            }
+        }
     }
 }
