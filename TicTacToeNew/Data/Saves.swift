@@ -11,7 +11,8 @@ struct Saves {
 
 	
 	
-    static var timeMode = true
+	static var isTimeMode = true
+	static var isMusicOn = true
 
     /// Allows you to save any data under a given key
     /// - Parameters:

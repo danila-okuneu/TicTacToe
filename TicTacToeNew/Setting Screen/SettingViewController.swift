@@ -17,7 +17,7 @@ class SettingsViewController: UIViewController {
     // MARK: - UI Components
     private let settingsView: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = 40
+        view.layer.cornerRadius = 45
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -52,8 +52,7 @@ class SettingsViewController: UIViewController {
     
     
     
-    private let timeToggleView = TimeToggleView()
-    private let timeView: UIView = TimeView()
+	private let dynamicTimeView = DynamicTimeView()
     
     
     private lazy var skinsVStack: UIStackView = {
@@ -147,8 +146,7 @@ class SettingsViewController: UIViewController {
         
         settingsView.addSubview(settingStackView)
         
-        settingStackView.addArrangedSubview(timeToggleView)
-        settingStackView.addArrangedSubview(timeView)
+		settingStackView.addArrangedSubview(dynamicTimeView)
     
         scrollViewContainer.addArrangedSubview(skinsVStack)
         
@@ -160,7 +158,7 @@ class SettingsViewController: UIViewController {
         
         
         settingsView.snp.makeConstraints { make in
-            make.height.equalTo(settingStackView.arrangedSubviews.count * 80 + 20)
+			make.height.equalTo(settingStackView).offset(40)
             make.width.equalToSuperview()
         }
         
@@ -169,28 +167,6 @@ class SettingsViewController: UIViewController {
             make.bottom.equalToSuperview().inset(20)
             make.left.equalToSuperview().inset(20)
             make.right.equalToSuperview().inset(20)
-        }
-        
-        timeToggleView.snp.makeConstraints { make in
-            
-        
-            make.height.equalTo(60)
-//            make.width.equalToSuperview().dividedBy(1.5)
-        }
-        
-        timeView.snp.makeConstraints { make in
-            
-            make.height.equalTo(60)
-//            make.width.equalToSuperview().dividedBy(1.5)
-
-            
-        }
-        
-        if Saves.timeMode {
-            settingStackView.setCustomSpacing(20, after: timeToggleView)
-        } else {
-            settingStackView.setCustomSpacing(-60, after: timeToggleView)
-            timeView.layer.opacity = 0
         }
     }
     
@@ -202,6 +178,8 @@ class SettingsViewController: UIViewController {
         fourthSkinsView.delegate = self
         fifthSkinsView.delegate = self
         sixthSkinsView.delegate = self
+		
+		dynamicTimeView.delegate = self
     }
     
     
@@ -224,13 +202,18 @@ extension SettingsViewController: SkinsCardViewDelegate {
     }
     
     @objc private func toggleTime() {
-        Saves.timeMode.toggle()
+        Saves.isTimeMode.toggle()
         
     }
 }
 
-//
-//@available(iOS 17.0, *)
-//#Preview {
-//    return UINavigationController(rootViewController: SettingsViewController())
-//}
+
+extension SettingsViewController: DynamicTimeViewDelegate {
+	
+	func timeViewDidChangedHeight(_ dynamicTimeView: DynamicTimeView) {
+		UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut) {
+				self.view.layoutIfNeeded()
+			}
+		}
+	
+}
