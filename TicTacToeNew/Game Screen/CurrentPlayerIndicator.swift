@@ -79,7 +79,7 @@ extension CurrentPlayerIndicator: PlayerIndicatorDelegate {
             currentPlayerLabel.text = "You turn"
             hidePlayerImage()
         case .nought:
-            playerImageView.image = Skins.getSelected().0
+            playerImageView.image = Skins.getSelected().o
             currentPlayerLabel.text = "Player Two turn"
             showPlayerImage()
         }
