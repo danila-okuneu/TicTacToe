@@ -91,8 +91,8 @@ extension GameViewController {
         
         NSLayoutConstraint.activate([
             gameHeaderInfo.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 112),
-            gameHeaderInfo.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 30),
-            gameHeaderInfo.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -30),
+            gameHeaderInfo.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.leadingAnchor, constant: 30),
+            gameHeaderInfo.trailingAnchor.constraint(greaterThanOrEqualTo: self.view.trailingAnchor, constant: -30),
             gameHeaderInfo.heightAnchor.constraint(equalToConstant: 103),
             gameHeaderInfo.widthAnchor.constraint(equalToConstant: 330),
         ])
