@@ -60,12 +60,13 @@ class GameViewController: UIViewController {
 extension GameViewController {
     private func initialGameBoard() {
         view.addSubview(gameBoardView)
-        gameBoardView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(328)
-            make.left.equalToSuperview().offset(44)
-            make.right.equalToSuperview().offset(-44)
-            make.bottom.equalToSuperview().offset(-217)
-        }
+        
+        NSLayoutConstraint.activate([
+            gameBoardView.topAnchor.constraint(equalTo: view.topAnchor, constant: 328),
+            gameBoardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
+            gameBoardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44),
+            gameBoardView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -217)
+        ])
         gameBoardView.delegatePI = currentStepView
         resetGame = gameBoardView.reset
     }

@@ -22,22 +22,10 @@ class GameBoard: UIView {
         [0, 4, 8],
         [2, 4, 6],
     ]
-    
+        
     // делегат для передачи результата игры и перехода на другой экран
     weak var delegateGameVC: GameResultable?
     weak var delegatePI: PlayerIndicatorDelegate?
-    
-    private let containerGameBoard: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 30
-        view.backgroundColor = .white
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOffset = CGSize(width: 4, height: 4)
-        view.layer.shadowOpacity = 0.3
-        view.layer.shadowRadius = 30
-        return view
-    }()
     
     private var playerImages: [UIImage] = [UIImage(), UIImage()]
     private var gameButtons: [UIButton] = []
@@ -47,7 +35,6 @@ class GameBoard: UIView {
     
     init(_ imagePlayerOne: UIImage, _ imagePlayerTwo: UIImage, delegateVC: GameResultable) {
         super.init(frame: .zero)
-        addSubview(containerGameBoard)
         playerImages[0] = imagePlayerOne
         playerImages[1] = imagePlayerTwo
         delegateGameVC = delegateVC
@@ -56,7 +43,6 @@ class GameBoard: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        addSubview(containerGameBoard)
         setupGameButtons()
     }
     
@@ -65,10 +51,10 @@ class GameBoard: UIView {
         stackView.axis = .vertical
         stackView.spacing = 20
         stackView.distribution = .fillEqually
-        containerGameBoard.addSubview(stackView)
+        addSubview(stackView)
         
         stackView.snp.makeConstraints { make in
-            make.edges.equalTo(containerGameBoard).inset(20)
+            make.edges.equalTo(self).inset(20)
         }
      
         for _ in 0..<3 {
@@ -110,13 +96,9 @@ class GameBoard: UIView {
             imageView.leftAnchor.constraint(equalTo: button.leftAnchor, constant: 10),
             imageView.rightAnchor.constraint(equalTo: button.rightAnchor, constant: -10),
             imageView.bottomAnchor.constraint(equalTo: button.bottomAnchor, constant: -10),
-            imageView.heightAnchor.constraint(equalToConstant: 53),
-            imageView.widthAnchor.constraint(equalToConstant: 54)
         ])
         
         button.addTarget(self, action: #selector(gameButtonTapped(_:)), for: .touchUpInside)
-        button.widthAnchor.constraint(equalToConstant: 74).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 73).isActive = true
         
         gameButtons.append(button)
         return button
