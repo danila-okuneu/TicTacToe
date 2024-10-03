@@ -2,9 +2,10 @@
 //  GameBoard.swift
 //  TicTacToeNew
 //
-//  Created by Evgeniy Kislitsin on 02.10.2024.
+//  Created by Evgeniy on 02.10.2024.
 //
 //
+
 import UIKit
 import SnapKit
 
@@ -22,7 +23,9 @@ class GameBoard: UIView {
         [2, 4, 6],
     ]
     
-    weak var delegate: GameBoardProtocol?
+    // делегат для передачи результата игры и перехода на другой экран
+    weak var delegateGameVC: GameResultable?
+    weak var delegatePI: PlayerIndicatorDelegate?
     
     private let containerGameBoard: UIView = {
         let view = UIView()
@@ -37,24 +40,23 @@ class GameBoard: UIView {
     }()
     
     private var playerImages: [UIImage] = [UIImage(), UIImage()]
-
     private var gameButtons: [UIButton] = []
-    
     private var currentPlayer: Player = .cross // Начинаем с крестика
     
     // MARK: - Enum for Players
     
-    init(_ imagePlayerOne: UIImage, _ imagePlayerTwo: UIImage, delegateVC: GameBoardProtocol) {
+    init(_ imagePlayerOne: UIImage, _ imagePlayerTwo: UIImage, delegateVC: GameResultable) {
         super.init(frame: .zero)
         addSubview(containerGameBoard)
         playerImages[0] = imagePlayerOne
         playerImages[1] = imagePlayerTwo
-        delegate = delegateVC
+        delegateGameVC = delegateVC
         setupGameButtons()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        addSubview(containerGameBoard)
         setupGameButtons()
     }
     
@@ -100,12 +102,16 @@ class GameBoard: UIView {
         imageView.layer.masksToBounds = true
         button.addSubview(imageView)
         
+        button.translatesAutoresizingMaskIntoConstraints = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: button.topAnchor, constant: 10),
             imageView.leftAnchor.constraint(equalTo: button.leftAnchor, constant: 10),
             imageView.rightAnchor.constraint(equalTo: button.rightAnchor, constant: -10),
-            imageView.bottomAnchor.constraint(equalTo: button.bottomAnchor, constant: -10)
+            imageView.bottomAnchor.constraint(equalTo: button.bottomAnchor, constant: -10),
+            imageView.heightAnchor.constraint(equalToConstant: 53),
+            imageView.widthAnchor.constraint(equalToConstant: 54)
         ])
         
         button.addTarget(self, action: #selector(gameButtonTapped(_:)), for: .touchUpInside)
@@ -115,8 +121,6 @@ class GameBoard: UIView {
         gameButtons.append(button)
         return button
     }
-    
-    
     
     @objc private func gameButtonTapped(_ sender: UIButton) {
         guard let index = gameButtons.firstIndex(of: sender), gameState[index] == nil else { return }
@@ -139,12 +143,11 @@ class GameBoard: UIView {
                 finishGame(with: nil)
             } else {
                 currentPlayer = currentPlayer == .cross ? .nought : .cross
+                delegatePI?.updateIndicator(for: currentPlayer)
             }
             print("Button \(index) tapped") // принты чтобы проверить на время что нажимаються и отрабатывают кнопки
         }
     }
-    
-    
     
     /// - Returns: Игрок, выигравший игру, или nil, если победитель не найден.
     private func determineWinner() -> Player? {
@@ -165,21 +168,26 @@ class GameBoard: UIView {
     
     /// Завершает игру и отображает экран с результатом.
     /// - Parameter winner: Игрок, который выиграл игру, или nil, если игра закончилась вничью.
-    private func finishGame(with winner: Player?) {
-        let result: GameResult
-        
-        // Определяем результат игры на основе наличия победителя
-        if let winner = winner {
-            result = winner == .cross ? .win : .lose
-        } else {
-            result = .draw
-        }
-        delegate?.finishGame(with: result)
-    }
+    /// - Parameter winner: Игрок, который выиграл игру, или nil, если игра закончилась вничью.
+       private func finishGame(with winner: Player?) {
+           let result: GameResult
+           
+           // Определяем результат игры на основе наличия победителя
+           if let winner = winner {
+               result = winner == .cross ? .win : .lose
+               
+           } else {
+               result = .draw
+           }
+           delegateGameVC?.finishGame(with: result)
+       }
+
     
+    // Метод который мы присваевыем замыканию во вью контроллере
     func reset() {
         gameState = Array(repeating: .none, count: 9)
         currentPlayer = .cross
+        delegatePI?.updateIndicator(for: currentPlayer)
         for button in gameButtons {
             if let imageView = button.subviews.compactMap({ $0 as? UIImageView }).first {
                 imageView.image = nil

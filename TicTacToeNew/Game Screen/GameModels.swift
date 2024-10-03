@@ -2,7 +2,7 @@
 //  ViewModels.swift
 //  TicTacToeNew
 //
-//  Created by Evgeniy Kislitsin on 03.10.2024.
+//  Created by Evgeniy on 03.10.2024.
 //
 
 import Foundation

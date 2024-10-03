@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import SnapKit
 
-protocol GameBoardProtocol: AnyObject {
+protocol GameResultable: AnyObject {
     func finishGame(with resultGame: GameResult)
 }
 
@@ -31,15 +32,11 @@ class GameViewController: UIViewController {
         return view
     }()
     
+    private lazy var currentStepView: CurrentPlayerIndicator = createCurrentStep()
+    
     // MARK: - UI Elements
     private lazy var gameBoardView: GameBoard = createGameBoard()
-    
-    // MARK: - Enum for Players
-    private enum Player {
-        case cross
-        case nought
-    }
-    
+        
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +44,7 @@ class GameViewController: UIViewController {
         setupHeaderInfo()
         setupNavigationBar()
         initialGameBoard()
+        initialCurrentStepView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,7 +66,18 @@ extension GameViewController {
             make.right.equalToSuperview().offset(-44)
             make.bottom.equalToSuperview().offset(-217)
         }
+        gameBoardView.delegatePI = currentStepView
         resetGame = gameBoardView.reset
+    }
+    
+    private func initialCurrentStepView() {
+        view.addSubview(currentStepView)
+        currentStepView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            currentStepView.topAnchor.constraint(equalTo: gameHeaderInfo.bottomAnchor, constant: 30),
+            currentStepView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            currentStepView.widthAnchor.constraint(equalToConstant: 221),
+        ])
     }
     
     private func setupHeaderInfo() {
@@ -102,7 +111,12 @@ extension GameViewController {
         ])
     }
     
-    func createGameBoard() -> GameBoard {
+    private func createCurrentStep() -> CurrentPlayerIndicator {
+        let viewIndicatorStep = CurrentPlayerIndicator()
+        return viewIndicatorStep
+    }
+    
+    private func createGameBoard() -> GameBoard {
         let gameBoard = GameBoard(Skins.getSelected().x, Skins.getSelected().0, delegateVC: self)
         gameBoard.translatesAutoresizingMaskIntoConstraints = false
         gameBoard.layer.cornerRadius = 30
@@ -128,8 +142,8 @@ extension GameViewController {
     }
 }
 
-// Навигация в конце игры
-extension GameViewController: GameBoardProtocol {
+// Навигация в конце игры через протокол
+extension GameViewController: GameResultable {
     func finishGame(with resultGame: GameResult) {
         let resultViewController = ResultViewController()
         resultViewController.gameResult = resultGame

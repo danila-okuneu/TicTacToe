@@ -8,8 +8,6 @@
 import UIKit
 import SnapKit
 
-
-
 final class PlayerCard: UIView {
     private let imageView: UIImageView = {
         let view = UIImageView()
@@ -42,7 +40,7 @@ final class PlayerCard: UIView {
     private func setupViews() {
         layer.cornerRadius = 30
         layer.masksToBounds = true
-        backgroundColor = UIColor.app(.lightBlue) // Задайте цвет по желанию
+        backgroundColor = UIColor.app(.lightBlue)
         translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(imageView)
@@ -51,9 +49,6 @@ final class PlayerCard: UIView {
     }
     
     private func setupConstraints() {
-        
-        
-        // Констрейнты для containerPlayer
         NSLayoutConstraint.activate([
             // Констрейнты для imageView
             imageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
