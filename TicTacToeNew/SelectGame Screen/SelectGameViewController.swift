@@ -46,7 +46,7 @@ class SelectViewController: UIViewController {
 		$0.translatesAutoresizingMaskIntoConstraints = false
 		$0.heightAnchor.constraint(equalToConstant: 29).isActive = true
 		$0.widthAnchor.constraint(equalToConstant: 38).isActive = true
-		$0.image = UIImage(named: "Single")
+        $0.image = UIImage(named: "SinglePlayerIcon.svg")
 		return $0
 	}(UIImageView())
 	
@@ -56,7 +56,7 @@ class SelectViewController: UIViewController {
 		$0.translatesAutoresizingMaskIntoConstraints = false
 		$0.heightAnchor.constraint(equalToConstant: 29).isActive = true
 		$0.widthAnchor.constraint(equalToConstant: 38).isActive = true
-		$0.image = UIImage(named: "Multi")
+		$0.image = UIImage(named: "Multiplayer.svg")
 		return $0
 	}(UIImageView())
 	
@@ -75,7 +75,10 @@ class SelectViewController: UIViewController {
 		
 		addSubviewsToView()
 		setViews()
-		playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside) // На время фикс
+        setSingleMultiPlayerViewGestureRecognizers()
+        
+		//playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside) // На время фикс
+    
 		setConstraints()
 		setupNavigationBar()
 	}
@@ -84,7 +87,7 @@ class SelectViewController: UIViewController {
 		[labelGame, viewSingle, viewMulti].forEach {
 			mainView.addSubview($0)
 		}
-		[mainView, labelGame, playButton].forEach {
+		[mainView, labelGame].forEach {
 			view.addSubview($0)
 		}
 	}
@@ -162,8 +165,18 @@ class SelectViewController: UIViewController {
 			action: #selector(settingsButtonTapped)
 		)
 	}
+    
+    private func setSingleMultiPlayerViewGestureRecognizers() {
+        let tapGestureSingle = UITapGestureRecognizer(target: self, action: #selector(singlePlayerButtonTapped))
+            viewSingle.isUserInteractionEnabled = true
+            viewSingle.addGestureRecognizer(tapGestureSingle)
+        
+        let tapGestureMulti = UITapGestureRecognizer(target: self, action: #selector(multiPlayerButtonTapped))
+        viewMulti.isUserInteractionEnabled = true
+        viewMulti.addGestureRecognizer(tapGestureMulti)
+    }
 	
-	@objc private func playButtonTapped() {
+	@objc private func singlePlayerButtonTapped() {
 		self.navigationController?.pushViewController(GameViewController(), animated: true)
 	}
 	
@@ -174,5 +187,9 @@ class SelectViewController: UIViewController {
 	@objc private func settingsButtonTapped() {
 		self.navigationController?.pushViewController(SettingsViewController(), animated: true)
 	}
+    
+    @objc private func multiPlayerButtonTapped() {
+        print("multiPlayerButtonTapped")
+    }
 	
 }
