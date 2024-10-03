@@ -34,6 +34,7 @@
 		37F8D45F2CAC982600CBB15A /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D45E2CAC982600CBB15A /* TimeView.swift */; };
 		37F8D4612CAC98A700CBB15A /* CustomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D4602CAC98A700CBB15A /* CustomNavBar.swift */; };
 		37F8D4632CAC98C200CBB15A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D4622CAC98C200CBB15A /* Extensions.swift */; };
+		F15E77092CAED9E900E8FB9D /* SelectGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E77082CAED9E900E8FB9D /* SelectGameViewController.swift */; };
 		F1BCAF322CAD4EE700D812C3 /* DynamicTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BCAF312CAD4EE100D812C3 /* DynamicTimeView.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		37F8D45E2CAC982600CBB15A /* TimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
 		37F8D4602CAC98A700CBB15A /* CustomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBar.swift; sourceTree = "<group>"; };
 		37F8D4622CAC98C200CBB15A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		F15E77082CAED9E900E8FB9D /* SelectGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGameViewController.swift; sourceTree = "<group>"; };
 		F1BCAF312CAD4EE100D812C3 /* DynamicTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTimeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,6 +120,7 @@
 		37F8D4202CAC937B00CBB15A /* TicTacToeNew */ = {
 			isa = PBXGroup;
 			children = (
+				F15E77072CAED9D200E8FB9D /* SelectGameScreen */,
 				371F88B02CACAC4B003849A2 /* LeaderBoard Screen */,
 				37F8D43E2CAC950100CBB15A /* App Delegate */,
 				37F8D43D2CAC94F500CBB15A /* Assets */,
@@ -228,6 +231,14 @@
 			path = "App Delegate";
 			sourceTree = "<group>";
 		};
+		F15E77072CAED9D200E8FB9D /* SelectGameScreen */ = {
+			isa = PBXGroup;
+			children = (
+				F15E77082CAED9E900E8FB9D /* SelectGameViewController.swift */,
+			);
+			path = SelectGameScreen;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -328,6 +339,7 @@
 				37F8D4512CAC971500CBB15A /* RulesViewController.swift in Sources */,
 				37F8D4532CAC973E00CBB15A /* SelectGameViewController.swift in Sources */,
 				371F88B72CACACDD003849A2 /* LeaderboardViewController.swift in Sources */,
+				F15E77092CAED9E900E8FB9D /* SelectGameViewController.swift in Sources */,
 				37F8D4482CAC965A00CBB15A /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
