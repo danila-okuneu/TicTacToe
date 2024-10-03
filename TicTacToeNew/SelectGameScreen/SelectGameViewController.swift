@@ -30,6 +30,8 @@ class SelectGameViewController: UIViewController {
         setLeaderbordButton()
         setLabelSelectGame()
 		
+		setButtonTargets() // Add targets for buttons
+		setupNavigationBar() // Add NavigationItems (Back Button and Settings Button)
 	}
     
     
@@ -133,5 +135,50 @@ class SelectGameViewController: UIViewController {
             labelSelectGame.centerXAnchor.constraint(equalTo: buttonsView.centerXAnchor),
         ])
     }
+	
+	private func setButtonTargets() {
+		singlePlayerButton.addTarget(self, action: #selector(startGame), for: .touchUpInside)
+		twoPlayersButton.addTarget(self, action: #selector(startGame), for: .touchUpInside)
+		leaderbordButton.addTarget(self, action: #selector(pushLeaderboard), for: .touchUpInside)
+	}
+	
+	func setupNavigationBar() {
+		
+		navigationItem.leftBarButtonItem = UIBarButtonItem(
+			image: UIImage(named: "backButtonIcon"),
+			style: .plain,
+			target: self,
+			action: #selector(backButtonTapped)
+		)
+		
+		navigationItem.leftBarButtonItem?.tintColor = UIColor.app(.pink)
+		
+		navigationItem.rightBarButtonItem = UIBarButtonItem(
+			image: UIImage(named: "Settings Icon"),
+			style: .plain,
+			target: self,
+			action: #selector(settingsButtonTapped)
+		)
+	}
+	@objc private func playTapped() {
+		self.navigationController?.pushViewController(SelectGameViewController(), animated: true)
+	}
+	
+	@objc private func backButtonTapped() {
+		self.navigationController?.popViewController(animated: true)
+	}
+	
+	@objc private func settingsButtonTapped() {
+		self.navigationController?.pushViewController(SettingsViewController(), animated: true)
+	}
+	
+
+	@objc private func startGame(_ sender: UIButton) {
+		self.navigationController?.pushViewController(GameViewController(), animated: true)
+	}
+	
+	@objc private func pushLeaderboard() {
+		self.navigationController?.pushViewController(LeaderboardViewController(), animated: true)
+	}
 }
 

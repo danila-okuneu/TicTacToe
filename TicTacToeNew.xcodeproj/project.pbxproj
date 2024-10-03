@@ -28,7 +28,6 @@
 		37F8D44D2CAC96B900CBB15A /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D44C2CAC96B900CBB15A /* ResultViewController.swift */; };
 		37F8D44F2CAC96DE00CBB15A /* RulesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D44E2CAC96DE00CBB15A /* RulesCell.swift */; };
 		37F8D4512CAC971500CBB15A /* RulesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D4502CAC971500CBB15A /* RulesViewController.swift */; };
-		37F8D4532CAC973E00CBB15A /* SelectGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D4522CAC973E00CBB15A /* SelectGameViewController.swift */; };
 		37F8D4552CAC976400CBB15A /* HStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D4542CAC976400CBB15A /* HStackView.swift */; };
 		37F8D4572CAC977F00CBB15A /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D4562CAC977F00CBB15A /* SettingViewController.swift */; };
 		37F8D4592CAC979E00CBB15A /* SkinsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D4582CAC979E00CBB15A /* SkinsCardView.swift */; };
@@ -64,7 +63,6 @@
 		37F8D44C2CAC96B900CBB15A /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		37F8D44E2CAC96DE00CBB15A /* RulesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesCell.swift; sourceTree = "<group>"; };
 		37F8D4502CAC971500CBB15A /* RulesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesViewController.swift; sourceTree = "<group>"; };
-		37F8D4522CAC973E00CBB15A /* SelectGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGameViewController.swift; sourceTree = "<group>"; };
 		37F8D4542CAC976400CBB15A /* HStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HStackView.swift; sourceTree = "<group>"; };
 		37F8D4562CAC977F00CBB15A /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		37F8D4582CAC979E00CBB15A /* SkinsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinsCardView.swift; sourceTree = "<group>"; };
@@ -186,7 +184,6 @@
 		37F8D4392CAC94BD00CBB15A /* SelectGame Screen */ = {
 			isa = PBXGroup;
 			children = (
-				37F8D4522CAC973E00CBB15A /* SelectGameViewController.swift */,
 			);
 			path = "SelectGame Screen";
 			sourceTree = "<group>";
@@ -349,7 +346,6 @@
 				37F8D4632CAC98C200CBB15A /* Extensions.swift in Sources */,
 				37F8D4242CAC937B00CBB15A /* SceneDelegate.swift in Sources */,
 				37F8D4512CAC971500CBB15A /* RulesViewController.swift in Sources */,
-				37F8D4532CAC973E00CBB15A /* SelectGameViewController.swift in Sources */,
 				371F88B72CACACDD003849A2 /* LeaderboardViewController.swift in Sources */,
 				F15E77092CAED9E900E8FB9D /* SelectGameViewController.swift in Sources */,
 				37F8D4482CAC965A00CBB15A /* MainViewController.swift in Sources */,

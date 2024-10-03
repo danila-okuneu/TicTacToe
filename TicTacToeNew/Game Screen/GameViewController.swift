@@ -82,7 +82,7 @@ extension GameViewController {
     
     private func setupHeaderInfo() {
         let cardOnePlyaer  = PlayerCard(image: Skins.getSelected().x, text: "You")
-        let cardTwoPlayer = PlayerCard(image: Skins.getSelected().0, text: "Player Two")
+        let cardTwoPlayer = PlayerCard(image: Skins.getSelected().o, text: "Player Two")
         
         view.addSubview(gameHeaderInfo)
         gameHeaderInfo.addSubview(cardOnePlyaer)
@@ -117,7 +117,7 @@ extension GameViewController {
     }
     
     private func createGameBoard() -> GameBoard {
-        let gameBoard = GameBoard(Skins.getSelected().x, Skins.getSelected().0, delegateVC: self)
+        let gameBoard = GameBoard(Skins.getSelected().x, Skins.getSelected().o, delegateVC: self)
         gameBoard.translatesAutoresizingMaskIntoConstraints = false
         gameBoard.layer.cornerRadius = 30
         gameBoard.backgroundColor = .white

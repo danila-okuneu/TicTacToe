@@ -143,12 +143,9 @@ class MainViewController: UIViewController {
 			target: self,
 			action: #selector(settingsButtonTapped)
 		)
-		
-	
-//
 	}
 	@objc private func playTapped() {
-		self.navigationController?.pushViewController(SelectViewController(), animated: true)
+		self.navigationController?.pushViewController(SelectGameViewController(), animated: true)
 	}
 	
 	@objc private func rulesButtonTapped() {

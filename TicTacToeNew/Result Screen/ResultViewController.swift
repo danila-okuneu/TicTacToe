@@ -161,7 +161,7 @@ final class ResultViewController: UIViewController {
 
     // Return to the game selection screen
     private func handleBack() {
-        if let selectViewController = navigationController?.viewControllers.first(where: { $0 is SelectViewController }) {
+        if let selectViewController = navigationController?.viewControllers.first(where: { $0 is SelectGameViewController }) {
             navigationController?.popToViewController(selectViewController, animated: true)
         }
     }
