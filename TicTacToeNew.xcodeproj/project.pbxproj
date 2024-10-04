@@ -36,7 +36,9 @@
 		37F8D45F2CAC982600CBB15A /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D45E2CAC982600CBB15A /* TimeView.swift */; };
 		37F8D4612CAC98A700CBB15A /* CustomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D4602CAC98A700CBB15A /* CustomNavBar.swift */; };
 		37F8D4632CAC98C200CBB15A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D4622CAC98C200CBB15A /* Extensions.swift */; };
+		F108FEA62CB01DF600E8216D /* MusicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F108FEA52CB01DF300E8216D /* MusicView.swift */; };
 		F15E77092CAED9E900E8FB9D /* SelectGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E77082CAED9E900E8FB9D /* SelectGameViewController.swift */; };
+		F1AD96C02CAF291E00C9AC40 /* DynamicMusicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AD96BF2CAF290E00C9AC40 /* DynamicMusicView.swift */; };
 		F1BCAF322CAD4EE700D812C3 /* DynamicTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BCAF312CAD4EE100D812C3 /* DynamicTimeView.swift */; };
 /* End PBXBuildFile section */
 
@@ -71,7 +73,9 @@
 		37F8D45E2CAC982600CBB15A /* TimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
 		37F8D4602CAC98A700CBB15A /* CustomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBar.swift; sourceTree = "<group>"; };
 		37F8D4622CAC98C200CBB15A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		F108FEA52CB01DF300E8216D /* MusicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicView.swift; sourceTree = "<group>"; };
 		F15E77082CAED9E900E8FB9D /* SelectGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGameViewController.swift; sourceTree = "<group>"; };
+		F1AD96BF2CAF290E00C9AC40 /* DynamicMusicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicMusicView.swift; sourceTree = "<group>"; };
 		F1BCAF312CAD4EE100D812C3 /* DynamicTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTimeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -134,7 +138,6 @@
 				37F8D4362CAC948500CBB15A /* Game Screen */,
 				37F8D4372CAC949B00CBB15A /* Result Screen */,
 				37F8D4382CAC94AD00CBB15A /* Rules Screen */,
-				37F8D4392CAC94BD00CBB15A /* SelectGame Screen */,
 				37F8D43A2CAC94D200CBB15A /* Setting Screen */,
 				37F8D4602CAC98A700CBB15A /* CustomNavBar.swift */,
 				37F8D4622CAC98C200CBB15A /* Extensions.swift */,
@@ -181,17 +184,12 @@
 			path = "Rules Screen";
 			sourceTree = "<group>";
 		};
-		37F8D4392CAC94BD00CBB15A /* SelectGame Screen */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "SelectGame Screen";
-			sourceTree = "<group>";
-		};
 		37F8D43A2CAC94D200CBB15A /* Setting Screen */ = {
 			isa = PBXGroup;
 			children = (
 				F1BCAF312CAD4EE100D812C3 /* DynamicTimeView.swift */,
+				F1AD96BF2CAF290E00C9AC40 /* DynamicMusicView.swift */,
+				F108FEA52CB01DF300E8216D /* MusicView.swift */,
 				37F8D4542CAC976400CBB15A /* HStackView.swift */,
 				37F8D4562CAC977F00CBB15A /* SettingViewController.swift */,
 				37F8D4582CAC979E00CBB15A /* SkinsCardView.swift */,
@@ -342,6 +340,8 @@
 				370CA3432CADE737007F2A5C /* GameBoard.swift in Sources */,
 				371F88B32CACAC8F003849A2 /* LeaderboardViewCell.swift in Sources */,
 				3777C7CC2CACD69E00AE76C0 /* GamePlayerCard.swift in Sources */,
+				F1AD96C02CAF291E00C9AC40 /* DynamicMusicView.swift in Sources */,
+				F108FEA62CB01DF600E8216D /* MusicView.swift in Sources */,
 				37F8D4592CAC979E00CBB15A /* SkinsCardView.swift in Sources */,
 				37F8D4632CAC98C200CBB15A /* Extensions.swift in Sources */,
 				37F8D4242CAC937B00CBB15A /* SceneDelegate.swift in Sources */,

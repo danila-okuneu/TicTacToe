@@ -12,14 +12,6 @@ struct Skins {
     
     
 	static var selectedPair = 1 
-    
-//    static func get(pair: Int) -> (x: UIImage, o: UIImage) { // на время теста экрана
-//       
-//        let x = UIImage(named: "xSkin5")
-//        let o = UIImage(named: "oSkin5")
-//
-//        return (x!, o!)
-//    }
 
     static func get(pair: Int) -> (x: UIImage,o: UIImage) {   
 

@@ -20,6 +20,7 @@ final class SkinsCardView: UIView {
             }
         }
     }
+	
     
     // MARK: - UI Components
     private let xSkinView = UIImageView()
@@ -61,6 +62,7 @@ final class SkinsCardView: UIView {
         xSkinView.image = skins.x
         oSkinView.image = skins.o
         
+		
         setupViews()
         setupConstraints()
     

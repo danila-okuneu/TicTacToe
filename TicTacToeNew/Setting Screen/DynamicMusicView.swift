@@ -6,15 +6,15 @@
 //
 import UIKit
 import SnapKit
-final class DynamicTimeView: UIView, Dynamic {
-	
+final class DynamicMusicView: UIView, Dynamic {
+
 	
 	weak var delegate: DynamicDelegate?
 	private var heightConstraint: Constraint?
 	
 	
 	// MARK: - UI Components
-	private let timeToggleView: UIView = {
+	private let musicToggleView: UIView = {
 		let view = UIView()
 		view.backgroundColor = UIColor.app(.lightPurple)
 		view.layer.cornerRadius = 30
@@ -22,10 +22,10 @@ final class DynamicTimeView: UIView, Dynamic {
 		return view
 	}()
 	
-	let timeSwitch: UISwitch = {
+	let musicSwitch: UISwitch = {
 		let toggle = UISwitch()
 		toggle.onTintColor = UIColor.app(.activeButton)
-		toggle.isOn = Saves.isTimeMode
+		toggle.isOn = Saves.isMusicOn
 		return toggle
 	}()
 	
@@ -40,16 +40,16 @@ final class DynamicTimeView: UIView, Dynamic {
 		return label
 	}()
 	
-	private let timeView: UIView = {
+	private let musicView: UIView = {
 		let view = UIView()
-		view.layer.opacity = Saves.isTimeMode ? 1 : 0
+		view.layer.opacity = Saves.isMusicOn ? 1 : 0
 		view.backgroundColor = UIColor.app(.lightPurple)
 		view.layer.cornerRadius = 30
 		view.translatesAutoresizingMaskIntoConstraints = false
 		return view
 	}()
 	
-	private let timeLabel: UILabel = {
+	private let musicLabel: UILabel = {
 		let label = UILabel()
 		label.textAlignment = .left
 		label.text = "Time for game"
@@ -60,14 +60,22 @@ final class DynamicTimeView: UIView, Dynamic {
 		return label
 	}()
 	
+	private let playTime: UILabel = {
+		let label = UILabel()
+		label.textAlignment = .center
+		label.text = "2:00"
+		label.font = .systemFont(ofSize: 18, weight: .semibold)
+		label.numberOfLines = 1
+		label.textColor = UIColor.app(.black)
+		label.translatesAutoresizingMaskIntoConstraints = false
+		return label
+	}()
 	
 	private let forwardButton: UIButton = {
 		let button = UIButton()
 		button.clipsToBounds = true
-		button.showsMenuAsPrimaryAction = true
-		button.changesSelectionAsPrimaryAction = true
-		
 		button.setTitleColor(UIColor.app(.activeButton), for: .normal)
+		button.setTitle("2:00", for: .normal)
 		button.backgroundColor = UIColor(red: 217/255, green: 217/255, blue: 244/255, alpha: 1)
 		button.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
 		button.layer.cornerRadius = 15
@@ -79,9 +87,9 @@ final class DynamicTimeView: UIView, Dynamic {
 	init() {
 		super.init(frame: .zero)
 		
-		timeSwitch.addTarget(self, action: #selector(switchTime), for: .valueChanged)
+		forwardButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+		musicSwitch.addTarget(self, action: #selector(switchTime), for: .valueChanged)
 		setupViews()
-		setupMenuButton()
 	}
 	
 	required init?(coder: NSCoder) {
@@ -90,16 +98,18 @@ final class DynamicTimeView: UIView, Dynamic {
 	
 	
 	// MARK: - Layout
+	
 	private func setupViews() {
 		
-		addSubview(timeView)
-		addSubview(timeToggleView)
+		addSubview(musicView)
+		addSubview(musicToggleView)
 		
-		timeToggleView.addSubview(titleLabel)
-		timeToggleView.addSubview(timeSwitch)
+		musicToggleView.addSubview(titleLabel)
+		musicToggleView.addSubview(musicSwitch)
 		
-		timeView.addSubview(timeLabel)
-		timeView.addSubview(forwardButton)
+		musicView.addSubview(musicLabel)
+		musicView.addSubview(playTime)
+		musicView.addSubview(forwardButton)
 		
 		makeConstraints()
 	}
@@ -109,17 +119,17 @@ final class DynamicTimeView: UIView, Dynamic {
 		
 		
 		snp.makeConstraints { make in
-			make.height.equalTo(Saves.isTimeMode ? 140 : 60)
-			
+			make.height.equalTo(Saves.isMusicOn ? 140 : 60)
+
 		}
-		timeToggleView.snp.makeConstraints { make in
+		musicToggleView.snp.makeConstraints { make in
 			make.height.equalTo(60)
 			make.top.equalToSuperview()
 			make.left.equalToSuperview()
 			make.right.equalToSuperview()
 		}
 		
-		timeView.snp.makeConstraints { make in
+		musicView.snp.makeConstraints { make in
 			make.height.equalTo(60)
 			make.bottom.equalToSuperview()
 			make.left.equalToSuperview()
@@ -133,63 +143,49 @@ final class DynamicTimeView: UIView, Dynamic {
 			make.width.equalToSuperview().dividedBy(2)
 		}
 		
-		timeSwitch.snp.makeConstraints { make in
-			make.right.equalToSuperview().inset(15)
+		musicSwitch.snp.makeConstraints { make in
+			make.right.equalToSuperview().inset(10)
 			make.centerY.equalToSuperview()
 			make.height.equalTo(30)
 		}
 		
-		timeLabel.snp.makeConstraints { make in
+		musicLabel.snp.makeConstraints { make in
 			make.left.equalToSuperview().inset(10)
 			make.centerY.equalToSuperview()
 			make.height.equalTo(20)
 			make.width.equalToSuperview().dividedBy(2)
 		}
 		
+		playTime.snp.makeConstraints { make in
+			make.left.equalTo(titleLabel.snp.right).inset(10)
+			make.height.equalTo(20)
+			make.centerY.equalToSuperview()
+		}
 		
 		forwardButton.snp.makeConstraints { make in
-			make.right.equalToSuperview().inset(15)
+			make.right.equalToSuperview().inset(10)
 			make.centerY.equalToSuperview()
 			make.height.equalTo(30)
-			make.width.equalTo(80)
+			make.width.equalTo(50)
 			
 		}
 	}
 	
-	// MARK: - Methods
-	
-	private func setupMenuButton() {
+	@objc private func buttonTapped(_ sender: UIButton) {
 		
-		var actions: [UIMenuElement] = []
-		let actionClosure = { (action: UIAction) in
-			Saves.selectedTime = Int(action.title) ?? 60
-			print(Saves.selectedTime)
-			self.forwardButton.setTitle("\(action.title) sec", for: .normal)
-			Saves.set(Saves.selectedTime, for: "selectedTime")
-
-		}
-		for time in [60, 90, 120] {
-			
-			let action = UIAction(title: "\(time)", state: time == Saves.selectedTime ? .on : .off, handler: actionClosure)
-			actions.append(action)
+		sender.layer.opacity = 0.7
+		UIView.animate(withDuration: 0.2, delay: 0.1) {
+			sender.layer.opacity = 1
 		}
 		
-		forwardButton.menu = UIMenu(options: .displayInline, children: actions)
-		forwardButton.setTitle("\(Saves.selectedTime) sec", for: .normal)
+		
 	}
 	
-
-
-		
-		
-		
-
-	// MARK: - Button targets
 	@objc private func switchTime() {
-		Saves.isTimeMode.toggle()
-		UserDefaults.standard.set(Saves.isTimeMode, forKey: "timeMode")
-		change(opacity: Saves.isTimeMode ? 1 : 0, for: timeView)
-		change(height: Saves.isTimeMode ? timeView.bounds.height + 80 : 60)
+		Saves.isMusicOn.toggle()
+		UserDefaults.standard.set(Saves.isMusicOn, forKey: "musicOn")
+		change(opacity: Saves.isMusicOn ? 1 : 0, for: musicView)
+		change(height: Saves.isMusicOn ? musicView.bounds.height + 80 : 60)
 
 		delegate?.dynamicViewDidChangedHeight(self)
 	}
@@ -197,30 +193,3 @@ final class DynamicTimeView: UIView, Dynamic {
 }
 
 
-// MARK: - Dynamic protocols
-protocol Dynamic {
-	func change(opacity: Float, for view: UIView)
-	func change(height: CGFloat)
-}
-
-extension Dynamic where Self: UIView {
-	
-	func change(opacity: Float, for view: UIView) {
-		UIView.animate(withDuration: 0.2) {
-			view.layer.opacity = opacity
-		}
-	}
-	
-	func change(height: CGFloat) {
-		snp.updateConstraints { make in
-			make.height.equalTo(height)
-		}
-		UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseOut) {
-			self.layoutIfNeeded()
-		}
-	}
-}
-
-protocol DynamicDelegate: AnyObject {
-	func dynamicViewDidChangedHeight(_ dynamicTimeView: Dynamic)
-}

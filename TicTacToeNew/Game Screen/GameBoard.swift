@@ -13,7 +13,7 @@ class GameBoard: UIView {
     
     private var gameState: [Player?] = Array(repeating: nil, count: 9)
     private let winningCombinations: [Set<Int>] = [
-        [0, 1, 2],
+		[0, 1, 2],
         [3, 4, 5],
         [6, 7, 8],
         [0, 3, 6],
@@ -22,6 +22,8 @@ class GameBoard: UIView {
         [0, 4, 8],
         [2, 4, 6],
     ]
+	
+	
     
     // делегат для передачи результата игры и перехода на другой экран
     weak var delegateGameVC: GameResultable?
