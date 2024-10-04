@@ -207,7 +207,7 @@ extension LeaderboardViewController {
         // Getting screen dimensions
         static let screenWidth: CGFloat = UIScreen.main.bounds.width
         static let screenHeight: CGFloat = UIScreen.main.bounds.height
-
+		
         // Relative sizes
         static let stackViewTopMargin: CGFloat = screenHeight * (169 / 844)
         static let stackViewWidthSize: CGFloat = screenWidth * (177 / 390)

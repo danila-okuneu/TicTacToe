@@ -15,6 +15,15 @@ class SettingsViewController: UIViewController {
     
     
     // MARK: - UI Components
+	
+	private let skinsTitle: UILabel = {
+		let label = UILabel()
+		label.text = "Skins"
+		label.font = .systemFont(ofSize: 22, weight: .semibold)
+		label.textAlignment = .center
+		label.translatesAutoresizingMaskIntoConstraints = false
+		return label
+	}()
     private let settingsView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 45
@@ -27,7 +36,7 @@ class SettingsViewController: UIViewController {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 20
-        stack.distribution = .fillEqually
+		stack.distribution = .fillProportionally
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -53,6 +62,7 @@ class SettingsViewController: UIViewController {
     
     
 	private let dynamicTimeView = DynamicTimeView()
+	private let dynamicMusicView = DynamicMusicView()
     
     
     private lazy var skinsVStack: UIStackView = {
@@ -103,14 +113,12 @@ class SettingsViewController: UIViewController {
 			}
 		}
         
-        
-        scrollView.dropShadow()
+		
+		scrollViewContainer.dropShadow()
     }
     
     
     private func addViews() {
-        
-        
         
         skinsVStack.addArrangedSubview(firstHStack)
         skinsVStack.addArrangedSubview(secondHStack)
@@ -148,10 +156,12 @@ class SettingsViewController: UIViewController {
     private func configureContainerView() {
         
         scrollViewContainer.addArrangedSubview(settingsView)
-        
         settingsView.addSubview(settingStackView)
         
+		scrollViewContainer.addArrangedSubview(skinsTitle)
+		scrollViewContainer.setCustomSpacing(10, after: skinsTitle)
 		settingStackView.addArrangedSubview(dynamicTimeView)
+		settingStackView.addArrangedSubview(dynamicMusicView)
     
         scrollViewContainer.addArrangedSubview(skinsVStack)
         
@@ -173,6 +183,12 @@ class SettingsViewController: UIViewController {
             make.left.equalToSuperview().inset(20)
             make.right.equalToSuperview().inset(20)
         }
+		
+		
+		skinsTitle.snp.makeConstraints { make in
+			make.height.equalTo(22)
+		}
+	
     }
     
     
@@ -185,6 +201,7 @@ class SettingsViewController: UIViewController {
         sixthSkinsView.delegate = self
 		
 		dynamicTimeView.delegate = self
+		dynamicMusicView.delegate = self
     }
     
     
@@ -213,11 +230,12 @@ extension SettingsViewController: SkinsCardViewDelegate {
 }
 
 
-extension SettingsViewController: DynamicTimeViewDelegate {
+extension SettingsViewController: DynamicDelegate {
 	
-	func timeViewDidChangedHeight(_ dynamicTimeView: DynamicTimeView) {
+	func dynamicViewDidChangedHeight(_ dynamicTimeView: Dynamic) {
 		UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut) {
 				self.view.layoutIfNeeded()
+				print("Settings Delegate")
 			}
 		}
 	
