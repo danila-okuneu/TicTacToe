@@ -81,6 +81,8 @@ class SelectGameViewController: UIViewController {
             singlePlayerButton.heightAnchor.constraint(equalToConstant: 69),
             singlePlayerButton.widthAnchor.constraint(equalToConstant: 245)
         ])
+
+        singlePlayerButton.tag = GameMode.singlePlayer.hashValue
     }
     
     func setTwoPlayersButton() {
@@ -101,6 +103,8 @@ class SelectGameViewController: UIViewController {
             twoPlayersButton.heightAnchor.constraint(equalToConstant: 69),
             twoPlayersButton.widthAnchor.constraint(equalToConstant: 245)
         ])
+
+        twoPlayersButton.tag = GameMode.multiPlayer.hashValue
     }
     
     func setLeaderbordButton() {
@@ -173,8 +177,17 @@ class SelectGameViewController: UIViewController {
 	}
 	
 
-	@objc private func startGame(_ sender: UIButton) {
-		self.navigationController?.pushViewController(GameViewController(), animated: true)
+    @objc private func startGame(_ sender: UIButton) {
+        switch sender.tag {
+        case GameMode.singlePlayer.hashValue:
+            self.navigationController?.pushViewController(DifficultySelectionViewController(), animated: true)
+        case GameMode.multiPlayer.hashValue:
+            let gameViewController = GameViewController()
+            gameViewController.gameMode = .multiPlayer
+            self.navigationController?.pushViewController(gameViewController, animated: true)
+        default:
+            break
+        }
 	}
 	
 	@objc private func pushLeaderboard() {

@@ -13,7 +13,9 @@ protocol GameResultable: AnyObject {
 }
 
 class GameViewController: UIViewController {
-    
+
+    var gameMode: GameMode?
+    var difficultyLevel: DifficultyLevel?
     var resetGame: (() -> Void)?
     
     let timerLabel: UILabel = {
