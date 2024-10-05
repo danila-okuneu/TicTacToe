@@ -14,6 +14,8 @@ protocol GameResultable: AnyObject {
 
 class GameViewController: UIViewController {
     
+    private var winningLineView: LineWinnerView?
+    
     var resetGame: (() -> Void)?
     
     let timerLabel: UILabel = {
@@ -21,7 +23,7 @@ class GameViewController: UIViewController {
         label.text = "1.50"
         label.textAlignment = .center
         label.textColor = UIColor.app(.black)
-        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: Constants.labelFontSize, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -62,10 +64,12 @@ extension GameViewController {
         view.addSubview(gameBoardView)
         
         NSLayoutConstraint.activate([
-            gameBoardView.topAnchor.constraint(equalTo: view.topAnchor, constant: 328),
-            gameBoardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            gameBoardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44),
-            gameBoardView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -217)
+            gameBoardView.heightAnchor.constraint(equalToConstant: Constants.gameBoardHeightt),
+            gameBoardView.widthAnchor.constraint(equalToConstant: Constants.gameBoardWidth),
+            gameBoardView.topAnchor.constraint(equalTo: gameHeaderInfo.bottomAnchor, constant: Constants.gameBoardTopMargin),
+            gameBoardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.gameBoardLeadingMargin),
+            gameBoardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.gameBoardTrailingMargin),
+            gameBoardView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.gameBoardBottomMargin),
         ])
         gameBoardView.delegatePI = currentStepView
         resetGame = gameBoardView.reset
@@ -75,9 +79,10 @@ extension GameViewController {
         view.addSubview(currentStepView)
         currentStepView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            currentStepView.topAnchor.constraint(equalTo: gameHeaderInfo.bottomAnchor, constant: 30),
+            currentStepView.topAnchor.constraint(equalTo: gameHeaderInfo.bottomAnchor, constant: Constants.CurrentPlayerIndicatorTopMargin),
             currentStepView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            currentStepView.widthAnchor.constraint(equalToConstant: 221),
+            currentStepView.widthAnchor.constraint(equalToConstant: Constants.CurrentPlayerIndicatorWidth),
+            currentStepView.heightAnchor.constraint(equalToConstant: Constants.CurrentPlayerIndicatorHeight)
         ])
     }
     
@@ -91,24 +96,31 @@ extension GameViewController {
         gameHeaderInfo.addSubview(cardTwoPlayer)
         
         NSLayoutConstraint.activate([
-            gameHeaderInfo.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 112),
-            gameHeaderInfo.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.leadingAnchor, constant: 30),
-            gameHeaderInfo.trailingAnchor.constraint(greaterThanOrEqualTo: self.view.trailingAnchor, constant: -30),
-            gameHeaderInfo.heightAnchor.constraint(equalToConstant: 103),
-            gameHeaderInfo.widthAnchor.constraint(equalToConstant: 330),
+            gameHeaderInfo.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.headerInfoTopMargin),
+            gameHeaderInfo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.headerInfoLeadingMargin),
+            gameHeaderInfo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.headerInfoTrailngMargin),
+            gameHeaderInfo.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.headerInfoBottomMargin),
+            
+            gameHeaderInfo.heightAnchor.constraint(equalToConstant: Constants.headerInfoHeight),
+            gameHeaderInfo.widthAnchor.constraint(equalToConstant: Constants.headerInfoWidth),
         ])
         
         NSLayoutConstraint.activate([
             cardOnePlyaer.topAnchor.constraint(equalTo: gameHeaderInfo.topAnchor),
             cardOnePlyaer.leadingAnchor.constraint(equalTo: gameHeaderInfo.leadingAnchor),
-            cardTwoPlayer.bottomAnchor.constraint(equalTo: gameHeaderInfo.bottomAnchor),
+            cardOnePlyaer.bottomAnchor.constraint(equalTo: gameHeaderInfo.bottomAnchor),
+            cardOnePlyaer.heightAnchor.constraint(equalToConstant: Constants.playerCardContainerHeight),
+            cardOnePlyaer.widthAnchor.constraint(equalToConstant: Constants.playerCardContainerWidth),
             
+
             timerLabel.centerXAnchor.constraint(equalTo: gameHeaderInfo.centerXAnchor),
             timerLabel.centerYAnchor.constraint(equalTo: gameHeaderInfo.centerYAnchor),
-            
+
             cardTwoPlayer.topAnchor.constraint(equalTo: gameHeaderInfo.topAnchor),
             cardTwoPlayer.trailingAnchor.constraint(equalTo: gameHeaderInfo.trailingAnchor),
             cardTwoPlayer.bottomAnchor.constraint(equalTo: gameHeaderInfo.bottomAnchor),
+            cardTwoPlayer.heightAnchor.constraint(equalToConstant: Constants.playerCardContainerHeight),
+            cardTwoPlayer.widthAnchor.constraint(equalToConstant: Constants.playerCardContainerWidth),
         ])
     }
     
@@ -149,6 +161,39 @@ extension GameViewController: GameResultable {
         let resultViewController = ResultViewController()
         resultViewController.gameResult = resultGame
         navigationController?.pushViewController(resultViewController, animated: true)
+    }
+}
+
+extension GameViewController {
+    private struct Constants {
+        // Fixed sizes
+        static let labelFontSize = screenWidth * (20 / 390)
+        // Getting screen dimensions
+        static let screenWidth: CGFloat = UIScreen.main.bounds.width
+        static let screenHeight: CGFloat = UIScreen.main.bounds.height
+        static let stackViewSpacing: CGFloat = screenHeight * (20 / 844)
+        
+        static let gameBoardHeightt = screenHeight * (299 / 844)
+        static let gameBoardWidth = screenWidth * (302 / 390)
+        static let gameBoardTopMargin = screenHeight * (113 / 844) // до хеадернфо
+        static let gameBoardBottomMargin = screenHeight * (217 / 844)
+        static let gameBoardLeadingMargin = screenWidth * (44 / 390)
+        static let gameBoardTrailingMargin = screenWidth * (44 / 390)
+        
+        static let CurrentPlayerIndicatorTopMargin = screenHeight * (30 / 844)
+        static let CurrentPlayerIndicatorWidth = screenWidth * (221 / 390)
+        static let CurrentPlayerIndicatorHeight = screenHeight * (53 / 844)
+        
+        
+        static let headerInfoHeight = screenHeight * (103 / 844)
+        static let headerInfoWidth = screenWidth * (330 / 390)
+        static let headerInfoLeadingMargin = screenWidth * (30 / 390)
+        static let headerInfoTrailngMargin = screenWidth * (30 / 390)
+        static let headerInfoBottomMargin = screenHeight * (629 / 844)
+        static let headerInfoTopMargin = screenHeight * (112 / 844)
+        static let playerCardContainerWidth = screenWidth * (103 / 390)
+        static let playerCardContainerHeight = screenHeight * (103 / 844)
+        
     }
 }
 

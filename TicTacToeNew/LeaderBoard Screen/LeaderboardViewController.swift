@@ -31,6 +31,7 @@ final class LeaderboardViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: Constants.noResultsLabelFontSize, weight: .medium)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
         return label
     }()
 
