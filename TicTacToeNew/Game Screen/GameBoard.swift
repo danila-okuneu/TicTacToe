@@ -11,7 +11,9 @@ import SnapKit
 
 class GameBoard: UIView {
 
-    var difficultyLevel: DifficultyLevel?
+    var difficultyLevel: DifficultyLevel?    
+    private var winningLineView: LineWinnerView?
+    
     private var gameState: [Player?] = Array(repeating: nil, count: 9)
     private let winningCombinations: [Set<Int>] = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -46,14 +48,18 @@ class GameBoard: UIView {
     private func setupGameButtons() {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 20
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = Constants.verticalSpacing
         stackView.distribution = .fillEqually
         addSubview(stackView)
 
-        stackView.snp.makeConstraints { make in
-            make.edges.equalTo(self).inset(20)
-        }
-
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.verticalSpacing), // Верхний отступ
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.horizontalSpacing), // Левый отступ
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.horizontalSpacing), // Правый отступ
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Constants.verticalSpacing) // Нижний отступ
+        ])
+     
         for _ in 0..<3 {
             let rowStackView = createRowStackView()
 
@@ -69,7 +75,7 @@ class GameBoard: UIView {
     private func createRowStackView() -> UIStackView {
         let rowStackView = UIStackView()
         rowStackView.axis = .horizontal
-        rowStackView.spacing = 20
+        rowStackView.spacing = Constants.horizontalSpacing
         rowStackView.distribution = .fillEqually
         return rowStackView
     }
@@ -77,22 +83,24 @@ class GameBoard: UIView {
     private func createGameButton() -> UIButton {
         let button = UIButton(type: .system)
         button.layer.cornerRadius = 20
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = UIColor.app(.lightBlue)
 
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 4
         imageView.layer.masksToBounds = true
-        button.addSubview(imageView)
-
-        button.translatesAutoresizingMaskIntoConstraints = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        button.addSubview(imageView)
+        
 
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: button.topAnchor, constant: 10),
-            imageView.leftAnchor.constraint(equalTo: button.leftAnchor, constant: 10),
-            imageView.rightAnchor.constraint(equalTo: button.rightAnchor, constant: -10),
-            imageView.bottomAnchor.constraint(equalTo: button.bottomAnchor, constant: -10),
+            imageView.topAnchor.constraint(equalTo: button.topAnchor, constant: Constants.verticalMargin),
+            imageView.leadingAnchor.constraint(equalTo: button.leadingAnchor, constant: Constants.horizontalMargin),
+            imageView.trailingAnchor.constraint(equalTo: button.trailingAnchor, constant: -Constants.horizontalMargin),
+            imageView.bottomAnchor.constraint(equalTo: button.bottomAnchor, constant: -Constants.verticalMargin),
+            
+            
         ])
 
         button.addTarget(self, action: #selector(gameButtonTapped(_:)), for: .touchUpInside)
@@ -159,6 +167,7 @@ class GameBoard: UIView {
     /// - Parameter winner: Игрок, который выиграл игру, или nil, если игра закончилась вничью.
     private func finishGame(with winner: Player?) {
         let result: GameResult
+
         if let winner = winner {
             result = winner == .cross ? .win : .lose
         } else {
@@ -174,6 +183,10 @@ class GameBoard: UIView {
 
     // Метод который мы присваевыем замыканию во вью контроллере
     func reset() {
+        if let winningLineView = winningLineView {
+                winningLineView.winningPattern = [] // Очистка линии
+                winningLineView.isHidden = true // Скрыть WinningLineView
+        }
         gameState = Array(repeating: .none, count: 9)
         currentPlayer = .cross
         delegatePI?.updateIndicator(for: currentPlayer)
@@ -182,6 +195,37 @@ class GameBoard: UIView {
                 imageView.image = nil
             }
         }
+    }
+    
+    private func showWinningLine(for combination: Set<Int>) {
+        winningLineView?.removeFromSuperview()
+            winningLineView = LineWinnerView()
+            winningLineView?.winningPattern = combination
+
+            guard let winningLineView = winningLineView else { return }
+            addSubview(winningLineView)
+
+            winningLineView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                winningLineView.topAnchor.constraint(equalTo: topAnchor),
+                winningLineView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                winningLineView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                winningLineView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            ])
+    }
+
+}
+
+extension GameBoard {
+    private struct Constants {
+        static let screenWidth: CGFloat = UIScreen.main.bounds.width
+        static let screenHeight: CGFloat = UIScreen.main.bounds.height
+       
+        static let horizontalSpacing = screenWidth * (20 / 390)
+        static let verticalSpacing = screenHeight * (20 / 844)
+        
+        static let horizontalMargin = screenWidth * (10 / 390)
+        static let verticalMargin = screenHeight * (10 / 844)
     }
 }
 
