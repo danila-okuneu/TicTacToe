@@ -11,6 +11,8 @@ import SnapKit
 
 class GameBoard: UIView {
     
+    private var winningLineView: LineWinnerView?
+    
     private var gameState: [Player?] = Array(repeating: nil, count: 9)
     private let winningCombinations: [Set<Int>] = [
         [0, 1, 2],
@@ -156,22 +158,36 @@ class GameBoard: UIView {
     /// Завершает игру и отображает экран с результатом.
     /// - Parameter winner: Игрок, который выиграл игру, или nil, если игра закончилась вничью.
     /// - Parameter winner: Игрок, который выиграл игру, или nil, если игра закончилась вничью.
-       private func finishGame(with winner: Player?) {
-           let result: GameResult
-           
-           // Определяем результат игры на основе наличия победителя
-           if let winner = winner {
-               result = winner == .cross ? .win : .lose
-               
-           } else {
-               result = .draw
-           }
-           delegateGameVC?.finishGame(with: result)
-       }
+    private func finishGame(with winner: Player?) {
+        let result: GameResult
+        
+        // Определяем результат игры на основе наличия победителя
+        if let winner = winner {
+            result = winner == .cross ? .win : .lose
+            
+            if let winningCombination = winningCombinations.first(where: { combination in
+                let players = combination.compactMap { gameState[$0] }
+                return players.count == 3 && Set(players).count == 1 && players.first == winner
+            }) {
+                // Отобразите линию победителя
+                showWinningLine(for: winningCombination)
+                winningLineView?.isHidden = false
+            }
+        } else {
+            result = .draw
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.delegateGameVC?.finishGame(with: result)
+        }
+    }
 
     
     // Метод который мы присваевыем замыканию во вью контроллере
     func reset() {
+        if let winningLineView = winningLineView {
+                winningLineView.winningPattern = [] // Очистка линии
+                winningLineView.isHidden = true // Скрыть WinningLineView
+        }
         gameState = Array(repeating: .none, count: 9)
         currentPlayer = .cross
         delegatePI?.updateIndicator(for: currentPlayer)
@@ -181,25 +197,33 @@ class GameBoard: UIView {
             }
         }
     }
+    
+    private func showWinningLine(for combination: Set<Int>) {
+        winningLineView?.removeFromSuperview()
+            winningLineView = LineWinnerView()
+            winningLineView?.winningPattern = combination
+
+            guard let winningLineView = winningLineView else { return }
+            addSubview(winningLineView)
+
+            winningLineView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                winningLineView.topAnchor.constraint(equalTo: topAnchor),
+                winningLineView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                winningLineView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                winningLineView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            ])
+    }
+
 }
 
 extension GameBoard {
     private struct Constants {
-
-        // Getting screen dimensions
         static let screenWidth: CGFloat = UIScreen.main.bounds.width
         static let screenHeight: CGFloat = UIScreen.main.bounds.height
        
         static let horizontalSpacing = screenWidth * (20 / 390)
         static let verticalSpacing = screenHeight * (20 / 844)
-        // Relative sizes
-//        static let buttonImageHeight = screenHeight * (53 / 844)
-//        static let buttonImageWidth = screenWidth * (54 / 390)
-//
-        
-//        static let buttonWidth = screenWidth * (74 / 390)
-//        static let butonnHeight = screenHeight * (73 / 844)
-//        
         
         static let horizontalMargin = screenWidth * (10 / 390)
         static let verticalMargin = screenHeight * (10 / 844)

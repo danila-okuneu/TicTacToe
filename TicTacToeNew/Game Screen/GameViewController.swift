@@ -14,6 +14,8 @@ protocol GameResultable: AnyObject {
 
 class GameViewController: UIViewController {
     
+    private var winningLineView: LineWinnerView?
+    
     var resetGame: (() -> Void)?
     
     let timerLabel: UILabel = {
@@ -21,7 +23,7 @@ class GameViewController: UIViewController {
         label.text = "1.50"
         label.textAlignment = .center
         label.textColor = UIColor.app(.black)
-        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: Constants.labelFontSize, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -77,9 +79,10 @@ extension GameViewController {
         view.addSubview(currentStepView)
         currentStepView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            currentStepView.topAnchor.constraint(equalTo: gameHeaderInfo.bottomAnchor, constant: 30),
+            currentStepView.topAnchor.constraint(equalTo: gameHeaderInfo.bottomAnchor, constant: Constants.CurrentPlayerIndicatorTopMargin),
             currentStepView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            currentStepView.widthAnchor.constraint(equalToConstant: 221),
+            currentStepView.widthAnchor.constraint(equalToConstant: Constants.CurrentPlayerIndicatorWidth),
+            currentStepView.heightAnchor.constraint(equalToConstant: Constants.CurrentPlayerIndicatorHeight)
         ])
     }
     
@@ -164,7 +167,7 @@ extension GameViewController: GameResultable {
 extension GameViewController {
     private struct Constants {
         // Fixed sizes
-        static let labelFontSize: CGFloat = 16
+        static let labelFontSize = screenWidth * (20 / 390)
         // Getting screen dimensions
         static let screenWidth: CGFloat = UIScreen.main.bounds.width
         static let screenHeight: CGFloat = UIScreen.main.bounds.height
@@ -177,10 +180,11 @@ extension GameViewController {
         static let gameBoardLeadingMargin = screenWidth * (44 / 390)
         static let gameBoardTrailingMargin = screenWidth * (44 / 390)
         
+        static let CurrentPlayerIndicatorTopMargin = screenHeight * (30 / 844)
+        static let CurrentPlayerIndicatorWidth = screenWidth * (221 / 390)
+        static let CurrentPlayerIndicatorHeight = screenHeight * (53 / 844)
         
         
-        
-     
         static let headerInfoHeight = screenHeight * (103 / 844)
         static let headerInfoWidth = screenWidth * (330 / 390)
         static let headerInfoLeadingMargin = screenWidth * (30 / 390)
