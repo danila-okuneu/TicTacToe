@@ -23,20 +23,19 @@ class CurrentPlayerIndicator: UIView {
     private let currentPlayerLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: Constants.labelFontSize)
         label.text = "Your turn"
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .brown
         setupViews()
+        translatesAutoresizingMaskIntoConstraints = false
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        backgroundColor = .brown
         setupViews() 
     }
     
@@ -52,13 +51,13 @@ class CurrentPlayerIndicator: UIView {
         NSLayoutConstraint.activate([
             playerImageView.topAnchor.constraint(equalTo: topAnchor),
             playerImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            playerImageView.widthAnchor.constraint(equalToConstant: 54),
-            playerImageView.heightAnchor.constraint(equalToConstant: 53),
+            playerImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            playerImageView.widthAnchor.constraint(equalToConstant: Constants.playerImageWidth),
+            playerImageView.heightAnchor.constraint(equalToConstant: Constants.playerImageHeight),
             
-            currentPlayerLabel.leadingAnchor.constraint(equalTo: playerImageView.trailingAnchor, constant: 20),
-            currentPlayerLabel.widthAnchor.constraint(equalToConstant: 161),
-            currentPlayerLabel.heightAnchor.constraint(equalToConstant: 24),
-            currentPlayerLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12)
+            currentPlayerLabel.leadingAnchor.constraint(equalTo: playerImageView.trailingAnchor, constant: Constants.horizontalSpacing),
+            currentPlayerLabel.widthAnchor.constraint(equalToConstant: Constants.stepLabelWidth),
+            currentPlayerLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
     
@@ -77,11 +76,28 @@ extension CurrentPlayerIndicator: PlayerIndicatorDelegate {
         case .cross:
             playerImageView.image = Skins.getSelected().x
             currentPlayerLabel.text = "You turn"
-            hidePlayerImage()
+            showPlayerImage()
         case .nought:
             playerImageView.image = Skins.getSelected().o
             currentPlayerLabel.text = "Player Two turn"
             showPlayerImage()
         }
     }
+}
+
+extension CurrentPlayerIndicator {
+        private struct Constants {
+            static let screenWidth: CGFloat = UIScreen.main.bounds.width
+            static let screenHeight: CGFloat = UIScreen.main.bounds.height
+           
+            static let playerImageHeight = screenHeight * (53 / 844)
+            static let playerImageWidth = screenWidth * (54 / 390)
+            
+            static let stepLabelWidth = screenWidth * (161 / 390)
+            
+            static let horizontalSpacing = screenWidth * (20 / 390)
+            static let verticalSpacing = screenHeight * (20 / 844)
+      
+            static let labelFontSize = screenWidth * (20 / 390)
+        }
 }
