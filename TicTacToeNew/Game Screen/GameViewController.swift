@@ -14,22 +14,15 @@ protocol GameResultable: AnyObject {
 
 class GameViewController: UIViewController {
 
-    var gameMode: GameMode?
-    var difficultyLevel: DifficultyLevel?
+	var gameMode: GameMode?
+	var difficultyLevel: Difficulty?
 
+	private var timer: Timer?
+	private var remainingTime: Int = Saves.selectedTime
+	
     private var winningLineView: LineWinnerView?
    
     var resetGame: (() -> Void)?
-
-    let timerLabel: UILabel = {
-        let label = UILabel()
-        label.text = "1.50"
-        label.textAlignment = .center
-        label.textColor = UIColor.app(.black)
-        label.font = UIFont.systemFont(ofSize: Constants.labelFontSize, weight: .semibold)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
 
     private let gameHeaderInfo: UIView = {
         let view = UIView()
@@ -50,6 +43,7 @@ class GameViewController: UIViewController {
         setupNavigationBar()
         initialGameBoard()
         initialCurrentStepView()
+		
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -57,8 +51,14 @@ class GameViewController: UIViewController {
         guard let resetGame = resetGame else {
             return
         }
+		startTimer()
         resetGame()
     }
+	
+	deinit {
+			timer?.invalidate()
+			NotificationCenter.default.removeObserver(self)
+		}
 }
 
 extension GameViewController {
@@ -95,7 +95,6 @@ extension GameViewController {
 
         view.addSubview(gameHeaderInfo)
         gameHeaderInfo.addSubview(cardOnePlyaer)
-        gameHeaderInfo.addSubview(timerLabel)
         gameHeaderInfo.addSubview(cardTwoPlayer)
 
         NSLayoutConstraint.activate([
@@ -115,8 +114,6 @@ extension GameViewController {
             cardOnePlyaer.heightAnchor.constraint(equalToConstant: Constants.playerCardContainerHeight),
             cardOnePlyaer.widthAnchor.constraint(equalToConstant: Constants.playerCardContainerWidth),
 
-            timerLabel.centerXAnchor.constraint(equalTo: gameHeaderInfo.centerXAnchor),
-            timerLabel.centerYAnchor.constraint(equalTo: gameHeaderInfo.centerYAnchor),
 
             cardTwoPlayer.topAnchor.constraint(equalTo: gameHeaderInfo.topAnchor),
             cardTwoPlayer.trailingAnchor.constraint(equalTo: gameHeaderInfo.trailingAnchor),
@@ -144,7 +141,7 @@ extension GameViewController {
     }
 }
 
-// Навигация
+// MARK: - Navigation
 extension GameViewController {
 
     // MARK: - Navigation Bar
@@ -157,8 +154,9 @@ extension GameViewController {
     }
 }
 
-// Навигация в конце игры через протокол
+// MARK: - Finish method
 extension GameViewController: GameResultable {
+	
     func finishGame(with resultGame: GameResult) {
         let resultViewController = ResultViewController()
         resultViewController.gameResult = resultGame
@@ -166,6 +164,7 @@ extension GameViewController: GameResultable {
     }
 }
 
+// MARK: - Constants
 extension GameViewController {
     private struct Constants {
         // Fixed sizes
@@ -199,3 +198,48 @@ extension GameViewController {
     }
 }
 
+// MARK: - Timer
+extension GameViewController {
+	
+
+	
+	private func startTimer() {
+		
+		timer?.invalidate()
+		updateTimerTitle()
+		remainingTime = Saves.selectedTime
+		timer = Timer.scheduledTimer(timeInterval: 1.0,
+									 target: self,
+									 selector: #selector(timerTick),
+									 userInfo: nil,
+									 repeats: true)
+	}
+	
+	
+	private func updateTimerTitle() {
+		let minutes = remainingTime / 60
+		let seconds = remainingTime % 60
+		title = String(format: "%d:%02d", minutes, seconds)
+	}
+	
+	@objc private func timerTick() {
+		if remainingTime > 0 {
+			remainingTime -= 1
+			updateTimerTitle()
+		} else {
+			timer?.invalidate()
+			timer = nil
+			timerDidFinish()
+		}
+	}
+	
+	private func timerDidFinish() {
+		resetTimer()
+		finishGame(with: .draw)
+	}
+	
+	private func resetTimer() {
+		timer?.invalidate()
+		remainingTime = Saves.selectedTime
+	}
+}

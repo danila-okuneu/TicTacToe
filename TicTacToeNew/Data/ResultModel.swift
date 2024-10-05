@@ -9,15 +9,15 @@
 struct Result: Codable {
     
     let time: String
-    let mode: Mode
+	let mode: GameMode
 	let difficulty: Difficulty?
-    
+	let gameResult: GameResult
 }
 
 
-enum Mode: Codable {
-    case twoPlayer
+enum GameMode: Codable {
     case singlePlayer
+    case twoPlayer
 }
 
 

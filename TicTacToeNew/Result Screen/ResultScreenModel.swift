@@ -6,7 +6,7 @@
 //
 import Foundation
 
-enum GameResult {
+enum GameResult: Codable {
     case win
     case draw
     case lose

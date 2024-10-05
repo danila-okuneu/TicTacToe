@@ -8,9 +8,10 @@
 import UIKit
 import SnapKit
 
-final class DynamicBotView: UIView, Dynamic {
+final class DynamicSingleView: UIView, Dynamic {
 	
-	// MARK: - UI Components
+	
+	weak var delegate: DifficultyDelegate?
 	private var isShowDificulties = false {
 		didSet {
 			change(opacity: isShowDificulties ? 1 : 0, for: difficultiesStackView)
@@ -18,8 +19,8 @@ final class DynamicBotView: UIView, Dynamic {
 			delegate?.dynamicViewDidChangedHeight(self)
 		}
 	}
-	weak var delegate: DifficultyDelegate?
 	
+	// MARK: - UI Components
 	private let singlePlayerButton: UIButton = {
 		let button = UIButton()
 		button.setTitle("  Single Player", for: .normal)
@@ -50,7 +51,6 @@ final class DynamicBotView: UIView, Dynamic {
 		
 		setupViews()
 		setButtonsTargets()
-		setupDifficulties()
 	}
 	
 	required init?(coder: NSCoder) {
@@ -59,12 +59,13 @@ final class DynamicBotView: UIView, Dynamic {
 	
 	
 	// MARK: - Layout
-	
 	private func setupViews() {
 		backgroundColor = UIColor.app(.lightPurple)
 		layer.cornerRadius = 30
 		addSubview(singlePlayerButton)
 		addSubview(difficultiesStackView)
+		
+		setupDifficultyButtons()
 		makeConstraints()
 	}
 	
@@ -87,9 +88,9 @@ final class DynamicBotView: UIView, Dynamic {
 		}
 	}
 	
-	
-	private func setupDifficulties() {
-		for difficulty in DifficultyLevel.allCases {
+	// MARK: - Methods
+	private func setupDifficultyButtons() {
+		for difficulty in Difficulty.allCases {
 			let button = UIButton()
 			button.setTitle(difficulty.rawValue, for: .normal)
 			button.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
@@ -101,27 +102,33 @@ final class DynamicBotView: UIView, Dynamic {
 			button.snp.makeConstraints { make in
 				make.height.equalTo(40)
 			}
-		
+
 			difficultiesStackView.addArrangedSubview(button)
 		}
 	}
 	
-	// MARK: - Methods
+	
 	private func setButtonsTargets() {
 		singlePlayerButton.addTarget(self, action: #selector(showDifficulties), for: .touchUpInside)
 	}
 	
+	
+	// MARK: - Actions
 	@objc private func showDifficulties() {
 		isShowDificulties.toggle()
-		
-		
 	}
 	
 	@objc private func selectDifficulty(_ sender: UIButton) {
 		isShowDificulties.toggle()
 		
 		if let title = sender.titleLabel?.text {
-			delegate?.pushViewController(difficulty: DifficultyLevel(rawValue: title) ?? .easy)
+			delegate?.pushViewController(difficulty: Difficulty(rawValue: title) ?? .easy)
 		}
 	}
 }
+
+// MARK: - DifficultyDelegate protocol
+protocol DifficultyDelegate: DynamicDelegate {
+	func pushViewController(difficulty: Difficulty)
+}
+

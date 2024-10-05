@@ -19,7 +19,7 @@ final class SelectGameViewController: UIViewController {
 	
 	
     let buttonStackView = UIStackView()
-	let singlePlayerButton = DynamicBotView()
+	let singlePlayerButton = DynamicSingleView()
     let twoPlayersButton = UIButton()
     let leaderbordButton = UIButton()
     let labelSelectGame = UILabel()
@@ -71,11 +71,8 @@ final class SelectGameViewController: UIViewController {
         buttonStackView.spacing = 20
         view.addSubview(buttonStackView)
         buttonStackView.translatesAutoresizingMaskIntoConstraints = false
-        buttonStackView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
+		buttonStackView.backgroundColor = .white
 		
-		
-		
-        
         NSLayoutConstraint.activate([
 			buttonStackView.leadingAnchor.constraint(equalTo: selectionView.leadingAnchor, constant: 20),
 			buttonStackView.trailingAnchor.constraint(equalTo: selectionView.trailingAnchor, constant: -20),
@@ -91,9 +88,9 @@ final class SelectGameViewController: UIViewController {
         twoPlayersButton.setTitle("  Two Players", for: .normal)
         twoPlayersButton.layer.cornerRadius = 30
         twoPlayersButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        twoPlayersButton.setTitleColor(UIColor.black, for: .normal)
-        twoPlayersButton.backgroundColor = UIColor(red: 230/255, green: 233/255, blue: 249/255, alpha: 1)
-        twoPlayersButton.setImage(imageTwoPlayers, for: .normal)
+		twoPlayersButton.setTitleColor(UIColor.app(.black), for: .normal)
+		twoPlayersButton.backgroundColor = UIColor.app(.lightPurple)
+		twoPlayersButton.setImage(imageTwoPlayers, for: .normal)
         twoPlayersButton.imageView?.layer.transform = CATransform3DMakeScale(0.8, 0.8, 0.8)
         twoPlayersButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -101,7 +98,7 @@ final class SelectGameViewController: UIViewController {
 			twoPlayersButton.heightAnchor.constraint(equalToConstant: 60)
         ])
 
-        twoPlayersButton.tag = GameMode.multiPlayer.hashValue
+		twoPlayersButton.tag = GameMode.twoPlayer.hashValue
     }
     
     func setLeaderbordButton() {
@@ -142,7 +139,7 @@ final class SelectGameViewController: UIViewController {
 		leaderbordButton.addTarget(self, action: #selector(pushLeaderboard), for: .touchUpInside)
 	}
 	
-	func setupNavigationBar() {
+	private func setupNavigationBar() {
 		
 		navigationItem.leftBarButtonItem = UIBarButtonItem(
 			image: UIImage(named: "backButtonIcon"),
@@ -160,6 +157,8 @@ final class SelectGameViewController: UIViewController {
 			action: #selector(settingsButtonTapped)
 		)
 	}
+	
+	// MARK: - Button actions
 	@objc private func playTapped() {
 		self.navigationController?.pushViewController(SelectGameViewController(), animated: true)
 	}
@@ -176,7 +175,7 @@ final class SelectGameViewController: UIViewController {
     @objc private func startGame(_ sender: UIButton) {
         
 		let gameViewController = GameViewController()
-		gameViewController.gameMode = .multiPlayer
+		gameViewController.gameMode = GameMode.twoPlayer
 		self.navigationController?.pushViewController(gameViewController, animated: true)
 	}
 	
@@ -185,12 +184,11 @@ final class SelectGameViewController: UIViewController {
 	}
 }
 
-protocol DifficultyDelegate: DynamicDelegate {
-	func pushViewController(difficulty: DifficultyLevel)
-}
+
+// MARK: - Extension
 extension SelectGameViewController: DifficultyDelegate {
 	
-	func pushViewController(difficulty: DifficultyLevel) {
+	func pushViewController(difficulty: Difficulty) {
 		
 		let gameViewController = GameViewController()
 		gameViewController.gameMode = GameMode.singlePlayer

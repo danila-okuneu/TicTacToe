@@ -36,7 +36,7 @@ struct Results: Codable {
         Saves.set(list, for: "Results")
     }
     
-    
+	
     static func load() {
         Results.list = Saves.get(for: "Results", as: [Result].self) ?? []
     }

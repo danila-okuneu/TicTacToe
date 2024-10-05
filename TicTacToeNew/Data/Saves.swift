@@ -9,8 +9,8 @@ import Foundation
 
 struct Saves {
 
-	
-	
+	static var results: [Result] = [] 
+		
 	static var isTimeMode = true
 	static var selectedTime = 60
 	static var isMusicOn: Bool {
