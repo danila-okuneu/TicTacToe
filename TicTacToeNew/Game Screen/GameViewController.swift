@@ -15,7 +15,7 @@ protocol GameResultable: AnyObject {
 class GameViewController: UIViewController {
 
 	var gameMode: GameMode?
-	var difficultyLevel: Difficulty?
+	var difficulty: Difficulty?
 
 	private var timer: Timer?
 	private var remainingTime: Int = Saves.selectedTime
@@ -55,6 +55,8 @@ class GameViewController: UIViewController {
         resetGame()
     }
 	
+	
+	
 	deinit {
 			timer?.invalidate()
 			NotificationCenter.default.removeObserver(self)
@@ -75,7 +77,7 @@ extension GameViewController {
         ])
         gameBoardView.delegatePI = currentStepView
         resetGame = gameBoardView.reset
-        gameBoardView.difficultyLevel = difficultyLevel
+        gameBoardView.difficulty = difficulty
     }
 
     private func initialCurrentStepView() {
@@ -157,9 +159,20 @@ extension GameViewController {
 // MARK: - Finish method
 extension GameViewController: GameResultable {
 	
-    func finishGame(with resultGame: GameResult) {
+    func finishGame(with gameResult: GameResult) {
+		
+		let time = Saves.selectedTime - remainingTime
+		
+		let result = Result(
+			time: time,
+			mode: gameMode ?? .twoPlayer,
+			difficulty: difficulty,
+			gameResult: gameResult
+		)
+		Results.list.append(result)
+		Results.save()
         let resultViewController = ResultViewController()
-        resultViewController.gameResult = resultGame
+		resultViewController.gameResult = gameResult
         navigationController?.pushViewController(resultViewController, animated: true)
     }
 }

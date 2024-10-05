@@ -7,6 +7,8 @@
 
 struct LeaderboardModel: Hashable {
     let position: Int
-    let duration: String
+	let duration: Int
+//	let mode: GameMode
+//	let difficulty: Difficulty
     let isBest: Bool
 }

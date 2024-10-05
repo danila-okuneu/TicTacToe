@@ -5,23 +5,51 @@ class LeaderboardTableViewCell: UITableViewCell {
     // MARK: - Properties
 
     static let identifier = "LeaderboardTableViewCell"
+	
     var leaderboard: LeaderboardModel? {
         didSet {
             guard let leaderboard else { return }
+			let time = translateTo(time: leaderboard.duration)
+			let attributedString = NSMutableAttributedString(string: leaderboard.isBest ? "Best time: \(time)" : "Time: \(time)")
+			attributedString.addAttribute(
+				NSAttributedString.Key.font,
+				value: UIFont.systemFont(
+					ofSize: 18,
+					weight: .semibold
+				),
+				range: NSRange(
+					location: 0,
+					length: attributedString.string.count - time.count
+				)
+			)
+			
+			
             positionLabel.text = "\(leaderboard.position)"
-            durationLabel.text = leaderboard.isBest ? "Best time \(leaderboard.duration)" : "Time \(leaderboard.duration)"
-            positionLabel.backgroundColor = leaderboard.isBest ? .app(.purple) : .app(.lightBlue)
+			
+			durationLabel.attributedText = attributedString
+			positionLabel.backgroundColor = leaderboard.isBest ? .app(.purple) : .app(.lightBlue)
             durationContainer.backgroundColor = leaderboard.isBest ? .app(.purple) : .app(.lightBlue)
+			
+			let modeAttributedString = NSMutableAttributedString(string: "Mode:")
+			modeAttributedString.addAttribute(
+				NSAttributedString.Key.font,
+				value: UIFont.systemFont(
+					ofSize: 20,
+					weight: .semibold
+				),
+				range: NSRange(location: 0, length: 5)
+			)
+			
+			modeLabel.attributedText = modeAttributedString
         }
     }
 
     // MARK: - Outlets
-
     private let positionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: Constants.positionLabelFontSize, weight: .regular)
+		label.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
         label.textAlignment = .center
-        label.textColor = .black
+		label.textColor = UIColor.app(.black)
         label.layer.cornerRadius = Constants.positionLabelCornerRadius
         label.clipsToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -45,6 +73,18 @@ class LeaderboardTableViewCell: UITableViewCell {
         return label
     }()
 
+	private let modeLabel: UILabel = {
+
+		let label = UILabel()
+		label.font = UIFont.systemFont(ofSize: Constants.timeLabelFontStize, weight: .regular)
+		label.textAlignment = .left
+		label.textColor = .black
+		label.translatesAutoresizingMaskIntoConstraints = false
+		
+		
+		return label
+
+	}()
     // MARK: - Initial
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -63,6 +103,7 @@ class LeaderboardTableViewCell: UITableViewCell {
     private func setupHierarchy() {
         contentView.addSubview(positionLabel)
         contentView.addSubview(durationContainer)
+		durationContainer.addSubview(modeLabel)
         durationContainer.addSubview(durationLabel)
     }
 
@@ -93,16 +134,41 @@ class LeaderboardTableViewCell: UITableViewCell {
             durationContainer.centerYAnchor.constraint(
                 equalTo: contentView.centerYAnchor
             ),
-            durationLabel.centerYAnchor.constraint(
-                equalTo: durationContainer.centerYAnchor
+			durationLabel.topAnchor.constraint(
+				equalTo: durationContainer.topAnchor,
+				constant: 10
             ),
             durationLabel.leadingAnchor.constraint(
                 equalTo: durationContainer.leadingAnchor,
                 constant: Constants.durationLabelLeadingMargin
             ),
+			
+			modeLabel.trailingAnchor.constraint(
+				equalTo: contentView.trailingAnchor
+			),
+			modeLabel.centerYAnchor.constraint(
+				equalTo: contentView.centerYAnchor
+			),
+			modeLabel.bottomAnchor.constraint(
+				equalTo: durationContainer.bottomAnchor,
+				constant: -10
+			),
+			modeLabel.leadingAnchor.constraint(
+				equalTo: durationContainer.leadingAnchor,
+				constant: Constants.durationLabelLeadingMargin
+			),
+
+			
         ])
     }
-
+	
+	private func translateTo(time: Int) -> String {
+		let minutes = time / 60
+		let seconds = time % 60
+		return String(format: "%d:%02d", minutes, seconds)
+		
+	}
+	
     override func prepareForReuse() {
         super.prepareForReuse()
         positionLabel.text = nil
@@ -126,7 +192,7 @@ extension LeaderboardTableViewCell {
         // Relative sizes
         static let labelHeight: CGFloat = screenHeight * (69 / 844)
         static let positionLabelCornerRadius: CGFloat = labelHeight / 2
-        static let durationLabelCornerRadius: CGFloat = screenHeight * (30 / 844)
+        static let durationLabelCornerRadius: CGFloat = labelHeight / 2
         static let durationContainerLeadingMargin: CGFloat = screenWidth * (10 / 390)
         static let durationLabelLeadingMargin: CGFloat = screenWidth * (24 / 390)
     }

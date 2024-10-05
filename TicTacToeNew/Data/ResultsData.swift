@@ -1,15 +1,15 @@
-
 //
 //  ResultsData.swift
 //  TicTacToe
 //
 //  Created by Danila Okuneu on 30.09.24.
 //
+import Foundation
 
 
 struct Results: Codable {
     
-    static var list: [Result] = []
+	static var list: [Result] = [ ]
     
     
     // MARK: - Static methods
@@ -33,7 +33,7 @@ struct Results: Codable {
     
     
     static func save() {
-        Saves.set(list, for: "Results")
+		Saves.set(Results.list, for: "Results")
     }
     
 	

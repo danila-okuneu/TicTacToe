@@ -8,7 +8,7 @@
 
 struct Result: Codable {
     
-    let time: String
+	let time: Int
 	let mode: GameMode
 	let difficulty: Difficulty?
 	let gameResult: GameResult

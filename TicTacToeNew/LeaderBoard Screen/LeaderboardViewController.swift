@@ -12,7 +12,7 @@ final class LeaderboardViewController: UIViewController {
     // MARK: - Properties
 
     private var leaderboards: [LeaderboardModel]?
-    private var durations: [String]?
+	private var durations: [Int]?
 
     // MARK: - Outlets
 
@@ -70,9 +70,10 @@ final class LeaderboardViewController: UIViewController {
         setupNavigationBar()
         setupView()
         fetchLeaderboardData()
+		
     }
 
-    // MARK: - Setups
+	// MARK: - Setups
 
     private func setupView() {
         view.backgroundColor = .app(.lightPurple)
@@ -82,7 +83,7 @@ final class LeaderboardViewController: UIViewController {
         navigationItem.titleView = titleLabel
         let backButtonImage = UIImage(named: "Back-Icon")?.withRenderingMode(.alwaysOriginal)
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: backButtonImage, style: .plain, target: self, action: nil
+			image: backButtonImage, style: .plain, target: self, action: #selector(backButtonTapped)
         )
     }
 
@@ -138,7 +139,7 @@ final class LeaderboardViewController: UIViewController {
 private extension LeaderboardViewController {
     func fetchLeaderboardData() {
         // TODO: здесь будет получение данных из хранилища
-        //durations = ["45:30", "15:45", "30:20", "125:10", "50:15"]
+		durations = Results.list.map() { $0.time }
         updateUIVisibility()
     }
 
@@ -153,19 +154,19 @@ private extension LeaderboardViewController {
 
     func sortAndUpdateLeaderboards() {
         leaderboards = durations?
-            .sorted { timeToSeconds($0) < timeToSeconds($1) }
+			.sorted(by: < )
             .enumerated()
             .map { index, duration in
                 LeaderboardModel(position: index + 1, duration: duration, isBest: index == 0)
             }
         resultsTableView.reloadData()
     }
+	
+	
+	@objc private func backButtonTapped() {
+		self.navigationController?.popViewController(animated: true)
+	}
 
-    func timeToSeconds(_ time: String) -> Int {
-        let components = time.split(separator: ":").compactMap { Int($0) }
-        guard components.count == 2 else { return 0 }
-        return components[0] * 60 + components[1]
-    }
 }
 
 // MARK: - TableView DataSource
@@ -219,7 +220,3 @@ extension LeaderboardViewController {
     }
 }
 
-//@available(iOS 17.0, *)
-//#Preview {
-//    UINavigationController(rootViewController: LeaderboardViewController())
-//}

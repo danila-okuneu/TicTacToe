@@ -67,7 +67,7 @@ struct Saves {
 	
 	static func load() {
 
-		
+		Results.load()
 		Skins.selectedPair = UserDefaults.standard.integer(forKey: "selectedPair")
 		Saves.isMusicOn = UserDefaults.standard.bool(forKey: "musicOn")
 		Saves.selectedSong = UserDefaults.standard.string(forKey: "selectedSong") ?? "Song 1"

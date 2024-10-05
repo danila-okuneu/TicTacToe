@@ -192,7 +192,7 @@ extension SelectGameViewController: DifficultyDelegate {
 		
 		let gameViewController = GameViewController()
 		gameViewController.gameMode = GameMode.singlePlayer
-		gameViewController.difficultyLevel = difficulty
+		gameViewController.difficulty = difficulty
 		self.navigationController?.pushViewController(gameViewController, animated: true)
 	}
 	

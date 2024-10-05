@@ -11,7 +11,7 @@ import SnapKit
 
 class GameBoard: UIView {
 
-	var difficultyLevel: Difficulty?
+	var difficulty: Difficulty?
     private var winningLineView: LineWinnerView?
     
     private var gameState: [Player?] = Array(repeating: nil, count: 9)
@@ -238,7 +238,7 @@ extension GameBoard {
 
         var index: Int?
 
-        switch difficultyLevel {
+        switch difficulty {
         case .easy:
             index = makeRandomMove()
 		case .medium:
