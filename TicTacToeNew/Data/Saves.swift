@@ -13,8 +13,30 @@ struct Saves {
 	
 	static var isTimeMode = true
 	static var selectedTime = 60
-	static var isMusicOn = true
-	static var selectedSong = "Song 1"
+	static var isMusicOn: Bool {
+		get {
+			return UserDefaults.standard.bool(forKey: "musicOn")
+		}
+		set {
+			UserDefaults.standard.set(newValue, forKey: "musicOn")
+			if newValue {
+				MusicPlayer.shared.startBackgroundMusic()
+			} else {
+				MusicPlayer.shared.stopBackgroundMusic()
+			}
+		}
+	}
+	
+	static var selectedSong: String {
+		get {
+			return UserDefaults.standard.string(forKey: "songName") ?? "Song 1"
+		}
+		set {
+			UserDefaults.standard.set(newValue, forKey: "songName")
+			MusicPlayer.shared.stopBackgroundMusic()
+			MusicPlayer.shared.startBackgroundMusic()
+		}
+	}
 
     /// Allows you to save any data under a given key
     /// - Parameters:

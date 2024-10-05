@@ -235,7 +235,6 @@ extension SettingsViewController: DynamicDelegate {
 	func dynamicViewDidChangedHeight(_ dynamicTimeView: Dynamic) {
 		UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut) {
 				self.view.layoutIfNeeded()
-				print("Settings Delegate")
 			}
 		}
 	

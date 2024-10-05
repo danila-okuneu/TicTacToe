@@ -28,7 +28,7 @@ class MainViewController: UIViewController {
         
 		setupNavigationBar()
 		playButton.addTarget(self, action: #selector(playTapped), for: .touchUpInside)
-        view.backgroundColor = UIColor.white
+		view.backgroundColor = UIColor.app(.lightPurple)
     }
     
 	override func viewWillAppear(_ animated: Bool) {
@@ -66,10 +66,11 @@ class MainViewController: UIViewController {
         view.addSubview(playButton)
         
         playButton.setTitle("Let's play", for: .normal)
-        playButton.layer.cornerRadius = 30
+        playButton.layer.cornerRadius = 36
         playButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         playButton.tintColor = .white
-        playButton.backgroundColor = UIColor(red: 132/255, green: 128/255, blue: 212/255, alpha: 1)
+		playButton.dropShadow()
+		playButton.backgroundColor = UIColor.app(.activeButton)
         playButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([

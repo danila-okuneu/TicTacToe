@@ -38,6 +38,10 @@
 		37F8D4632CAC98C200CBB15A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D4622CAC98C200CBB15A /* Extensions.swift */; };
 		F108FEA62CB01DF600E8216D /* MusicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F108FEA52CB01DF300E8216D /* MusicView.swift */; };
 		F15E77092CAED9E900E8FB9D /* SelectGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E77082CAED9E900E8FB9D /* SelectGameViewController.swift */; };
+		F17BDA0E2CB180910006D8A9 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17BDA0D2CB1808C0006D8A9 /* MusicPlayer.swift */; };
+		F17BDA122CB184260006D8A9 /* Song 3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F17BDA112CB184260006D8A9 /* Song 3.mp3 */; };
+		F17BDA132CB184260006D8A9 /* Song 1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F17BDA0F2CB184260006D8A9 /* Song 1.mp3 */; };
+		F17BDA142CB184260006D8A9 /* Song 2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F17BDA102CB184260006D8A9 /* Song 2.mp3 */; };
 		F1AD96C02CAF291E00C9AC40 /* DynamicMusicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AD96BF2CAF290E00C9AC40 /* DynamicMusicView.swift */; };
 		F1BCAF322CAD4EE700D812C3 /* DynamicTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BCAF312CAD4EE100D812C3 /* DynamicTimeView.swift */; };
 /* End PBXBuildFile section */
@@ -75,6 +79,10 @@
 		37F8D4622CAC98C200CBB15A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F108FEA52CB01DF300E8216D /* MusicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicView.swift; sourceTree = "<group>"; };
 		F15E77082CAED9E900E8FB9D /* SelectGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGameViewController.swift; sourceTree = "<group>"; };
+		F17BDA0D2CB1808C0006D8A9 /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
+		F17BDA0F2CB184260006D8A9 /* Song 1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Song 1.mp3"; sourceTree = "<group>"; };
+		F17BDA102CB184260006D8A9 /* Song 2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Song 2.mp3"; sourceTree = "<group>"; };
+		F17BDA112CB184260006D8A9 /* Song 3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Song 3.mp3"; sourceTree = "<group>"; };
 		F1AD96BF2CAF290E00C9AC40 /* DynamicMusicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicMusicView.swift; sourceTree = "<group>"; };
 		F1BCAF312CAD4EE100D812C3 /* DynamicTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTimeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -196,6 +204,7 @@
 				37F8D45A2CAC97CD00CBB15A /* SkinsModel.swift */,
 				37F8D45C2CAC97EA00CBB15A /* TimeToggleView.swift */,
 				37F8D45E2CAC982600CBB15A /* TimeView.swift */,
+				F17BDA0D2CB1808C0006D8A9 /* MusicPlayer.swift */,
 			);
 			path = "Setting Screen";
 			sourceTree = "<group>";
@@ -221,6 +230,9 @@
 		37F8D43D2CAC94F500CBB15A /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				F17BDA0F2CB184260006D8A9 /* Song 1.mp3 */,
+				F17BDA102CB184260006D8A9 /* Song 2.mp3 */,
+				F17BDA112CB184260006D8A9 /* Song 3.mp3 */,
 				37F8D42A2CAC937F00CBB15A /* Assets.xcassets */,
 			);
 			path = Assets;
@@ -309,6 +321,9 @@
 			files = (
 				37F8D42E2CAC937F00CBB15A /* LaunchScreen.storyboard in Resources */,
 				37F8D42B2CAC937F00CBB15A /* Assets.xcassets in Resources */,
+				F17BDA122CB184260006D8A9 /* Song 3.mp3 in Resources */,
+				F17BDA132CB184260006D8A9 /* Song 1.mp3 in Resources */,
+				F17BDA142CB184260006D8A9 /* Song 2.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +349,7 @@
 				37F8D44D2CAC96B900CBB15A /* ResultViewController.swift in Sources */,
 				370CA3452CADF240007F2A5C /* GameModels.swift in Sources */,
 				371F88B52CACACB9003849A2 /* LeaderboardModel.swift in Sources */,
+				F17BDA0E2CB180910006D8A9 /* MusicPlayer.swift in Sources */,
 				37F8D4222CAC937B00CBB15A /* AppDelegate.swift in Sources */,
 				37F8D4552CAC976400CBB15A /* HStackView.swift in Sources */,
 				37F8D4422CAC95E200CBB15A /* ResultsData.swift in Sources */,

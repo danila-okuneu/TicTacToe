@@ -30,6 +30,10 @@ class RulesViewController: UIViewController {
         tableView.register(RulesCell.self, forCellReuseIdentifier: RulesCell.identifier)
         tableView.separatorStyle = .none
         tableView.dataSource = self
+		tableView.allowsSelection = false
+		tableView.showsVerticalScrollIndicator = false
+		tableView.dropShadow()
+		tableView.layer.shadowOpacity = 0.1
 		tableView.backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

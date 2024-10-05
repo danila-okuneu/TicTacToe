@@ -10,13 +10,8 @@ final class DynamicMusicView: UIView, Dynamic, DynamicDelegate {
 	
 	
 	func dynamicViewDidChangedHeight(_ dynamicTimeView: Dynamic) {
-		
-		
-		
 		UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut) {
 			self.layoutIfNeeded()
-			
-			print("MusicDelegate")
 			self.change(height: self.musicView.bounds.height + 80, for: self)
 			self.delegate?.dynamicViewDidChangedHeight(self)
 		}
