@@ -111,14 +111,16 @@ class GameBoard: UIView {
 
     @objc private func gameButtonTapped(_ sender: UIButton) {
         guard let index = gameButtons.firstIndex(of: sender), gameState[index] == nil else { return }
-
         gameState[index] = currentPlayer
-
+       
         if let imageView = sender.subviews.compactMap({ $0 as? UIImageView }).first {
             imageView.image = currentPlayer == .cross ? playerImages[0] : playerImages[1]
 
-            checkGameState()
-            handleNextPlayerTurn(sender)
+            UIButton.animateButtonPress(sender)
+            UIImageView.fadeInImage(imageView) {
+                self.checkGameState()
+                self.handleNextPlayerTurn(sender)
+            }
         }
     }
 
@@ -170,13 +172,27 @@ class GameBoard: UIView {
 
         if let winner = winner {
             result = winner == .cross ? .win : .lose
+            createWinnerLine(winner)
         } else {
             result = .draw
         }
-        delegateGameVC?.finishGame(with: result)
-
+        // Показываем экран результата после 1.5 секунд чтобы увидеть отрисовку линии выйгрыша
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            self.delegateGameVC?.finishGame(with: result)
+        }
         // Разблокируем все кнопки после завершения игры
         gameButtons.forEach { $0.isUserInteractionEnabled = true }
+    }
+    
+    private func createWinnerLine(_ playerWinner: Player?) {
+        if let winningCombination = winningCombinations.first(where: { combination in
+            let players = combination.compactMap { gameState[$0] }
+            return players.count == 3 && Set(players).count == 1 && players.first == playerWinner
+        }) {
+            // Отобразите линию победителя
+            showWinningLine(for: winningCombination)
+            winningLineView?.isHidden = false
+        }
     }
 
     // MARK: - Public Methods
@@ -237,7 +253,6 @@ extension GameBoard {
         guard gameMode == .singlePlayer else { return }
 
         var index: Int?
-
         switch difficultyLevel {
         case .easy:
             index = makeRandomMove()
@@ -316,7 +331,6 @@ extension GameBoard {
         if gameState.allSatisfy({ $0 != nil }) {
             return 0
         }
-
         var bestScore = (player == .nought) ? Int.min : Int.max
 
         // Проходим по всем доступным ходам

@@ -36,7 +36,7 @@ class CurrentPlayerIndicator: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupViews() 
+        setupViews()
     }
     
     
@@ -75,10 +75,12 @@ extension CurrentPlayerIndicator: PlayerIndicatorDelegate {
         switch player {
         case .cross:
             playerImageView.image = Skins.getSelected().x
+            UIImageView.animateImagePress(playerImageView)  // Анимация при смене картинки
             currentPlayerLabel.text = "You turn"
             showPlayerImage()
         case .nought:
             playerImageView.image = Skins.getSelected().o
+            UIImageView.animateImagePress(playerImageView)  // Анимация при смене картинки
             currentPlayerLabel.text = "Player Two turn"
             showPlayerImage()
         }

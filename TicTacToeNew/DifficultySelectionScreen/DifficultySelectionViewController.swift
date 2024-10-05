@@ -217,7 +217,7 @@ extension DifficultySelectionViewController {
     }
 }
 
-@available(iOS 17.0, *)
-#Preview {
-    UINavigationController(rootViewController: DifficultySelectionViewController())
-}
+//@available(iOS 17.0, *)
+//#Preview {
+//    UINavigationController(rootViewController: DifficultySelectionViewController())
+//}

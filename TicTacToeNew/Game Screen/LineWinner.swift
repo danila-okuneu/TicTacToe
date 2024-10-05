@@ -15,8 +15,9 @@ class LineWinnerView: UIView {
     }
     
     private let step: CGFloat = 10
-    private var lineColor: UIColor = .blue
+    private var lineColor: UIColor = UIColor.app(.darkPurple)
     private var lineWidth: CGFloat = 12
+    private var shapeLayer: CAShapeLayer? // Добавим слой для анимации
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,6 +31,7 @@ class LineWinnerView: UIView {
     
     override func draw(_ rect: CGRect) {
         // Проверяем, есть ли выигрышный паттерн
+        shapeLayer?.removeFromSuperlayer()
         guard !winningPattern.isEmpty,
               let start = positionForCell(index: winningPattern.min()!, in: rect.size),
               let end = positionForCell(index: winningPattern.max()!, in: rect.size) else {
@@ -40,11 +42,23 @@ class LineWinnerView: UIView {
         path.move(to: start)
         path.addLine(to: end)
         
-        // Настройка цвета и стиля
-        lineColor.setStroke()
-        path.lineWidth = lineWidth
-        path.lineCapStyle = .round
-        path.stroke()
+        let newShapeLayer = CAShapeLayer()
+            newShapeLayer.path = path.cgPath
+            newShapeLayer.strokeColor = lineColor.cgColor
+            newShapeLayer.lineWidth = lineWidth
+            newShapeLayer.lineCap = .round
+            newShapeLayer.strokeEnd = 0 // Начальное значение для анимации
+        
+        layer.addSublayer(newShapeLayer)
+            shapeLayer = newShapeLayer // Сохраняем ссылку на новый слой
+        
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+                animation.fromValue = 0
+                animation.toValue = 1
+                animation.duration = 0.5 // Длительность анимации
+                animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+                newShapeLayer.add(animation, forKey: "line")
+                newShapeLayer.strokeEnd = 1 // Обновляем значение strokeEnd после анимации
     }
     
     // Метод для получения позиции центра ячейки по индексу
