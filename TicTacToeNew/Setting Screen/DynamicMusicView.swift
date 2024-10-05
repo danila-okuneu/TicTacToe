@@ -39,7 +39,7 @@ final class DynamicMusicView: UIView, Dynamic, DynamicDelegate {
 	private let titleLabel: UILabel = {
 		let label = UILabel()
 		label.textAlignment = .left
-		label.text = "Turn on the time"
+		label.text = "Music"
 		label.font = .systemFont(ofSize: 18, weight: .semibold)
 		label.numberOfLines = 1
 		label.textColor = UIColor.app(.black)

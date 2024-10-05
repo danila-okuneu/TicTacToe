@@ -24,7 +24,7 @@ final class MusicView: UIView, Dynamic {
 	
 	private let label: UILabel = {
 		let label = UILabel()
-		label.text = "Select song"
+		label.text = "Select music"
 		label.font = .systemFont(ofSize: 18, weight: .semibold)
 		label.translatesAutoresizingMaskIntoConstraints = false
 		return label

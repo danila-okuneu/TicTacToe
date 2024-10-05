@@ -32,7 +32,7 @@ final class DynamicTimeView: UIView, Dynamic {
 	private let titleLabel: UILabel = {
 		let label = UILabel()
 		label.textAlignment = .left
-		label.text = "Turn on the time"
+		label.text = "Time"
 		label.font = .systemFont(ofSize: 18, weight: .semibold)
 		label.numberOfLines = 1
 		label.textColor = UIColor.app(.black)
@@ -52,7 +52,7 @@ final class DynamicTimeView: UIView, Dynamic {
 	private let timeLabel: UILabel = {
 		let label = UILabel()
 		label.textAlignment = .left
-		label.text = "Time for game"
+		label.text = "Selected time"
 		label.font = .systemFont(ofSize: 18, weight: .semibold)
 		label.numberOfLines = 1
 		label.textColor = UIColor.app(.black)

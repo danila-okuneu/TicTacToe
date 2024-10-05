@@ -6,11 +6,20 @@
 //
 import UIKit
 
-class SelectGameViewController: UIViewController {
+final class SelectGameViewController: UIViewController {
     
     
-    let buttonsView = UIStackView()
-    let singlePlayerButton = UIButton()
+	let selectionView: UIView = {
+		let view = UIView()
+		view.backgroundColor = .white
+		view.layer.cornerRadius = 35
+		view.translatesAutoresizingMaskIntoConstraints = false
+		return view
+	}()
+	
+	
+    let buttonStackView = UIStackView()
+	let singlePlayerButton = DynamicBotView()
     let twoPlayersButton = UIButton()
     let leaderbordButton = UIButton()
     let labelSelectGame = UILabel()
@@ -21,72 +30,63 @@ class SelectGameViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
         
-        view.backgroundColor = UIColor(red: 245/255, green: 247/255, blue: 255/255, alpha: 1)
-        
-        
-        setButtonsView()
-        setSinglePlayerButton()
+		view.backgroundColor = UIColor.app(.lightPurple)
+		
+		view.addSubview(selectionView)
+		selectionView.addSubview(labelSelectGame)
+		selectionView.addSubview(buttonStackView)
+		
+		buttonStackView.addArrangedSubview(singlePlayerButton)
+		buttonStackView.addArrangedSubview(twoPlayersButton)
+		buttonStackView.addArrangedSubview(leaderbordButton)
+		
+		setupSelectionView()
+        setButtonsStackView()
         setTwoPlayersButton()
         setLeaderbordButton()
         setLabelSelectGame()
 		
+		
+		singlePlayerButton.delegate = self
 		setButtonTargets() // Add targets for buttons
 		setupNavigationBar() // Add NavigationItems (Back Button and Settings Button)
 	}
     
     
-    func setButtonsView() {
-        buttonsView.axis = .vertical
-        buttonsView.distribution = .fillEqually
-        buttonsView.alignment = .center
-        buttonsView.spacing = 0.5
-        view.addSubview(buttonsView)
-        buttonsView.translatesAutoresizingMaskIntoConstraints = false
-        buttonsView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
-        buttonsView.layer.cornerRadius = 30
-        buttonsView.layer.shadowColor = UIColor.black.cgColor
-        buttonsView.layer.shadowOpacity = 0.150
-        buttonsView.layer.shadowOffset = CGSize(width: 4, height: 4)
-        buttonsView.layer.shadowRadius = 10
-        buttonsView.addArrangedSubview(singlePlayerButton)
-        buttonsView.addArrangedSubview(twoPlayersButton)
-        buttonsView.addArrangedSubview(leaderbordButton)
-        buttonsView.addArrangedSubview(labelSelectGame)
+	private func setupSelectionView() {
+		
+		
+		
+		NSLayoutConstraint.activate([
+			selectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 3/4),
+			selectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			selectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+		])
+	}
+	
+	
+    func setButtonsStackView() {
+        buttonStackView.axis = .vertical
+		buttonStackView.distribution = .fillProportionally
+        buttonStackView.spacing = 20
+        view.addSubview(buttonStackView)
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+        buttonStackView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
+		
+		
+		
         
         NSLayoutConstraint.activate([
-            buttonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            buttonsView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            buttonsView.heightAnchor.constraint(equalToConstant: 336),
-            buttonsView.widthAnchor.constraint(equalToConstant: 285)
-            
+			buttonStackView.leadingAnchor.constraint(equalTo: selectionView.leadingAnchor, constant: 20),
+			buttonStackView.trailingAnchor.constraint(equalTo: selectionView.trailingAnchor, constant: -20),
+			buttonStackView.topAnchor.constraint(equalTo: labelSelectGame.bottomAnchor, constant: 10),
+			buttonStackView.bottomAnchor.constraint(equalTo: selectionView.bottomAnchor, constant: -20)
         ])
         
     }
     
-    func setSinglePlayerButton() {
-        view.addSubview(singlePlayerButton)
         
-        singlePlayerButton.setTitle("  Single Player", for: .normal)
-        singlePlayerButton.layer.cornerRadius = 30
-        singlePlayerButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        singlePlayerButton.setTitleColor(UIColor.black, for: .normal)
-        singlePlayerButton.backgroundColor = UIColor(red: 230/255, green: 233/255, blue: 249/255, alpha: 1)
-        singlePlayerButton.setImage(imageSingle, for: .normal)
-        singlePlayerButton.imageView?.layer.transform = CATransform3DMakeScale(0.8, 0.8, 0.8)
-        singlePlayerButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            singlePlayerButton.centerXAnchor.constraint(equalTo: buttonsView.centerXAnchor),
-            singlePlayerButton.topAnchor.constraint(equalTo: labelSelectGame.bottomAnchor, constant: 20),
-            singlePlayerButton.heightAnchor.constraint(equalToConstant: 69),
-            singlePlayerButton.widthAnchor.constraint(equalToConstant: 245)
-        ])
-
-        singlePlayerButton.tag = GameMode.singlePlayer.hashValue
-    }
-    
     func setTwoPlayersButton() {
-        view.addSubview(twoPlayersButton)
         
         twoPlayersButton.setTitle("  Two Players", for: .normal)
         twoPlayersButton.layer.cornerRadius = 30
@@ -98,17 +98,13 @@ class SelectGameViewController: UIViewController {
         twoPlayersButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            twoPlayersButton.centerXAnchor.constraint(equalTo: buttonsView.centerXAnchor),
-            twoPlayersButton.topAnchor.constraint(equalTo: singlePlayerButton.bottomAnchor, constant: 20),
-            twoPlayersButton.heightAnchor.constraint(equalToConstant: 69),
-            twoPlayersButton.widthAnchor.constraint(equalToConstant: 245)
+			twoPlayersButton.heightAnchor.constraint(equalToConstant: 60)
         ])
 
         twoPlayersButton.tag = GameMode.multiPlayer.hashValue
     }
     
     func setLeaderbordButton() {
-        view.addSubview(leaderbordButton)
         
         leaderbordButton.setTitle("  Leaderbord", for: .normal)
         leaderbordButton.layer.cornerRadius = 30
@@ -120,28 +116,28 @@ class SelectGameViewController: UIViewController {
         leaderbordButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            leaderbordButton.centerXAnchor.constraint(equalTo: buttonsView.centerXAnchor),
-            leaderbordButton.topAnchor.constraint(equalTo: twoPlayersButton.bottomAnchor, constant: 20),
-            leaderbordButton.heightAnchor.constraint(equalToConstant: 69),
-            leaderbordButton.widthAnchor.constraint(equalToConstant: 245)
+            
+            leaderbordButton.heightAnchor.constraint(equalToConstant: 60),
         ])
     }
     
     func setLabelSelectGame () {
-        view.addSubview(labelSelectGame)
+        
         labelSelectGame.text = "Select Game"
         labelSelectGame.textColor = .black
+		labelSelectGame.textAlignment = .center
         labelSelectGame.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         labelSelectGame.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            labelSelectGame.topAnchor.constraint(equalTo: buttonsView.topAnchor, constant: 20),
-            labelSelectGame.centerXAnchor.constraint(equalTo: buttonsView.centerXAnchor),
-        ])
-    }
+		
+		NSLayoutConstraint.activate([
+			labelSelectGame.topAnchor.constraint(equalTo: selectionView.topAnchor, constant: 20),
+			labelSelectGame.leadingAnchor.constraint(equalTo: selectionView.leadingAnchor, constant: 20),
+			labelSelectGame.trailingAnchor.constraint(equalTo: selectionView.trailingAnchor, constant: -20),
+			labelSelectGame.heightAnchor.constraint(equalToConstant: 24)
+		])
+	}
 	
 	private func setButtonTargets() {
-		singlePlayerButton.addTarget(self, action: #selector(startGame), for: .touchUpInside)
 		twoPlayersButton.addTarget(self, action: #selector(startGame), for: .touchUpInside)
 		leaderbordButton.addTarget(self, action: #selector(pushLeaderboard), for: .touchUpInside)
 	}
@@ -195,3 +191,24 @@ class SelectGameViewController: UIViewController {
 	}
 }
 
+protocol DifficultyDelegate: DynamicDelegate {
+	func pushViewController(difficulty: DifficultyLevel)
+}
+extension SelectGameViewController: DifficultyDelegate {
+	
+	func pushViewController(difficulty: DifficultyLevel) {
+		
+		let gameViewController = GameViewController()
+		gameViewController.gameMode = GameMode.singlePlayer
+		gameViewController.difficultyLevel = difficulty
+		self.navigationController?.pushViewController(gameViewController, animated: true)
+	}
+	
+	func dynamicViewDidChangedHeight(_ dynamicTimeView: Dynamic) {
+		UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut) {
+			self.view.layoutIfNeeded()
+		}
+	}
+
+	
+}

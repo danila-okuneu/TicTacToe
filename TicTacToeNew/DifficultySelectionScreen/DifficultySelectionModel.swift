@@ -5,8 +5,11 @@
 //  Created by Churkin Vitaly on 05.10.2024.
 //
 
-enum DifficultyLevel {
-    case easy
-    case standart
-    case hard
+enum DifficultyLevel: String, CaseIterable {
+    case easy = "Easy"
+    case standart = "Standart"
+    case hard = "Hard"
 }
+
+
+
