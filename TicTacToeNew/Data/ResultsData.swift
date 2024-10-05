@@ -13,12 +13,15 @@ struct Results: Codable {
     
     
     // MARK: - Static methods
-    static func clearResults() {
+    
+	static func clearResults() {
         Results.list = []
     }
     
+	
+	
     static func getResults() -> [(Int, Result)] {
-        
+
         var results: [(Int, Result)] = []
         
         for (index, result) in Results.list.enumerated() {

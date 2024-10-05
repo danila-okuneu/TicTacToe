@@ -10,7 +10,7 @@ struct Result: Codable {
     
     let time: String
     let mode: Mode
-    let difficulty: String?
+	let difficulty: Difficulty?
     
 }
 
@@ -21,8 +21,8 @@ enum Mode: Codable {
 }
 
 
-enum Difficulty: String {
-    case easy
-    case medium
-    case hard
+enum Difficulty: String, CaseIterable, Codable {
+    case easy = "Easy"
+    case medium = "Medium"
+    case hard = "Hard"
 }

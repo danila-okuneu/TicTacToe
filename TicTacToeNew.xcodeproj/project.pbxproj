@@ -107,14 +107,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0FB522052CB1491A0027ABC3 /* DifficultySelectionScreen */ = {
-			isa = PBXGroup;
-			children = (
-				0FB522082CB149390027ABC3 /* DifficultySelectionModel.swift */,
-			);
-			path = DifficultySelectionScreen;
-			sourceTree = "<group>";
-		};
 		371F88B02CACAC4B003849A2 /* LeaderBoard Screen */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,7 +145,6 @@
 			isa = PBXGroup;
 			children = (
 				F15E77072CAED9D200E8FB9D /* SelectGameScreen */,
-				0FB522052CB1491A0027ABC3 /* DifficultySelectionScreen */,
 				371F88B02CACAC4B003849A2 /* LeaderBoard Screen */,
 				37F8D43E2CAC950100CBB15A /* App Delegate */,
 				37F8D43D2CAC94F500CBB15A /* Assets */,
@@ -271,6 +262,7 @@
 				F15E77082CAED9E900E8FB9D /* SelectGameViewController.swift */,
 				F17BDA172CB1AE220006D8A9 /* DynamicBotView.swift */,
 				0FB5220A2CB14E6A0027ABC3 /* SelectGameModel.swift */,
+				0FB522082CB149390027ABC3 /* DifficultySelectionModel.swift */,
 			);
 			path = SelectGameScreen;
 			sourceTree = "<group>";

@@ -66,11 +66,9 @@ struct Saves {
 	
 	
 	static func load() {
-		UserDefaults.standard.register(defaults: ["selectedPair" : 1])
-		UserDefaults.standard.register(defaults: ["timeMode" : false])
-		UserDefaults.standard.register(defaults: ["musicOn" : false])
-	
-		Skins.load()
+
+		
+		Skins.selectedPair = UserDefaults.standard.integer(forKey: "selectedPair")
 		Saves.isMusicOn = UserDefaults.standard.bool(forKey: "musicOn")
 		Saves.selectedSong = UserDefaults.standard.string(forKey: "selectedSong") ?? "Song 1"
 		Saves.isTimeMode = UserDefaults.standard.bool(forKey: "timeMode")

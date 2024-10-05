@@ -174,16 +174,10 @@ final class SelectGameViewController: UIViewController {
 	
 
     @objc private func startGame(_ sender: UIButton) {
-        switch sender.tag {
-        case GameMode.singlePlayer.hashValue:
-            self.navigationController?.pushViewController(DifficultySelectionViewController(), animated: true)
-        case GameMode.multiPlayer.hashValue:
-            let gameViewController = GameViewController()
-            gameViewController.gameMode = .multiPlayer
-            self.navigationController?.pushViewController(gameViewController, animated: true)
-        default:
-            break
-        }
+        
+		let gameViewController = GameViewController()
+		gameViewController.gameMode = .multiPlayer
+		self.navigationController?.pushViewController(gameViewController, animated: true)
 	}
 	
 	@objc private func pushLeaderboard() {

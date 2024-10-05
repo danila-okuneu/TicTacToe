@@ -4,14 +4,13 @@
 //
 //  Created by Danila Okuneu on 5.10.24.
 //
-import AVFoundation
 
 import AVFoundation
 
 class MusicPlayer {
 	static let shared = MusicPlayer()
 	private var audioPlayer: AVAudioPlayer?
-	private let audioQueue = DispatchQueue(label: "com.yourapp.audioQueue", qos: .userInitiated)
+	private let audioQueue = DispatchQueue(label: "idk", qos: .userInitiated)
 
 	func startBackgroundMusic() {
 		audioQueue.async { [weak self] in
