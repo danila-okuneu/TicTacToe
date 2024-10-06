@@ -112,16 +112,16 @@ class GameBoard: UIView {
 
     @objc private func gameButtonTapped(_ sender: UIButton) {
         guard let index = gameButtons.firstIndex(of: sender), gameState[index] == nil else { return }
-
+        setButtonLock(false)
         gameState[index] = currentPlayer
 
         if let imageView = sender.subviews.compactMap({ $0 as? UIImageView }).first {
 			
             imageView.image = currentPlayer == .cross ? playerImages[0] : playerImages[1]
 
-			
 			UIButton.animateButtonPress(sender)
 			UIImageView.fadeInImage(imageView) {
+                self.setButtonLock(true)
 				self.checkGameState()
 				self.handleNextPlayerTurn(sender)
 			}
@@ -143,15 +143,12 @@ class GameBoard: UIView {
     // Обрабатывает ход текущего игрока и переключает ход на следующего игрока (или бота).
     private func handleNextPlayerTurn(_ sender: UIButton) {
         if gameMode == .singlePlayer {
-            sender.isUserInteractionEnabled = false
+            setButtonLock(false)
             currentPlayer = .cross
-			
 
 			DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
 				self?.botTurn()
-	
 			}
-
 			
         } else {
             currentPlayer = currentPlayer == .cross ? .nought : .cross
@@ -190,12 +187,11 @@ class GameBoard: UIView {
         } else {
             result = .draw
         }
-		
+
 		DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
 			self.delegateGameVC?.finishGame(with: result)
 		}
-		// Разблокируем все кнопки после завершения игры
-		gameButtons.forEach { $0.isUserInteractionEnabled = true }
+        setButtonLock(true)
 	}
 	
 	private func createWinnerLine(_ playerWinner: Player?) {
@@ -222,6 +218,7 @@ class GameBoard: UIView {
         currentPlayer = .cross
         delegatePI?.updateIndicator(for: currentPlayer)
         for button in gameButtons {
+            button.isUserInteractionEnabled = true
             if let imageView = button.subviews.compactMap({ $0 as? UIImageView }).first {
                 imageView.image = nil
             }
@@ -245,6 +242,12 @@ class GameBoard: UIView {
             ])
     }
 
+    private func setButtonLock(_ isLocked: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            gameButtons.forEach { $0.isUserInteractionEnabled = isLocked }
+        }
+    }
 }
 
 extension GameBoard {
@@ -286,6 +289,7 @@ extension GameBoard {
                 imageView.image = playerImages[1]
             }
             checkGameState()
+            setButtonLock(true)
         }
     }
 
