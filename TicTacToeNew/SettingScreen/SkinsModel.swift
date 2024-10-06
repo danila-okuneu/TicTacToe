@@ -17,8 +17,8 @@ struct Skins {
         let lowercaseX = UIImage(named: "xSkin\(pair)")
         let lowercaseO = UIImage(named: "oSkin\(pair)")
         
-        let uppercaseX = UIImage(named: "XSkin\(pair)")
-        let uppercaseO = UIImage(named: "OSkin\(pair)")
+        let uppercaseX = UIImage(named: "Xskin\(pair)")
+        let uppercaseO = UIImage(named: "Oskin\(pair)")
         
         let x = lowercaseX ?? uppercaseX ?? Skins.get(pair: 1).x
         let o = lowercaseO ?? uppercaseO ?? Skins.get(pair: 1).o

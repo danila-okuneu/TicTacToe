@@ -87,7 +87,7 @@ final class SelectGameViewController: UIViewController {
         twoPlayersButton.titleLabel?.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
 		twoPlayersButton.setTitleColor(UIColor.app(.black), for: .normal)
 		twoPlayersButton.backgroundColor = UIColor.app(.lightPurple)
-		twoPlayersButton.setImage(UIImage(named: "multiplayer"), for: .normal)
+		twoPlayersButton.setImage(UIImage(named: "Multiplayer"), for: .normal)
         twoPlayersButton.imageView?.layer.transform = CATransform3DMakeScale(0.8, 0.8, 0.8)
         twoPlayersButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -105,7 +105,7 @@ final class SelectGameViewController: UIViewController {
         leaderbordButton.titleLabel?.font = .systemFont(ofSize: 22, weight: .semibold)
 		leaderbordButton.setTitleColor(UIColor.app(.black), for: .normal)
 		leaderbordButton.backgroundColor = UIColor.app(.lightPurple)
-		leaderbordButton.setImage(UIImage(named: "leaderboard"), for: .normal)
+		leaderbordButton.setImage(UIImage(named: "Leaderboard"), for: .normal)
         leaderbordButton.imageView?.layer.transform = CATransform3DMakeScale(0.8, 0.8, 0.8)
         leaderbordButton.translatesAutoresizingMaskIntoConstraints = false
         

@@ -51,9 +51,9 @@ class GameViewController: UIViewController {
         guard let resetGame = resetGame else {
             return
         }
-		if Saves.isTimeMode {
-			startTimer()
-		}
+		
+		startTimer()
+	
         resetGame()
     }
 	
@@ -227,6 +227,7 @@ extension GameViewController {
 	private func startTimer() {
 		
 		timer?.invalidate()
+	
 		updateTimerTitle()
 		remainingTime = Saves.selectedTime
 		timer = Timer.scheduledTimer(timeInterval: 1.0,
@@ -238,9 +239,11 @@ extension GameViewController {
 	
 	
 	private func updateTimerTitle() {
-		let minutes = remainingTime / 60
-		let seconds = remainingTime % 60
-		title = String(format: "%d:%02d", minutes, seconds)
+		if Saves.isTimeMode {
+			let minutes = remainingTime / 60
+			let seconds = remainingTime % 60
+			title = String(format: "%d:%02d", minutes, seconds)
+		}
 	}
 	
 	@objc private func timerTick() {
@@ -255,8 +258,10 @@ extension GameViewController {
 	}
 	
 	private func timerDidFinish() {
-		resetTimer()
-		finishGame(with: .draw)
+		if Saves.isTimeMode {
+			resetTimer()
+			finishGame(with: .draw)
+		}
 	}
 	
 	private func resetTimer() {
