@@ -6,43 +6,7 @@ class LeaderboardTableViewCell: UITableViewCell {
 
     static let identifier = "LeaderboardTableViewCell"
 	
-    var leaderboard: LeaderboardModel? {
-        didSet {
-            guard let leaderboard else { return }
-			let time = translateTo(time: leaderboard.duration)
-			let attributedString = NSMutableAttributedString(string: leaderboard.isBest ? "Best time: \(time)" : "Time: \(time)")
-			attributedString.addAttribute(
-				NSAttributedString.Key.font,
-				value: UIFont.systemFont(
-					ofSize: 18,
-					weight: .semibold
-				),
-				range: NSRange(
-					location: 0,
-					length: attributedString.string.count - time.count
-				)
-			)
-			
-			
-            positionLabel.text = "\(leaderboard.position)"
-			
-			durationLabel.attributedText = attributedString
-			positionLabel.backgroundColor = leaderboard.isBest ? .app(.purple) : .app(.lightBlue)
-            durationContainer.backgroundColor = leaderboard.isBest ? .app(.purple) : .app(.lightBlue)
-			
-			let modeAttributedString = NSMutableAttributedString(string: "Mode:")
-			modeAttributedString.addAttribute(
-				NSAttributedString.Key.font,
-				value: UIFont.systemFont(
-					ofSize: 20,
-					weight: .semibold
-				),
-				range: NSRange(location: 0, length: 5)
-			)
-			
-			modeLabel.attributedText = modeAttributedString
-        }
-    }
+	var leaderboard: LeaderboardModel? { didSet { setLeaderboard() } }
 
     // MARK: - Outlets
     private let positionLabel: UILabel = {
@@ -80,19 +44,17 @@ class LeaderboardTableViewCell: UITableViewCell {
 		label.textAlignment = .left
 		label.textColor = .black
 		label.translatesAutoresizingMaskIntoConstraints = false
-		
-		
 		return label
-
 	}()
     // MARK: - Initial
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .app(.lightPurple)
         setupHierarchy()
         setupLayout()
     }
+	
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -134,33 +96,70 @@ class LeaderboardTableViewCell: UITableViewCell {
             durationContainer.centerYAnchor.constraint(
                 equalTo: contentView.centerYAnchor
             ),
-			durationLabel.topAnchor.constraint(
-				equalTo: durationContainer.topAnchor,
-				constant: 10
+			durationLabel.bottomAnchor.constraint(
+				equalTo: durationContainer.bottomAnchor,
+				constant: -10
             ),
             durationLabel.leadingAnchor.constraint(
                 equalTo: durationContainer.leadingAnchor,
                 constant: Constants.durationLabelLeadingMargin
             ),
 			
-			modeLabel.trailingAnchor.constraint(
-				equalTo: contentView.trailingAnchor
-			),
-			modeLabel.centerYAnchor.constraint(
-				equalTo: contentView.centerYAnchor
-			),
-			modeLabel.bottomAnchor.constraint(
-				equalTo: durationContainer.bottomAnchor,
-				constant: -10
+			
+			
+			modeLabel.topAnchor.constraint(
+				equalTo: durationContainer.topAnchor,
+				constant: 10
 			),
 			modeLabel.leadingAnchor.constraint(
 				equalTo: durationContainer.leadingAnchor,
 				constant: Constants.durationLabelLeadingMargin
 			),
+		
 
 			
         ])
     }
+	
+	
+	private func setLeaderboard() {
+		
+		let time = translateTo(time: leaderboard?.result.time ?? 0)
+		var mode = leaderboard?.result.mode.rawValue ?? "Single"
+		if let difficulty = leaderboard?.result.difficulty?.rawValue {
+			mode = "Single | \(difficulty)"
+		}
+		
+		if let leaderboard {
+			positionLabel.text = "\(leaderboard.position)"
+			
+			durationLabel.attributedText = attributed(
+				string: leaderboard.isBest ? "Best time: \(time)" : "Time: \(time)",
+				lenght: leaderboard.isBest ? 10 : 5
+			)
+			
+			modeLabel.attributedText = attributed(string: "Mode: \(mode)", lenght: 5)
+			positionLabel.backgroundColor = leaderboard.isBest ? .app(.purple) : .app(.lightBlue)
+			durationContainer.backgroundColor = leaderboard.isBest ? .app(.purple) : .app(.lightBlue)
+
+				
+		}
+	}
+	
+	private func attributed(string: String, lenght: Int) -> NSAttributedString {
+		
+		let attributedString = NSMutableAttributedString(string: string)
+		attributedString.addAttribute(
+			NSAttributedString.Key.font,
+			value: UIFont.systemFont(
+				ofSize: 18,
+				weight: .semibold
+			),
+			range: NSRange(location: 0, length: lenght)
+		)
+		return attributedString
+	}
+	
 	
 	private func translateTo(time: Int) -> String {
 		let minutes = time / 60

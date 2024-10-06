@@ -23,12 +23,12 @@ final class DynamicSingleView: UIView, Dynamic {
 	// MARK: - UI Components
 	private let singlePlayerButton: UIButton = {
 		let button = UIButton()
-		button.setTitle("  Single Player", for: .normal)
+		button.setTitle("Single Player", for: .normal)
 		button.titleLabel?.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
 		button.setTitleColor(.black, for: .normal)
 		button.backgroundColor = .clear
 //		button.setImage("Singleplayer", for: .normal)
-		button.imageView?.image = UIImage(named: "Singleplayer")
+		button.setImage(UIImage(named: "Singleplayer"), for: .normal)
 		button.imageView?.layer.transform = CATransform3DMakeScale(0.8, 0.8, 0.8)
 		button.translatesAutoresizingMaskIntoConstraints = false
 		return button

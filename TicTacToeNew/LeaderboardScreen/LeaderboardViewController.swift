@@ -11,8 +11,8 @@ final class LeaderboardViewController: UIViewController {
 
     // MARK: - Properties
 
-    private var leaderboards: [LeaderboardModel]?
-	private var durations: [Int]?
+	private var leaderboards: [LeaderboardModel] = []
+	
 
     // MARK: - Outlets
 
@@ -62,6 +62,17 @@ final class LeaderboardViewController: UIViewController {
         tableView.delegate = self
         return tableView
     }()
+	
+	private let clearButton: UIButton = {
+		let button = UIButton()
+		button.setTitle("Clear", for: .normal)
+		button.titleLabel?.font = .systemFont(ofSize: 22, weight: .semibold)
+		button.tintColor = .white
+		button.backgroundColor = UIColor.app(.activeButton)
+		button.layer.cornerRadius = 40
+		button.translatesAutoresizingMaskIntoConstraints = false
+		return button
+	}()
 
     // MARK: - Lifecycle
 
@@ -85,11 +96,14 @@ final class LeaderboardViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(
 			image: backButtonImage, style: .plain, target: self, action: #selector(backButtonTapped)
         )
+		
+		clearButton.addTarget(self, action: #selector(clearResults), for: .touchUpInside)
     }
 
 
     private func setupTableView() {
         view.addSubview(resultsTableView)
+		view.addSubview(clearButton)
         setupTableViewLayout()
     }
 
@@ -109,7 +123,13 @@ final class LeaderboardViewController: UIViewController {
             ),
             resultsTableView.bottomAnchor.constraint(
                 equalTo: view.bottomAnchor
-            )
+            ),
+			
+			clearButton.heightAnchor.constraint(equalToConstant: 80),
+			clearButton.widthAnchor.constraint(equalToConstant: 160),
+			clearButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
+			clearButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10)
+			
         ])
     }
 
@@ -129,7 +149,7 @@ final class LeaderboardViewController: UIViewController {
             ),
             emptyStateStackView.widthAnchor.constraint(
                 equalToConstant: Constants.stackViewWidthSize
-            ),
+            )
         ])
     }
 }
@@ -139,12 +159,12 @@ final class LeaderboardViewController: UIViewController {
 private extension LeaderboardViewController {
     func fetchLeaderboardData() {
         // TODO: здесь будет получение данных из хранилища
-		durations = Results.list.map() { $0.time }
-        updateUIVisibility()
+		let results = Results.list
+		updateUIVisibility(by: results)
     }
 
-    func updateUIVisibility() {
-        if let durations, !durations.isEmpty {
+	func updateUIVisibility(by results: [Result]) {
+		if !results.isEmpty {
             setupTableView()
             sortAndUpdateLeaderboards()
         } else {
@@ -153,11 +173,11 @@ private extension LeaderboardViewController {
     }
 
     func sortAndUpdateLeaderboards() {
-        leaderboards = durations?
-			.sorted(by: < )
+		leaderboards = Results.list
+			.sorted(by: { $0.time < $1.time } )
             .enumerated()
-            .map { index, duration in
-                LeaderboardModel(position: index + 1, duration: duration, isBest: index == 0)
+            .map { index, result in
+				LeaderboardModel(position: index + 1, isBest: index == 0, result: result)
             }
         resultsTableView.reloadData()
     }
@@ -167,13 +187,24 @@ private extension LeaderboardViewController {
 		self.navigationController?.popViewController(animated: true)
 	}
 
+	
+	@objc private func clearResults() {
+		UIView.animate(withDuration: 0.3) {
+			self.clearButton.layer.opacity = 0
+		}
+		Results.list = []
+		leaderboards = []
+		Results.save()
+		resultsTableView.reloadData()
+		updateUIVisibility(by: Results.list)
+	}
 }
 
 // MARK: - TableView DataSource
 
 extension LeaderboardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return leaderboards?.count ?? 0
+        return leaderboards.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -183,7 +214,7 @@ extension LeaderboardViewController: UITableViewDataSource {
         ) as? LeaderboardTableViewCell else {
             return UITableViewCell()
         }
-        let leaderboard = leaderboards?[indexPath.row]
+		let leaderboard = leaderboards[indexPath.row]
         cell.leaderboard = leaderboard
         cell.selectionStyle = .none
         return cell

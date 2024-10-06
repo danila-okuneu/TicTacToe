@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "xSkin2@1x.png",
+      "filename" : "Xskin2.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "xSkin2@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "xSkin2@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

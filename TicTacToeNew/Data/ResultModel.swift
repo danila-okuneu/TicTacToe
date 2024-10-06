@@ -15,9 +15,9 @@ struct Result: Codable {
 }
 
 
-enum GameMode: Codable {
-    case singlePlayer
-    case twoPlayer
+enum GameMode: String, Codable {
+	case singlePlayer = "Single"
+    case twoPlayer = "Multi"
 }
 
 

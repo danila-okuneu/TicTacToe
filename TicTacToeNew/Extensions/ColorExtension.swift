@@ -47,15 +47,3 @@ extension UIColor {
         
     }
 }
-
-
-
-extension UIView {
-    
-    func dropShadow() {
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.15
-        layer.shadowRadius = 10
-    }
-    
-}

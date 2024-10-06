@@ -23,9 +23,6 @@ final class SelectGameViewController: UIViewController {
     let twoPlayersButton = UIButton()
     let leaderbordButton = UIButton()
     let labelSelectGame = UILabel()
-    let imageSingle = UIImage(named: "Singleplayer.png")
-    let imageTwoPlayers = UIImage(named: "Multiplayer")
-    let imageLeaderbord = UIImage(named: "Multiplayer Icon")
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -46,7 +43,7 @@ final class SelectGameViewController: UIViewController {
         setLeaderbordButton()
         setLabelSelectGame()
 		
-		
+		selectionView.dropShadow()
 		singlePlayerButton.delegate = self
 		setButtonTargets() // Add targets for buttons
 		setupNavigationBar() // Add NavigationItems (Back Button and Settings Button)
@@ -85,12 +82,12 @@ final class SelectGameViewController: UIViewController {
         
     func setTwoPlayersButton() {
         
-        twoPlayersButton.setTitle("  Two Players", for: .normal)
+        twoPlayersButton.setTitle("Two Players", for: .normal)
         twoPlayersButton.layer.cornerRadius = 30
-        twoPlayersButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        twoPlayersButton.titleLabel?.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
 		twoPlayersButton.setTitleColor(UIColor.app(.black), for: .normal)
 		twoPlayersButton.backgroundColor = UIColor.app(.lightPurple)
-		twoPlayersButton.setImage(imageTwoPlayers, for: .normal)
+		twoPlayersButton.setImage(UIImage(named: "multiplayer"), for: .normal)
         twoPlayersButton.imageView?.layer.transform = CATransform3DMakeScale(0.8, 0.8, 0.8)
         twoPlayersButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -103,12 +100,12 @@ final class SelectGameViewController: UIViewController {
     
     func setLeaderbordButton() {
         
-        leaderbordButton.setTitle("  Leaderbord", for: .normal)
+        leaderbordButton.setTitle("Leaderbord", for: .normal)
         leaderbordButton.layer.cornerRadius = 30
-        leaderbordButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        leaderbordButton.setTitleColor(UIColor.black, for: .normal)
-        leaderbordButton.backgroundColor = UIColor(red: 230/255, green: 233/255, blue: 249/255, alpha: 1)
-        leaderbordButton.setImage(imageLeaderbord, for: .normal)
+        leaderbordButton.titleLabel?.font = .systemFont(ofSize: 22, weight: .semibold)
+		leaderbordButton.setTitleColor(UIColor.app(.black), for: .normal)
+		leaderbordButton.backgroundColor = UIColor.app(.lightPurple)
+		leaderbordButton.setImage(UIImage(named: "leaderboard"), for: .normal)
         leaderbordButton.imageView?.layer.transform = CATransform3DMakeScale(0.8, 0.8, 0.8)
         leaderbordButton.translatesAutoresizingMaskIntoConstraints = false
         

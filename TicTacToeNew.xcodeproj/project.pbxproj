@@ -33,7 +33,7 @@
 		37F8D4592CAC979E00CBB15A /* SkinsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D4582CAC979E00CBB15A /* SkinsCardView.swift */; };
 		37F8D45B2CAC97CD00CBB15A /* SkinsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D45A2CAC97CD00CBB15A /* SkinsModel.swift */; };
 		37F8D4612CAC98A700CBB15A /* CustomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D4602CAC98A700CBB15A /* CustomNavBar.swift */; };
-		37F8D4632CAC98C200CBB15A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D4622CAC98C200CBB15A /* Extensions.swift */; };
+		37F8D4632CAC98C200CBB15A /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F8D4622CAC98C200CBB15A /* ColorExtension.swift */; };
 		F108FEA62CB01DF600E8216D /* MusicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F108FEA52CB01DF300E8216D /* MusicView.swift */; };
 		F15E77092CAED9E900E8FB9D /* SelectGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E77082CAED9E900E8FB9D /* SelectGameViewController.swift */; };
 		F17BDA0E2CB180910006D8A9 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17BDA0D2CB1808C0006D8A9 /* MusicPlayer.swift */; };
@@ -42,6 +42,9 @@
 		F17BDA142CB184260006D8A9 /* Song 2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F17BDA102CB184260006D8A9 /* Song 2.mp3 */; };
 		F17BDA162CB18CB40006D8A9 /* LineWinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17BDA152CB18CB40006D8A9 /* LineWinner.swift */; };
 		F17BDA182CB1AE340006D8A9 /* DynamicSingleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17BDA172CB1AE220006D8A9 /* DynamicSingleView.swift */; };
+		F1973BAC2CB21EA800934F0A /* Extensions+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1973BAB2CB21E9D00934F0A /* Extensions+Animations.swift */; };
+		F1973BB02CB2274500934F0A /* ShadowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1973BAF2CB2274100934F0A /* ShadowExtension.swift */; };
+		F1973BB22CB2277E00934F0A /* DynamicProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1973BB12CB2277A00934F0A /* DynamicProtocols.swift */; };
 		F1AD96C02CAF291E00C9AC40 /* DynamicMusicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AD96BF2CAF290E00C9AC40 /* DynamicMusicView.swift */; };
 		F1BCAF322CAD4EE700D812C3 /* DynamicTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BCAF312CAD4EE100D812C3 /* DynamicTimeView.swift */; };
 /* End PBXBuildFile section */
@@ -74,7 +77,7 @@
 		37F8D4582CAC979E00CBB15A /* SkinsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinsCardView.swift; sourceTree = "<group>"; };
 		37F8D45A2CAC97CD00CBB15A /* SkinsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinsModel.swift; sourceTree = "<group>"; };
 		37F8D4602CAC98A700CBB15A /* CustomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBar.swift; sourceTree = "<group>"; };
-		37F8D4622CAC98C200CBB15A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		37F8D4622CAC98C200CBB15A /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		F108FEA52CB01DF300E8216D /* MusicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicView.swift; sourceTree = "<group>"; };
 		F15E77082CAED9E900E8FB9D /* SelectGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGameViewController.swift; sourceTree = "<group>"; };
 		F17BDA0D2CB1808C0006D8A9 /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
@@ -83,6 +86,9 @@
 		F17BDA112CB184260006D8A9 /* Song 3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Song 3.mp3"; sourceTree = "<group>"; };
 		F17BDA152CB18CB40006D8A9 /* LineWinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineWinner.swift; sourceTree = "<group>"; };
 		F17BDA172CB1AE220006D8A9 /* DynamicSingleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSingleView.swift; sourceTree = "<group>"; };
+		F1973BAB2CB21E9D00934F0A /* Extensions+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+Animations.swift"; sourceTree = "<group>"; };
+		F1973BAF2CB2274100934F0A /* ShadowExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowExtension.swift; sourceTree = "<group>"; };
+		F1973BB12CB2277A00934F0A /* DynamicProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicProtocols.swift; sourceTree = "<group>"; };
 		F1AD96BF2CAF290E00C9AC40 /* DynamicMusicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicMusicView.swift; sourceTree = "<group>"; };
 		F1BCAF312CAD4EE100D812C3 /* DynamicTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTimeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,14 +105,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		371F88B02CACAC4B003849A2 /* LeaderBoard Screen */ = {
+		371F88B02CACAC4B003849A2 /* LeaderboardScreen */ = {
 			isa = PBXGroup;
 			children = (
 				371F88B12CACAC6D003849A2 /* Cell */,
 				371F88B42CACACB9003849A2 /* LeaderboardModel.swift */,
 				371F88B62CACACDD003849A2 /* LeaderboardViewController.swift */,
 			);
-			path = "LeaderBoard Screen";
+			path = LeaderboardScreen;
 			sourceTree = "<group>";
 		};
 		371F88B12CACAC6D003849A2 /* Cell */ = {
@@ -136,19 +142,20 @@
 		37F8D4202CAC937B00CBB15A /* TicTacToeNew */ = {
 			isa = PBXGroup;
 			children = (
-				F15E77072CAED9D200E8FB9D /* SelectGameScreen */,
-				371F88B02CACAC4B003849A2 /* LeaderBoard Screen */,
-				37F8D43E2CAC950100CBB15A /* App Delegate */,
-				37F8D43D2CAC94F500CBB15A /* Assets */,
-				37F8D43C2CAC94ED00CBB15A /* Base */,
-				37F8D43B2CAC94E500CBB15A /* Data */,
+				37F8D43E2CAC950100CBB15A /* AppDelegate */,
 				37F8D4352CAC947700CBB15A /* Main Screen */,
-				37F8D4362CAC948500CBB15A /* Game Screen */,
-				37F8D4372CAC949B00CBB15A /* Result Screen */,
-				37F8D4382CAC94AD00CBB15A /* Rules Screen */,
-				37F8D43A2CAC94D200CBB15A /* Setting Screen */,
+				F15E77072CAED9D200E8FB9D /* SelectionScreen */,
+				37F8D4362CAC948500CBB15A /* GameScreen */,
+				37F8D4372CAC949B00CBB15A /* ResultScreen */,
+				371F88B02CACAC4B003849A2 /* LeaderboardScreen */,
+				37F8D43A2CAC94D200CBB15A /* SettingScreen */,
+				37F8D4382CAC94AD00CBB15A /* RulesScreen */,
+				37F8D43D2CAC94F500CBB15A /* Assets */,
+				37F8D43B2CAC94E500CBB15A /* Data */,
+				F1973BAD2CB2270800934F0A /* Extensions */,
+				37F8D43C2CAC94ED00CBB15A /* Base */,
+				F1973BB12CB2277A00934F0A /* DynamicProtocols.swift */,
 				37F8D4602CAC98A700CBB15A /* CustomNavBar.swift */,
-				37F8D4622CAC98C200CBB15A /* Extensions.swift */,
 				37F8D42F2CAC937F00CBB15A /* Info.plist */,
 			);
 			path = TicTacToeNew;
@@ -162,9 +169,10 @@
 			path = "Main Screen";
 			sourceTree = "<group>";
 		};
-		37F8D4362CAC948500CBB15A /* Game Screen */ = {
+		37F8D4362CAC948500CBB15A /* GameScreen */ = {
 			isa = PBXGroup;
 			children = (
+				F1973BAB2CB21E9D00934F0A /* Extensions+Animations.swift */,
 				37F8D4452CAC963200CBB15A /* GameViewController.swift */,
 				3777C7CB2CACD69E00AE76C0 /* GamePlayerCard.swift */,
 				370CA3422CADE737007F2A5C /* GameBoard.swift */,
@@ -172,28 +180,28 @@
 				370CA3482CAE2385007F2A5C /* CurrentPlayerIndicator.swift */,
 				F17BDA152CB18CB40006D8A9 /* LineWinner.swift */,
 			);
-			path = "Game Screen";
+			path = GameScreen;
 			sourceTree = "<group>";
 		};
-		37F8D4372CAC949B00CBB15A /* Result Screen */ = {
+		37F8D4372CAC949B00CBB15A /* ResultScreen */ = {
 			isa = PBXGroup;
 			children = (
 				37F8D4492CAC968400CBB15A /* ResultScreenModel.swift */,
 				37F8D44C2CAC96B900CBB15A /* ResultViewController.swift */,
 			);
-			path = "Result Screen";
+			path = ResultScreen;
 			sourceTree = "<group>";
 		};
-		37F8D4382CAC94AD00CBB15A /* Rules Screen */ = {
+		37F8D4382CAC94AD00CBB15A /* RulesScreen */ = {
 			isa = PBXGroup;
 			children = (
 				37F8D44E2CAC96DE00CBB15A /* RulesCell.swift */,
 				37F8D4502CAC971500CBB15A /* RulesViewController.swift */,
 			);
-			path = "Rules Screen";
+			path = RulesScreen;
 			sourceTree = "<group>";
 		};
-		37F8D43A2CAC94D200CBB15A /* Setting Screen */ = {
+		37F8D43A2CAC94D200CBB15A /* SettingScreen */ = {
 			isa = PBXGroup;
 			children = (
 				F1BCAF312CAD4EE100D812C3 /* DynamicTimeView.swift */,
@@ -205,7 +213,7 @@
 				37F8D45A2CAC97CD00CBB15A /* SkinsModel.swift */,
 				F17BDA0D2CB1808C0006D8A9 /* MusicPlayer.swift */,
 			);
-			path = "Setting Screen";
+			path = SettingScreen;
 			sourceTree = "<group>";
 		};
 		37F8D43B2CAC94E500CBB15A /* Data */ = {
@@ -237,22 +245,31 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
-		37F8D43E2CAC950100CBB15A /* App Delegate */ = {
+		37F8D43E2CAC950100CBB15A /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
 				37F8D4232CAC937B00CBB15A /* SceneDelegate.swift */,
 				37F8D4212CAC937B00CBB15A /* AppDelegate.swift */,
 			);
-			path = "App Delegate";
+			path = AppDelegate;
 			sourceTree = "<group>";
 		};
-		F15E77072CAED9D200E8FB9D /* SelectGameScreen */ = {
+		F15E77072CAED9D200E8FB9D /* SelectionScreen */ = {
 			isa = PBXGroup;
 			children = (
 				F15E77082CAED9E900E8FB9D /* SelectGameViewController.swift */,
 				F17BDA172CB1AE220006D8A9 /* DynamicSingleView.swift */,
 			);
-			path = SelectGameScreen;
+			path = SelectionScreen;
+			sourceTree = "<group>";
+		};
+		F1973BAD2CB2270800934F0A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F1973BAF2CB2274100934F0A /* ShadowExtension.swift */,
+				37F8D4622CAC98C200CBB15A /* ColorExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -286,7 +303,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					37F8D41D2CAC937B00CBB15A = {
 						CreatedOnToolsVersion = 14.2;
@@ -338,11 +355,14 @@
 				37F8D4612CAC98A700CBB15A /* CustomNavBar.swift in Sources */,
 				F17BDA162CB18CB40006D8A9 /* LineWinner.swift in Sources */,
 				37F8D4462CAC963200CBB15A /* GameViewController.swift in Sources */,
+				F1973BAC2CB21EA800934F0A /* Extensions+Animations.swift in Sources */,
+				F1973BB22CB2277E00934F0A /* DynamicProtocols.swift in Sources */,
 				37F8D4402CAC95C600CBB15A /* ResultModel.swift in Sources */,
 				37F8D44A2CAC968400CBB15A /* ResultScreenModel.swift in Sources */,
 				F1BCAF322CAD4EE700D812C3 /* DynamicTimeView.swift in Sources */,
 				37F8D44F2CAC96DE00CBB15A /* RulesCell.swift in Sources */,
 				37F8D45B2CAC97CD00CBB15A /* SkinsModel.swift in Sources */,
+				F1973BB02CB2274500934F0A /* ShadowExtension.swift in Sources */,
 				37F8D4572CAC977F00CBB15A /* SettingViewController.swift in Sources */,
 				37F8D4442CAC960000CBB15A /* Saves.swift in Sources */,
 				37F8D44D2CAC96B900CBB15A /* ResultViewController.swift in Sources */,
@@ -358,7 +378,7 @@
 				F1AD96C02CAF291E00C9AC40 /* DynamicMusicView.swift in Sources */,
 				F108FEA62CB01DF600E8216D /* MusicView.swift in Sources */,
 				37F8D4592CAC979E00CBB15A /* SkinsCardView.swift in Sources */,
-				37F8D4632CAC98C200CBB15A /* Extensions.swift in Sources */,
+				37F8D4632CAC98C200CBB15A /* ColorExtension.swift in Sources */,
 				37F8D4242CAC937B00CBB15A /* SceneDelegate.swift in Sources */,
 				37F8D4512CAC971500CBB15A /* RulesViewController.swift in Sources */,
 				F17BDA182CB1AE340006D8A9 /* DynamicSingleView.swift in Sources */,
@@ -418,6 +438,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -478,6 +499,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -503,6 +525,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3V899K3TN7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TicTacToeNew/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -529,6 +552,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3V899K3TN7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TicTacToeNew/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

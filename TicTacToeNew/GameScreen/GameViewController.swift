@@ -51,7 +51,9 @@ class GameViewController: UIViewController {
         guard let resetGame = resetGame else {
             return
         }
-		startTimer()
+		if Saves.isTimeMode {
+			startTimer()
+		}
         resetGame()
     }
 	
@@ -96,9 +98,15 @@ extension GameViewController {
         let cardTwoPlayer = PlayerCard(image: Skins.getSelected().o, text: "Player Two")
 
         view.addSubview(gameHeaderInfo)
+		
         gameHeaderInfo.addSubview(cardOnePlyaer)
         gameHeaderInfo.addSubview(cardTwoPlayer)
-
+		
+		cardOnePlyaer.clipsToBounds = false
+		cardTwoPlayer.clipsToBounds = false
+		cardOnePlyaer.dropShadow()
+		cardTwoPlayer.dropShadow()
+		
         NSLayoutConstraint.activate([
             gameHeaderInfo.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.headerInfoTopMargin),
             gameHeaderInfo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.headerInfoLeadingMargin),

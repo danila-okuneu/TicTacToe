@@ -88,7 +88,8 @@ class GameBoard: UIView {
 
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = 4
+        imageView.layer.cornerRadius = 5
+		
         imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         button.addSubview(imageView)
@@ -115,10 +116,16 @@ class GameBoard: UIView {
         gameState[index] = currentPlayer
 
         if let imageView = sender.subviews.compactMap({ $0 as? UIImageView }).first {
+			
             imageView.image = currentPlayer == .cross ? playerImages[0] : playerImages[1]
 
-            checkGameState()
-            handleNextPlayerTurn(sender)
+			
+			UIButton.animateButtonPress(sender)
+			UIImageView.fadeInImage(imageView) {
+				self.checkGameState()
+				self.handleNextPlayerTurn(sender)
+			}
+
         }
     }
 
@@ -138,7 +145,14 @@ class GameBoard: UIView {
         if gameMode == .singlePlayer {
             sender.isUserInteractionEnabled = false
             currentPlayer = .cross
-            botTurn()
+			
+
+			DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+				self?.botTurn()
+	
+			}
+
+			
         } else {
             currentPlayer = currentPlayer == .cross ? .nought : .cross
             delegatePI?.updateIndicator(for: currentPlayer)
@@ -170,14 +184,31 @@ class GameBoard: UIView {
 
         if let winner = winner {
             result = winner == .cross ? .win : .lose
+			DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+				self.createWinnerLine(winner)
+			}
         } else {
             result = .draw
         }
-        delegateGameVC?.finishGame(with: result)
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+			self.delegateGameVC?.finishGame(with: result)
+		}
+		// Разблокируем все кнопки после завершения игры
+		gameButtons.forEach { $0.isUserInteractionEnabled = true }
+	}
+	
+	private func createWinnerLine(_ playerWinner: Player?) {
+		if let winningCombination = winningCombinations.first(where: { combination in
+			let players = combination.compactMap { gameState[$0] }
+			return players.count == 3 && Set(players).count == 1 && players.first == playerWinner
+		}) {
+			// Отобразите линию победителя
+			showWinningLine(for: winningCombination)
+			winningLineView?.isHidden = false
+		}
+	}
 
-        // Разблокируем все кнопки после завершения игры
-        gameButtons.forEach { $0.isUserInteractionEnabled = true }
-    }
 
     // MARK: - Public Methods
 
