@@ -70,6 +70,7 @@ extension RulesViewController: UITableViewDataSource {
             fatalError()
         }
         cell.configure(with: rules[indexPath.row], index: "\(indexPath.row + 1)")
+        cell.selectionStyle = .none
         return cell
     }
 }
