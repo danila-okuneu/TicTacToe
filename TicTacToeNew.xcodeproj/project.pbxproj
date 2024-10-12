@@ -47,6 +47,10 @@
 		F1973BB22CB2277E00934F0A /* DynamicProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1973BB12CB2277A00934F0A /* DynamicProtocols.swift */; };
 		F1AD96C02CAF291E00C9AC40 /* DynamicMusicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AD96BF2CAF290E00C9AC40 /* DynamicMusicView.swift */; };
 		F1BCAF322CAD4EE700D812C3 /* DynamicTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BCAF312CAD4EE100D812C3 /* DynamicTimeView.swift */; };
+		F1C18A6D2CBACB120030E4B1 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F1C18A6C2CBACB120030E4B1 /* FirebaseAuth */; };
+		F1C18A6F2CBACB120030E4B1 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F1C18A6E2CBACB120030E4B1 /* FirebaseFirestore */; };
+		F1C18A712CBACB120030E4B1 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F1C18A702CBACB120030E4B1 /* FirebaseStorage */; };
+		F1C18A732CBACBBF0030E4B1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1C18A722CBACBBF0030E4B1 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +95,7 @@
 		F1973BB12CB2277A00934F0A /* DynamicProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicProtocols.swift; sourceTree = "<group>"; };
 		F1AD96BF2CAF290E00C9AC40 /* DynamicMusicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicMusicView.swift; sourceTree = "<group>"; };
 		F1BCAF312CAD4EE100D812C3 /* DynamicTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTimeView.swift; sourceTree = "<group>"; };
+		F1C18A722CBACBBF0030E4B1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +104,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				371F88AF2CACAAB0003849A2 /* SnapKit in Frameworks */,
+				F1C18A712CBACB120030E4B1 /* FirebaseStorage in Frameworks */,
+				F1C18A6D2CBACB120030E4B1 /* FirebaseAuth in Frameworks */,
+				F1C18A6F2CBACB120030E4B1 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +164,7 @@
 				37F8D43C2CAC94ED00CBB15A /* Base */,
 				F1973BB12CB2277A00934F0A /* DynamicProtocols.swift */,
 				37F8D4602CAC98A700CBB15A /* CustomNavBar.swift */,
+				F1C18A722CBACBBF0030E4B1 /* GoogleService-Info.plist */,
 				37F8D42F2CAC937F00CBB15A /* Info.plist */,
 			);
 			path = TicTacToeNew;
@@ -290,6 +299,9 @@
 			name = TicTacToeNew;
 			packageProductDependencies = (
 				371F88AE2CACAAB0003849A2 /* SnapKit */,
+				F1C18A6C2CBACB120030E4B1 /* FirebaseAuth */,
+				F1C18A6E2CBACB120030E4B1 /* FirebaseFirestore */,
+				F1C18A702CBACB120030E4B1 /* FirebaseStorage */,
 			);
 			productName = TicTacToeNew;
 			productReference = 37F8D41E2CAC937B00CBB15A /* TicTacToeNew.app */;
@@ -321,6 +333,7 @@
 			mainGroup = 37F8D4152CAC937B00CBB15A;
 			packageReferences = (
 				371F88AD2CACAAB0003849A2 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				F1C18A6B2CBACB120030E4B1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 37F8D41F2CAC937B00CBB15A /* Products */;
 			projectDirPath = "";
@@ -341,6 +354,7 @@
 				F17BDA122CB184260006D8A9 /* Song 3.mp3 in Resources */,
 				F17BDA132CB184260006D8A9 /* Song 1.mp3 in Resources */,
 				F17BDA142CB184260006D8A9 /* Song 2.mp3 in Resources */,
+				F1C18A732CBACBBF0030E4B1 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,7 +539,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = 723HTEFHBA;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TicTacToeNew/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
@@ -538,7 +552,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.fibeapp.TicTacToeNew;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.fibeapp.TicTacToe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -553,7 +567,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = 723HTEFHBA;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TicTacToeNew/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
@@ -566,7 +580,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.fibeapp.TicTacToeNew;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.fibeapp.TicTacToe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -606,6 +620,14 @@
 				minimumVersion = 5.0.1;
 			};
 		};
+		F1C18A6B2CBACB120030E4B1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -613,6 +635,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 371F88AD2CACAAB0003849A2 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		F1C18A6C2CBACB120030E4B1 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F1C18A6B2CBACB120030E4B1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		F1C18A6E2CBACB120030E4B1 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F1C18A6B2CBACB120030E4B1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		F1C18A702CBACB120030E4B1 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F1C18A6B2CBACB120030E4B1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
